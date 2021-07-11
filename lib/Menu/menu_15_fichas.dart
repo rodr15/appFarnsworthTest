@@ -72,7 +72,7 @@ class _MenuFifteenChips extends State<MenuFifteenChips> {
       }),
     );
     return Container(
-      color: Colors.red,
+      color: Colors.black,
       child: RawKeyboardListener(
           autofocus: true,
           focusNode: _focusNode,
