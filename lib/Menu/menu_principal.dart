@@ -1,4 +1,5 @@
 import 'package:anthony/Menu/options.dart';
+import 'package:anthony/screens/hundred_chips.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -54,10 +55,10 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                 );
                 break;
               case 1:
-                /*Navigator.push(
+                Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FifteenChips(0)),
-                );*/
+                  MaterialPageRoute(builder: (context) => HundredChips()),
+                );
                 break;
             }
             break;
@@ -84,7 +85,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
       }),
     );
     return Container(
-      color: Colors.red,
+      color: Colors.black,
           child: RawKeyboardListener(
               autofocus: true,
               focusNode: _focusNode,

@@ -42,7 +42,9 @@ class Option extends StatelessWidget {
 
     );
     return Padding(
-      padding: EdgeInsets.only(top:MediaQuery.of(context).size.height*15/30),
+      padding: EdgeInsets.only(
+          top:MediaQuery.of(context).size.height*15/30
+      ),
       child: Column(
         children: <Widget>[
           opcion,
