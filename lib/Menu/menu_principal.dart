@@ -84,14 +84,20 @@ class _MenuPrincipal extends State<MenuPrincipal> {
         return Option(opciones[index]);
       }),
     );
-    return Container(
-      color: Colors.black,
-          child: RawKeyboardListener(
+    return Stack(
+          children: <Widget>[
+            Image.asset(
+              "SmartVisionPortada.jpeg",
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.fill,),
+            RawKeyboardListener(
               autofocus: true,
               focusNode: _focusNode,
               onKey: _handleKeyEvent,
               child: listaOpciones
           ),
+    ],
     );
   }
 }
