@@ -75,6 +75,7 @@ class _MobileChipsState extends State<MobileChips> {
               }
             });
           }
+
         },
         onDraggableCanceled: (velocity,Offset){
           setState(() {
