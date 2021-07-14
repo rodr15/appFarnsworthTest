@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: FifteenChips(0, false),
+      home: FifteenChips(0, false, 0, 0),
     );
   }
 }

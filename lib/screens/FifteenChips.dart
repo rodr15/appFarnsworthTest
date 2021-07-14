@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 class FifteenChips extends StatelessWidget {
   int opcion = 0;
   bool random = false;
-  FifteenChips(this.opcion, this.random);
+  int minuts = 0;
+  int seconds = 0;
+  FifteenChips(this.opcion, this.random, this.minuts, this.seconds);
   @override
   Widget build(BuildContext context) {
     double len = 0.0;
@@ -169,7 +171,7 @@ class FifteenChips extends StatelessWidget {
           MobileChips(12, len, chipsData, objectiveData, chipsColors, noMove),
           MobileChips(13, len, chipsData, objectiveData, chipsColors, noMove),
           MobileChips(14, len, chipsData, objectiveData, chipsColors, noMove),
-          ToolBar(opcion, random),
+          ToolBar(opcion, random, minuts, seconds),
         ],
       ),
     );
