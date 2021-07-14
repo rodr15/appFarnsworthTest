@@ -16,8 +16,8 @@ class _MenuPrincipal extends State<MenuPrincipal> {
   int _pulsaciones = 0;
   int _contador = 0;
   List opciones = [
-    ['hola','15 Fichas',true],
-    ['hola','100 Fichas',false],
+    ['hola', '15 Fichas', true],
+    ['hola', '100 Fichas', false],
   ];
   final FocusNode _focusNode = FocusNode();
   final ScrollController _controller = ScrollController();
@@ -26,28 +26,33 @@ class _MenuPrincipal extends State<MenuPrincipal> {
     super.dispose();
     _focusNode.dispose();
   }
-  void _handleKeyEvent(RawKeyEvent event){
+
+  void _handleKeyEvent(RawKeyEvent event) {
     setState(() {
       _pulsaciones++;
-      if(_pulsaciones == 2) {
-        for(int i = 0;i<opciones.length;i++){
-          if(opciones[i][2] == true){opciones[i][2]=false;}
+      if (_pulsaciones == 2) {
+        for (int i = 0; i < opciones.length; i++) {
+          if (opciones[i][2] == true) {
+            opciones[i][2] = false;
+          }
         }
         switch (event.physicalKey.debugName) {
           case 'Arrow Left':
             _controller.animateTo(
                 _controller.offset + MediaQuery.of(context).size.width / 2,
-                curve: Curves.linear, duration: Duration(milliseconds: 500));
+                curve: Curves.linear,
+                duration: Duration(milliseconds: 500));
             _contador++;
             break;
           case 'Arrow Right':
             _controller.animateTo(
                 _controller.offset - MediaQuery.of(context).size.width / 2,
-                curve: Curves.linear, duration: Duration(milliseconds: 500));
+                curve: Curves.linear,
+                duration: Duration(milliseconds: 500));
             _contador--;
             break;
           case 'Enter':
-            switch(_contador){
+            switch (_contador) {
               case 0:
                 Navigator.push(
                   context,
@@ -57,22 +62,23 @@ class _MenuPrincipal extends State<MenuPrincipal> {
               case 1:
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HundredChips()),
+                  MaterialPageRoute(builder: (context) => HundredChips(false)),
                 );
                 break;
             }
             break;
         }
-        if(_contador < 0){_contador = 0;}
-        if(_contador >= opciones.length){_contador = opciones.length-1;}
-          opciones[_contador][2] = true;
-          _pulsaciones = 0;
+        if (_contador < 0) {
+          _contador = 0;
         }
+        if (_contador >= opciones.length) {
+          _contador = opciones.length - 1;
+        }
+        opciones[_contador][2] = true;
+        _pulsaciones = 0;
       }
-
-      );
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -80,24 +86,24 @@ class _MenuPrincipal extends State<MenuPrincipal> {
       scrollDirection: Axis.horizontal,
       controller: _controller,
       crossAxisCount: 1,
-      children: List.generate(opciones.length, (index){
+      children: List.generate(opciones.length, (index) {
         return Option(opciones[index]);
       }),
     );
     return Stack(
-          children: <Widget>[
-            Image.asset(
-              "SmartVisionPortada.jpeg",
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.fill,),
-            RawKeyboardListener(
-              autofocus: true,
-              focusNode: _focusNode,
-              onKey: _handleKeyEvent,
-              child: listaOpciones
-          ),
-    ],
+      children: <Widget>[
+        Image.asset(
+          "SmartVisionPortada.jpeg",
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.fill,
+        ),
+        RawKeyboardListener(
+            autofocus: true,
+            focusNode: _focusNode,
+            onKey: _handleKeyEvent,
+            child: listaOpciones),
+      ],
     );
   }
 }
