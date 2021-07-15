@@ -153,7 +153,8 @@ class HundredChips extends StatelessWidget {
     medidas();
     colors();
     positions();
-    (randomize ? shuffle() : null);
+    //(randomize ? shuffle() : null);
+    shuffle();
     data();
 
     List noMove = [

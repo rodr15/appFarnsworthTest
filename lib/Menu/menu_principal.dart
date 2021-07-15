@@ -1,4 +1,5 @@
 import 'package:anthony/Menu/options.dart';
+import 'package:anthony/screens/FifteenChips.dart';
 import 'package:anthony/screens/hundred_chips.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,9 @@ class _MenuPrincipal extends State<MenuPrincipal> {
               case 0:
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MenuFifteenChips()),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          FifteenChips(0, false, 0, 0, Colors.black)),
                 );
                 break;
               case 1:

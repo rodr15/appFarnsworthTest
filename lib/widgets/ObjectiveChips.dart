@@ -7,18 +7,17 @@ class ObjectiveChips extends StatefulWidget {
   final List objectiveData;
   final List acceptedColors;
   final List noMove;
-  ObjectiveChips(this.id,this.len,this.chipsData,this.objectiveData,this.acceptedColors,this.noMove);
-
+  ObjectiveChips(this.id, this.len, this.chipsData, this.objectiveData,
+      this.acceptedColors, this.noMove);
 
   @override
   _ObjectiveChipsState createState() => _ObjectiveChipsState();
 }
 
 class _ObjectiveChipsState extends State<ObjectiveChips> {
-
   int id = 0;
   double len = 50;
-  Offset position = Offset(0.0,0.0);
+  Offset position = Offset(0.0, 0.0);
   Color objectiveColor = Colors.red;
   List acceptedColors = [];
   List noMove = [];
@@ -39,31 +38,30 @@ class _ObjectiveChipsState extends State<ObjectiveChips> {
       top: position.dx,
       left: position.dy,
       child: DragTarget(
-        onAccept: (Color color){
-          if(!(noMove.contains(color))){
+        onAccept: (Color color) {
+          if (!(noMove.contains(color))) {
             setState(() {
               if (acceptedColors.contains(color)) {
                 // Verificar si esta disponible
                 if (widget.objectiveData[0][widget.id] == true) {
                   if (widget.objectiveData[1].contains(color)) {
-                    widget.objectiveData[0][widget.objectiveData[1].indexOf(
-                        color)] = true;
-                    widget.objectiveData[1][widget.objectiveData[1].indexOf(
-                        color)] = Colors.black;
+                    widget.objectiveData[0]
+                        [widget.objectiveData[1].indexOf(color)] = true;
+                    widget.objectiveData[1]
+                        [widget.objectiveData[1].indexOf(color)] = Colors.black;
                   }
                   objectiveColor = color; // Tomar el color
                   widget.objectiveData[0][widget.id] =
-                  false; // Decir que esta ocupado
+                      false; // Decir que esta ocupado
                   widget.objectiveData[1][widget.id] =
                       color; // Guardar el color que tiene
                   //print(widget.objectiveData[1]);
                 }
               }
-            }
-            );
+            });
           }
         },
-        builder: (BuildContext context,accepted,rejected){
+        builder: (BuildContext context, accepted, rejected) {
           return Container(
             height: len,
             width: len,
@@ -72,9 +70,8 @@ class _ObjectiveChipsState extends State<ObjectiveChips> {
               textScaleFactor: 0.5,
             ),*/
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.white),
-                color: accepted.isEmpty? Colors.transparent:Colors.grey
-            ),
+                border: Border.all(color: Colors.blueAccent),
+                color: accepted.isEmpty ? Colors.transparent : Colors.grey),
           );
         },
       ),

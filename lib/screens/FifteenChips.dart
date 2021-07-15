@@ -11,7 +11,10 @@ class FifteenChips extends StatelessWidget {
   bool random = false;
   int minuts = 0;
   int seconds = 0;
-  FifteenChips(this.opcion, this.random, this.minuts, this.seconds);
+  Color toolbarColor = Colors.black;
+  FifteenChips(
+      this.opcion, this.random, this.minuts, this.seconds, this.toolbarColor);
+
   @override
   Widget build(BuildContext context) {
     double len = 0.0;
@@ -132,47 +135,59 @@ class FifteenChips extends StatelessWidget {
       child: Icon(Icons.star),
     );
 
-    return Container(
-      color: Colors.black,
-      child: Stack(
-        children: <Widget>[
-          ObjectiveChips(0, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(1, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(2, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(3, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(4, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(5, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(6, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(7, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(8, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(9, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(
-              10, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(
-              11, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(
-              12, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(
-              13, len, chipsData, objectiveData, chipsColors, noMove),
-          ObjectiveChips(
-              14, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(0, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(1, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(2, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(3, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(4, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(5, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(6, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(7, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(8, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(9, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(10, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(11, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(12, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(13, len, chipsData, objectiveData, chipsColors, noMove),
-          MobileChips(14, len, chipsData, objectiveData, chipsColors, noMove),
-          ToolBar(opcion, random, minuts, seconds),
-        ],
+    return Scaffold(
+      body: Container(
+        color: toolbarColor,
+        child: Stack(
+          children: <Widget>[
+            ObjectiveChips(
+                0, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                1, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                2, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                3, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                4, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                5, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                6, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                7, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                8, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                9, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                10, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                11, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                12, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                13, len, chipsData, objectiveData, chipsColors, noMove),
+            ObjectiveChips(
+                14, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(0, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(1, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(2, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(3, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(4, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(5, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(6, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(7, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(8, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(9, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(10, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(11, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(12, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(13, len, chipsData, objectiveData, chipsColors, noMove),
+            MobileChips(14, len, chipsData, objectiveData, chipsColors, noMove),
+            ToolBar(opcion, random, minuts, seconds, toolbarColor),
+          ],
+        ),
       ),
     );
   }

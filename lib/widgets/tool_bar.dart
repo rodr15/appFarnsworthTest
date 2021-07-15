@@ -8,7 +8,9 @@ class ToolBar extends StatefulWidget {
   bool random = false;
   int seconds = 0;
   int minuts = 0;
-  ToolBar(this.colorOption, this.random, this.minuts, this.seconds);
+  Color toolbarColor = Colors.black;
+  ToolBar(this.colorOption, this.random, this.minuts, this.seconds,
+      this.toolbarColor);
   @override
   _ToolBarState createState() => _ToolBarState();
 }
@@ -24,20 +26,28 @@ class _ToolBarState extends State<ToolBar> {
   double tiempoWidth = 0;
   int _TimerSecondscounter = 0;
   int _TimerMinutescounter = 0;
+  int confTimerSecondscounter = 0;
+  int confTimerMinutescounter = 0;
   bool randomChange = false;
   double randomWidth = 0;
   bool startChange = false;
   Timer _Testtimer = Timer(Duration(seconds: 0), () {});
   Timer _starttimer = Timer(Duration(seconds: 0), () {});
   int _startcounter = 3;
+  Color toolbarColor = Colors.black;
+  bool onPlay = false;
+  int ojo = 0; // 0 -> Derecho , 1 -> Izquierdo
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     randomChange = widget.random;
     colorOption = widget.colorOption;
+    confTimerMinutescounter = widget.minuts;
+    confTimerSecondscounter = widget.seconds;
     _TimerMinutescounter = widget.minuts;
     _TimerSecondscounter = widget.seconds;
+    toolbarColor = widget.toolbarColor;
   }
 
   void actionColores() {
@@ -58,6 +68,7 @@ class _ToolBarState extends State<ToolBar> {
 
   @override
   Widget build(BuildContext context) {
+    widget.toolbarColor = toolbarColor;
     ///////////////////////
     Color rojoLadrillo = Color.fromARGB(255, 203, 65, 84);
     Color verde = Color.fromARGB(255, 0, 80, 0);
@@ -76,7 +87,6 @@ class _ToolBarState extends State<ToolBar> {
     toolbarWidth = MediaQuery.of(context).size.width * 5 / 100;
     maxWidth = 40 * 6 + toolbarWidth;
 
-    Color toolbarColor = Colors.black;
     double toolbarPadding = 0.0;
 
     Color iconsColor = Colors.blue;
@@ -90,6 +100,8 @@ class _ToolBarState extends State<ToolBar> {
     );
 
     void TestTimer() {
+      _TimerMinutescounter = confTimerMinutescounter;
+      _TimerSecondscounter = confTimerSecondscounter;
       _Testtimer = Timer.periodic(Duration(seconds: 1), (timer) {
         setState(() {
           if (_TimerSecondscounter == 0) {
@@ -99,6 +111,12 @@ class _ToolBarState extends State<ToolBar> {
               _TimerMinutescounter = 0;
               _TimerSecondscounter = 0;
               _Testtimer.cancel();
+              onPlay = false;
+              if (ojo == 0) {
+                ojo = 1;
+              } else {
+                ojo = 0;
+              }
             }
           }
           if (_TimerSecondscounter > 0) {
@@ -136,19 +154,31 @@ class _ToolBarState extends State<ToolBar> {
                     ? '${_TimerMinutescounter}:${_TimerSecondscounter}0'
                     : '${_TimerMinutescounter}:${_TimerSecondscounter}'),
                 textAlign: TextAlign.center,
+                textScaleFactor: 4,
+                style: TextStyle(
+                  color: toolbarColor == Colors.white
+                      ? Colors.black
+                      : Colors.white,
+                ),
               ),
               decoration: BoxDecoration(
-                  color: Colors.blue, border: Border.all(color: Colors.red)),
+                  color: Colors.transparent,
+                  border: Border.all(color: Colors.transparent)),
             ))
       ],
     );
 
     void push() {
+      print(toolbarColor);
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => FifteenChips(colorOption, randomChange,
-                _TimerMinutescounter, _TimerSecondscounter)),
+            builder: (context) => FifteenChips(
+                colorOption,
+                randomChange,
+                confTimerMinutescounter,
+                confTimerSecondscounter,
+                toolbarColor)),
       );
     }
 
@@ -269,7 +299,10 @@ class _ToolBarState extends State<ToolBar> {
             backgroundColor: toolbarColor, // Color del circulo
             hoverColor: Colors.white60, // Color de cuando el mouse esta encima
             onPressed: colorPressed,
-            child: Icon(Icons.color_lens_rounded),
+            child: Icon(
+              Icons.color_lens_rounded,
+              color: toolbarColor == Colors.white ? Colors.black : Colors.white,
+            ),
           ),
           (colorChange ? opcionesColores : Row())
         ],
@@ -280,7 +313,6 @@ class _ToolBarState extends State<ToolBar> {
       setState(() {
         tiempoChange = !tiempoChange;
         colorChange = false;
-        randomChange = false;
         actionColores();
         actionTiempo();
       });
@@ -288,28 +320,32 @@ class _ToolBarState extends State<ToolBar> {
 
     void masTiempo() {
       setState(() {
-        _TimerSecondscounter += 30;
-        if (_TimerSecondscounter >= 60) {
-          _TimerMinutescounter++;
-          _TimerSecondscounter = 0;
+        confTimerSecondscounter += 30;
+        if (confTimerSecondscounter >= 60) {
+          confTimerMinutescounter++;
+          confTimerSecondscounter = 0;
         }
+        _TimerMinutescounter = confTimerMinutescounter;
+        _TimerSecondscounter = confTimerSecondscounter;
       });
     }
 
     void menosTiempo() {
       setState(() {
-        if (_TimerSecondscounter == 30) {
-          _TimerSecondscounter -= 30;
+        if (confTimerSecondscounter == 30) {
+          confTimerSecondscounter -= 30;
         } else {
-          if (_TimerSecondscounter <= 0) {
-            _TimerMinutescounter--;
+          if (confTimerSecondscounter <= 0) {
+            confTimerMinutescounter--;
             _TimerSecondscounter = 30;
           }
         }
-        if (_TimerMinutescounter < 0) {
-          _TimerMinutescounter = 0;
-          _TimerSecondscounter = 0;
+        if (confTimerMinutescounter < 0) {
+          confTimerMinutescounter = 0;
+          confTimerSecondscounter = 0;
         }
+        _TimerMinutescounter = confTimerMinutescounter;
+        _TimerSecondscounter = confTimerSecondscounter;
       });
     }
 
@@ -326,17 +362,18 @@ class _ToolBarState extends State<ToolBar> {
           onPressed: menosTiempo,
           child: Icon(
             Icons.remove,
+            color: toolbarColor == Colors.white ? Colors.black : Colors.white,
           ),
         ),
         Container(
           width: maxWidth / 4,
           child: Text(
-            (_TimerSecondscounter == 0
-                ? '${_TimerMinutescounter}:${_TimerSecondscounter}0'
-                : '${_TimerMinutescounter}:${_TimerSecondscounter}'),
+            (confTimerSecondscounter == 0
+                ? '${confTimerMinutescounter}:${confTimerSecondscounter}0'
+                : '${confTimerMinutescounter}:${confTimerSecondscounter}'),
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white,
+              color: toolbarColor == Colors.white ? Colors.black : Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: maxWidth / 10,
             ),
@@ -350,6 +387,7 @@ class _ToolBarState extends State<ToolBar> {
           onPressed: masTiempo,
           child: Icon(
             Icons.add,
+            color: toolbarColor == Colors.white ? Colors.black : Colors.white,
           ),
         ),
       ],
@@ -370,7 +408,10 @@ class _ToolBarState extends State<ToolBar> {
             backgroundColor: toolbarColor, // Color del circulo
             hoverColor: Colors.white60, // Color de cuando el mouse esta encima
             onPressed: tiempoPressed,
-            child: Icon(Icons.timer),
+            child: Icon(
+              Icons.timer,
+              color: toolbarColor == Colors.white ? Colors.black : Colors.white,
+            ),
           ),
           (tiempoChange ? opcionesTiempo : Row())
         ],
@@ -400,7 +441,10 @@ class _ToolBarState extends State<ToolBar> {
             backgroundColor: toolbarColor, // Color del circulo
             hoverColor: Colors.white60, // Color de cuando el mouse esta encima
             onPressed: randomPressed,
-            child: Icon(Icons.change_circle),
+            child: Icon(
+              Icons.change_circle,
+              color: toolbarColor == Colors.white ? Colors.black : Colors.white,
+            ),
           ),
         ],
       ),
@@ -408,8 +452,18 @@ class _ToolBarState extends State<ToolBar> {
 
     void startPressed() {
       setState(() {
-        startChange = true;
-        startTimer();
+        if (!_Testtimer.isActive) {
+          if (confTimerMinutescounter == 0 && confTimerSecondscounter == 0) {
+          } else {
+            onPlay = true;
+            startChange = true;
+            colorChange = false;
+            tiempoChange = false;
+            actionColores();
+            actionTiempo();
+            startTimer();
+          }
+        }
       });
     }
 
@@ -424,7 +478,41 @@ class _ToolBarState extends State<ToolBar> {
             backgroundColor: toolbarColor, // Color del circulo
             hoverColor: Colors.white60, // Color de cuando el mouse esta encima
             onPressed: startPressed,
-            child: Icon(Icons.play_arrow),
+            child: Icon(
+              Icons.play_arrow,
+              color: toolbarColor == Colors.white ? Colors.black : Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+    // OPCIÓN BACKGROUND
+    void backGroundPressed() {
+      setState(() {
+        if (toolbarColor == Colors.white) {
+          toolbarColor = Colors.black;
+        } else {
+          toolbarColor = Colors.white;
+        }
+        push();
+      });
+    }
+
+    Container opcionBackGround = Container(
+      width: toolbarWidth,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          FloatingActionButton(
+            heroTag: "Bton8",
+            elevation: 0,
+            backgroundColor: toolbarColor, // Color del circulo
+            hoverColor: Colors.white60, // Color de cuando el mouse esta encima
+            onPressed: backGroundPressed,
+            child: Icon(
+              Icons.stop,
+              color: toolbarColor == Colors.white ? Colors.black : Colors.white,
+            ),
           ),
         ],
       ),
@@ -435,37 +523,38 @@ class _ToolBarState extends State<ToolBar> {
           top: MediaQuery.of(context).size.height * 2 / 10,
           left: MediaQuery.of(context).size.width * 2.5 / 10,
           child: Container(
-            height: MediaQuery.of(context).size.height / 2,
+            height: MediaQuery.of(context).size.height * 2 / 3,
             width: MediaQuery.of(context).size.width / 2,
-            color: Colors.red,
+            color: toolbarColor == Colors.white ? Colors.black : Colors.white,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.panorama_fish_eye, //Icons.lens,
-                      size: 100,
-                      color: Colors.black,
-                    ),
-                    Icon(
-                      Icons.lens, //Icons.lens,
-                      size: 100,
-                      color: Colors.black,
-                    ),
-                  ],
-                ),
+                Container(
+                    height: MediaQuery.of(context).size.height * 2 / 5,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                            (ojo == 0 ? "derecho.png" : "izquierdo.png"),
+                          ),
+                          fit: BoxFit.fill),
+                      //border: Border.all(color: Colors.blueAccent),
+                    )),
                 Text(
-                  'OJO DERECHO',
-                  style: TextStyle(color: Colors.black),
+                  (ojo == 0 ? 'OJO DERECHO' : 'OJO IZQUIERDO'),
+                  textScaleFactor: 4,
+                  style: TextStyle(
+                      color: toolbarColor == Colors.white
+                          ? Colors.white
+                          : Colors.black),
                 ),
                 Text('${_startcounter}',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: toolbarColor == Colors.white
+                          ? Colors.white
+                          : Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.width / 10,
+                      fontSize: MediaQuery.of(context).size.height / 10,
                     ))
               ],
             ),
@@ -480,7 +569,7 @@ class _ToolBarState extends State<ToolBar> {
         width: toolbarWidth - 2 * toolbarWidth / 10,
         child: Text('COLOR',
             style: TextStyle(
-              color: Colors.white,
+              color: toolbarColor == Colors.white ? Colors.black : Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: toolbarWidth / 4,
             )),
@@ -489,12 +578,12 @@ class _ToolBarState extends State<ToolBar> {
       Container(
         width: toolbarWidth,
         child: Text(
-            (_TimerSecondscounter == 0
-                ? '${_TimerMinutescounter}:${_TimerSecondscounter}0'
-                : '${_TimerMinutescounter}:${_TimerSecondscounter}'),
+            (confTimerSecondscounter == 0
+                ? '${confTimerMinutescounter}:${confTimerSecondscounter}0'
+                : '${confTimerMinutescounter}:${confTimerSecondscounter}'),
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white,
+              color: toolbarColor == Colors.white ? Colors.black : Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: toolbarWidth / 4,
             )),
@@ -505,18 +594,19 @@ class _ToolBarState extends State<ToolBar> {
         child: Text(randomChange ? ('Desordenado') : ('Ordenado'),
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white,
+              color: toolbarColor == Colors.white ? Colors.black : Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: toolbarWidth / 6,
             )),
       ),
+      opcionBackGround,
       opcionStart,
     ]);
 
     return Stack(
       children: <Widget>[
         Fondo,
-        Opciones,
+        (onPlay ? Stack() : Opciones),
         Cronometer,
         (startChange ? MensajeInicio : Stack())
       ],
