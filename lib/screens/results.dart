@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Results extends StatefulWidget {
-  const Results({Key? key}) : super(key: key);
+  List objectiveData = [];
+  Results(this.objectiveData);
 
   @override
   _ResultsState createState() => _ResultsState();

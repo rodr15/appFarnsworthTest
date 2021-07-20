@@ -457,6 +457,7 @@ class _ToolBarState extends State<ToolBar> {
           } else {
             onPlay = true;
             startChange = true;
+            randomChange = true;
             colorChange = false;
             tiempoChange = false;
             actionColores();
