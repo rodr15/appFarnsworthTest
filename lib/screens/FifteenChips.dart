@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:anthony/widgets/ObjectiveChips.dart';
+import 'package:anthony/widgets/objective_chips.dart';
 import 'package:anthony/widgets/moble_chips.dart';
 import 'package:anthony/widgets/tool_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -140,7 +140,7 @@ class FifteenChips extends StatelessWidget {
         color: toolbarColor,
         child: Stack(
           children: <Widget>[
-            ObjectiveChips(
+            /* ObjectiveChips(
                 0, len, chipsData, objectiveData, chipsColors, noMove),
             ObjectiveChips(
                 1, len, chipsData, objectiveData, chipsColors, noMove),
@@ -185,7 +185,7 @@ class FifteenChips extends StatelessWidget {
             MobileChips(12, len, chipsData, objectiveData, chipsColors, noMove),
             MobileChips(13, len, chipsData, objectiveData, chipsColors, noMove),
             MobileChips(14, len, chipsData, objectiveData, chipsColors, noMove),
-            ToolBar(opcion, random, minuts, seconds, toolbarColor),
+            ToolBar(opcion, random, minuts, seconds, toolbarColor),*/
           ],
         ),
       ),

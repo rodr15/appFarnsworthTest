@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:anthony/widgets/ObjectiveChips.dart';
+import 'package:anthony/widgets/objective_chips.dart';
 import 'package:anthony/widgets/moble_chips.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -179,8 +179,7 @@ class HundredChips extends StatelessWidget {
         } else if (index < 100) {
           aceptado = 3;
         }
-        return ObjectiveChips(index, len, chipsData, objectiveData,
-            acceptedColors[aceptado], noMove);
+        return Container();
       }),
     );
 
@@ -196,8 +195,9 @@ class HundredChips extends StatelessWidget {
         } else if (index < 100) {
           aceptado = 3;
         }
-        return MobileChips(index, len, chipsData, objectiveData,
-            acceptedColors[aceptado], noMove);
+        return Container();
+        /*MobileChips(index, len, chipsData, objectiveData,
+            acceptedColors[aceptado], noMove);*/
       }),
     );
 
