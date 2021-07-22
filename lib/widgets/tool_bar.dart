@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:anthony/provider/aplication_colors.dart';
 import 'package:anthony/provider/data_mobile_chips.dart';
 import 'package:anthony/provider/data_objective_chips.dart';
+import 'package:anthony/provider/notify_avisos.dart';
 import 'package:anthony/provider/test_data.dart';
+import 'package:anthony/widgets/moble_chips.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,8 +27,12 @@ class _ToolBarState extends State<ToolBar> {
   int minutes = 0;
   int seconds = 0;
 
-  int _timerminuts = 0;
-  int _timerseconds = 0;
+  int _TimerMinutescounter = 0;
+  int _TimerSecondscounter = 0;
+
+  Timer _Testtimer = Timer.periodic(Duration(seconds: 1), (timer) {});
+
+  int repeticiones = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +40,8 @@ class _ToolBarState extends State<ToolBar> {
     final objective = Provider.of<ObjectiveData>(context);
     final appColor = Provider.of<AppColors>(context);
     final testData = Provider.of<TestData>(context);
+    final notify = Provider.of<Avisos>(context);
+
     minutes = testData.get_minutes;
     seconds = testData.get_seconds;
     void optcolorPressed() {
@@ -182,7 +191,7 @@ class _ToolBarState extends State<ToolBar> {
 
     void masTiempo() {
       setState(() {
-        seconds += 30;
+        seconds += 1; // AUMENTO
         if (seconds >= 60) {
           minutes++;
           seconds = 0;
@@ -246,7 +255,7 @@ class _ToolBarState extends State<ToolBar> {
               ? Container(
                   width: 80,
                   child: Text(
-                    (seconds == 0 ? '$minutes:0$seconds' : '$minutes:$seconds'),
+                    (seconds < 10 ? '$minutes:0$seconds' : '$minutes:$seconds'),
                     style: TextStyle(
                       color: appColor.getLetterColor,
                     ),
@@ -269,6 +278,7 @@ class _ToolBarState extends State<ToolBar> {
         ],
       ),
     );
+
     Column opcionBackGround = Column(children: <Widget>[
       FloatingActionButton(
         heroTag: 'Btn3',
@@ -289,7 +299,74 @@ class _ToolBarState extends State<ToolBar> {
         style: TextStyle(color: appColor.getLetterColor),
       )
     ]);
-    void startPressed() {}
+
+    void TestTimer() {
+      _TimerMinutescounter = minutes;
+      _TimerSecondscounter = seconds;
+      _Testtimer = Timer.periodic(Duration(seconds: 1), (timer) {
+        setState(() {
+          _TimerSecondscounter--;
+          if (_TimerSecondscounter < 0) {
+            if (_TimerMinutescounter != 0) {
+              _TimerSecondscounter = 59;
+            } else {
+              _TimerSecondscounter = 0;
+            }
+            _TimerMinutescounter--;
+          }
+          if (_TimerMinutescounter < 0) {
+            _Testtimer.cancel();
+            testData.startCronometer = false;
+            _TimerMinutescounter = 0;
+            if (testData.get_repeticion == repeticiones) {
+              notify.set_Aviso = 'TEST FINALIZADO';
+              notify.set_Image = 'warning.png';
+              testData.set_Notification = true;
+              testData.testfinished();
+            }
+          }
+          testData.set_Cronometertiempo = [
+            _TimerMinutescounter,
+            _TimerSecondscounter
+          ];
+        });
+      });
+    }
+
+    void startPressed() {
+      setState(() {
+        colorWidth = minWidth;
+        tiempoWidth = minWidth;
+        optColorChange = false;
+        optTiempoChange = false;
+        if (!(minutes == 0 && seconds == 0)) {
+          testData.aumentarRepeticion();
+          if (testData.get_repeticion <= repeticiones) {
+            if (testData.get_repeticion % 2 == 1) {
+              notify.set_Aviso = 'OJO DERECHO';
+              notify.set_Image = 'derecho.png';
+              testData.set_Notification = true;
+            } else {
+              notify.set_Aviso = 'OJO IZQUIERDO';
+              notify.set_Image = 'izquierdo.png';
+              testData.set_Notification = true;
+            }
+            Future.delayed(Duration(seconds: 3), () {
+              testData.set_Notification = false;
+              if (!testData.isactiveCronometer) {
+                TestTimer();
+                chips.shuffle();
+              }
+              testData.startCronometer = true;
+            });
+          }
+        } else {
+          notify.set_Aviso = 'No hay tiempo';
+          notify.set_Image = 'warning.png';
+          testData.set_Notification = true;
+        }
+      });
+    }
 
     Container start = Container(
       child: FloatingActionButton(

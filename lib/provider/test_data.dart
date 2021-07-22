@@ -1,45 +1,102 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class TestData with ChangeNotifier {
-  List data = []; // data = [chip_ids];
-  List tiempo = []; // tiempo = [min,sec];
-  bool start = false;
+  bool _finished = false;
+  bool _notification = false;
+  int _repeticion = 0;
+  List _data = []; // data = [chip_ids];
+  List _tiempo = []; // tiempo = [min,sec];
+  bool _start = false;
+  int _cronometerSeconds = 0;
+  int _cronometerMinutes = 0;
+  Timer _cronometer = Timer(Duration(seconds: 0), () {});
   void initState(int _numChips) {
-    data.clear();
+    _data.clear();
     for (int i = 0; i < _numChips; i++) {
-      this.data.add(null);
+      this._data.add(null);
     }
   }
 
   set modifyData(List ids) {
     // List ids = [objetivo_id, chip_id];
-    this.data[ids[0]] = ids[1];
+    this._data[ids[0]] = ids[1];
     notifyListeners();
   }
 
   get consult {
-    return data;
+    return _data;
   }
 
   set set_tiempo(List n_tiempo) {
-    this.tiempo = n_tiempo;
+    this._tiempo = n_tiempo;
+    if (!_start) {
+      _cronometerMinutes = _tiempo[0];
+      _cronometerSeconds = _tiempo[1];
+    }
     notifyListeners();
   }
 
   get get_minutes {
-    return tiempo[0];
+    return _tiempo[0];
   }
 
   get get_seconds {
-    return tiempo[1];
+    return _tiempo[1];
   }
 
-  set startCronometer(bool _start) {
-    this.start = _start;
+  get get_Cronometerminutes {
+    return _cronometerMinutes;
+  }
+
+  get get_Cronomterseconds {
+    return _cronometerSeconds;
+  }
+
+  set set_Cronometertiempo(List n_Cronometertime) {
+    this._cronometerMinutes = n_Cronometertime[0];
+    this._cronometerSeconds = n_Cronometertime[1];
+    notifyListeners();
+  }
+
+  set startCronometer(bool n_start) {
+    this._start = n_start;
+    if (!_start) {
+      _cronometerMinutes = _tiempo[0];
+      _cronometerSeconds = _tiempo[1];
+    }
     notifyListeners();
   }
 
   get isactiveCronometer {
-    return this.start;
+    return this._start;
+  }
+
+  set set_Notification(bool n_notification) {
+    this._notification = n_notification;
+    notifyListeners();
+  }
+
+  get get_Notification {
+    return _notification;
+  }
+
+  void aumentarRepeticion() {
+    this._repeticion++;
+    notifyListeners();
+  }
+
+  get get_repeticion {
+    return _repeticion;
+  }
+
+  void testfinished() {
+    _finished = true;
+    notifyListeners();
+  }
+
+  get get_testfinished {
+    return _finished;
   }
 }

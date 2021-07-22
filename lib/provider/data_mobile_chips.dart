@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class ChipsData with ChangeNotifier {
@@ -152,5 +154,38 @@ class ChipsData with ChangeNotifier {
 
   get get_positions {
     return _positions[_id];
+  }
+
+  void shuffle() {
+    if (_numChips < 25) {
+      var random = Random();
+      for (int i = _initPositions.length - 2; i > 0; i--) {
+        var n = random.nextInt(i + 1);
+        if (n == 0) {
+          n = i;
+        }
+        var temp = _initPositions[i];
+
+        _initPositions[i] = _initPositions[n];
+        _initPositions[n] = temp;
+      }
+    } else {
+      var random = Random();
+      for (int j = 0; j < 4; j++) {
+        for (int i = (_initPositions.length / 4).round() - 2; i > 0; i--) {
+          var n = random.nextInt(i + 1);
+
+          if (n == 0) {
+            n = i;
+          }
+          var temp = _initPositions[(j * 25) + i];
+          _initPositions[(j * 25) + i] = _initPositions[(j * 25) + n];
+          _initPositions[(j * 25) + n] = temp;
+        }
+      }
+    }
+    _positions.clear();
+    _positions = List.from(_initPositions);
+    notifyListeners();
   }
 }

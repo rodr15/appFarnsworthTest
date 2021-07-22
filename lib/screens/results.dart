@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Results extends StatefulWidget {
-  List objectiveData = [];
-  Results(this.objectiveData);
-
   @override
   _ResultsState createState() => _ResultsState();
 }
@@ -11,8 +8,9 @@ class Results extends StatefulWidget {
 class _ResultsState extends State<Results> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[],
-    );
+    return Container(
+        child: Center(
+      child: Text('RESULTADOS'),
+    ));
   }
 }

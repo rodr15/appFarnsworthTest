@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:anthony/provider/aplication_colors.dart';
 import 'package:anthony/provider/data_mobile_chips.dart';
@@ -17,26 +18,35 @@ class Cronometer extends StatefulWidget {
 class _CronometerState extends State<Cronometer> {
   int seconds = 0;
   int minutes = 0;
-  Timer _cronometer = Timer(Duration(seconds: 0), () {});
   @override
   Widget build(BuildContext context) {
     final chips = Provider.of<ChipsData>(context);
     final objective = Provider.of<ObjectiveData>(context);
     final appColor = Provider.of<AppColors>(context);
     final testData = Provider.of<TestData>(context);
-    seconds = testData.get_seconds;
-    minutes = testData.get_minutes;
-    Timer.periodic(Duration(seconds: 1), (_cronometer) {});
+
+    seconds = testData.get_Cronomterseconds;
+    minutes = testData.get_Cronometerminutes;
+
     return Positioned(
         right: 0,
         top: 0,
         child: Container(
           height: MediaQuery.of(context).size.height / 10,
           width: MediaQuery.of(context).size.width / 10,
-          color: appColor.getBorderColor,
-          child: Text((seconds == 0
-              ? '${minutes}:0${seconds}'
-              : '${minutes}:${seconds}')),
+          color: appColor.getBackgroundColor,
+          child: Center(
+            child: Text(
+              (seconds < 10
+                  ? '${minutes}:0${seconds}'
+                  : '${minutes}:${seconds}'),
+              style: TextStyle(
+                backgroundColor: Colors.transparent,
+                color: appColor.getLetterColor,
+                fontSize: MediaQuery.of(context).size.width / 30,
+              ),
+            ),
+          ),
         ));
   }
 }
