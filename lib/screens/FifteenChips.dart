@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:anthony/widgets/objective_chips.dart';
-import 'package:anthony/widgets/moble_chips.dart';
-import 'package:anthony/widgets/tool_bar.dart';
+import 'package:farnsworth/widgets/objective_chips.dart';
+import 'package:farnsworth/widgets/moble_chips.dart';
+import 'package:farnsworth/widgets/tool_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

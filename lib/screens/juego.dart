@@ -1,8 +1,8 @@
-import 'package:anthony/provider/aplication_colors.dart';
-import 'package:anthony/provider/data_mobile_chips.dart';
-import 'package:anthony/provider/data_objective_chips.dart';
-import 'package:anthony/widgets/objective_chips.dart';
-import 'package:anthony/widgets/moble_chips.dart';
+import 'package:farnsworth/provider/aplication_colors.dart';
+import 'package:farnsworth/provider/data_mobile_chips.dart';
+import 'package:farnsworth/provider/data_objective_chips.dart';
+import 'package:farnsworth/widgets/objective_chips.dart';
+import 'package:farnsworth/widgets/moble_chips.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,6 +1,6 @@
-import 'package:anthony/provider/aplication_colors.dart';
-import 'package:anthony/provider/notify_avisos.dart';
-import 'package:anthony/provider/test_data.dart';
+import 'package:farnsworth/provider/aplication_colors.dart';
+import 'package:farnsworth/provider/notify_avisos.dart';
+import 'package:farnsworth/provider/test_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

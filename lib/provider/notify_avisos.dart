@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Avisos with ChangeNotifier {
   String _Aviso = 'OJO DERECHO';
-  String _Image = 'warning.png';
+  String _Image = 'lib/assets/warning.png';
 
   set set_Image(String n_Image) {
     this._Image = n_Image;

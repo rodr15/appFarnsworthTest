@@ -1,13 +1,13 @@
-import 'package:anthony/provider/aplication_colors.dart';
-import 'package:anthony/provider/data_mobile_chips.dart';
-import 'package:anthony/provider/data_objective_chips.dart';
-import 'package:anthony/provider/notify_avisos.dart';
-import 'package:anthony/provider/test_data.dart';
-import 'package:anthony/screens/juego.dart';
-import 'package:anthony/screens/results.dart';
-import 'package:anthony/widgets/cronometer.dart';
-import 'package:anthony/widgets/tool_bar.dart';
-import 'package:anthony/widgets/warning.dart';
+import 'package:farnsworth/provider/aplication_colors.dart';
+import 'package:farnsworth/provider/data_mobile_chips.dart';
+import 'package:farnsworth/provider/data_objective_chips.dart';
+import 'package:farnsworth/provider/notify_avisos.dart';
+import 'package:farnsworth/provider/test_data.dart';
+import 'package:farnsworth/screens/juego.dart';
+import 'package:farnsworth/screens/results.dart';
+import 'package:farnsworth/widgets/cronometer.dart';
+import 'package:farnsworth/widgets/tool_bar.dart';
+import 'package:farnsworth/widgets/warning.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -38,6 +38,7 @@ class _FarnsworthTestState extends State<FarnsworthTest> {
       setState(() {
         _pulsaciones++;
         if (_pulsaciones == 2) {
+          print(event.physicalKey.debugName);
           switch (event.physicalKey.debugName) {
             case 'Enter':
               if (testData.get_testfinished) {
@@ -47,6 +48,7 @@ class _FarnsworthTestState extends State<FarnsworthTest> {
                 );
               }
           }
+          _pulsaciones = 0;
         }
       });
     }

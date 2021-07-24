@@ -1,7 +1,7 @@
-import 'package:anthony/provider/aplication_colors.dart';
-import 'package:anthony/provider/data_mobile_chips.dart';
-import 'package:anthony/provider/data_objective_chips.dart';
-import 'package:anthony/provider/test_data.dart';
+import 'package:farnsworth/provider/aplication_colors.dart';
+import 'package:farnsworth/provider/data_mobile_chips.dart';
+import 'package:farnsworth/provider/data_objective_chips.dart';
+import 'package:farnsworth/provider/test_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

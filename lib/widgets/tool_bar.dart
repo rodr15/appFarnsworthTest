@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:anthony/provider/aplication_colors.dart';
-import 'package:anthony/provider/data_mobile_chips.dart';
-import 'package:anthony/provider/data_objective_chips.dart';
-import 'package:anthony/provider/notify_avisos.dart';
-import 'package:anthony/provider/test_data.dart';
-import 'package:anthony/widgets/moble_chips.dart';
+import 'package:farnsworth/provider/aplication_colors.dart';
+import 'package:farnsworth/provider/data_mobile_chips.dart';
+import 'package:farnsworth/provider/data_objective_chips.dart';
+import 'package:farnsworth/provider/notify_avisos.dart';
+import 'package:farnsworth/provider/test_data.dart';
+import 'package:farnsworth/widgets/moble_chips.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -320,7 +320,7 @@ class _ToolBarState extends State<ToolBar> {
             _TimerMinutescounter = 0;
             if (testData.get_repeticion == repeticiones) {
               notify.set_Aviso = 'TEST FINALIZADO';
-              notify.set_Image = 'warning.png';
+              notify.set_Image = 'lib/assets/warning.png';
               testData.set_Notification = true;
               testData.testfinished();
             }
@@ -344,11 +344,11 @@ class _ToolBarState extends State<ToolBar> {
           if (testData.get_repeticion <= repeticiones) {
             if (testData.get_repeticion % 2 == 1) {
               notify.set_Aviso = 'OJO DERECHO';
-              notify.set_Image = 'derecho.png';
+              notify.set_Image = 'lib/assets/derecho.png';
               testData.set_Notification = true;
             } else {
               notify.set_Aviso = 'OJO IZQUIERDO';
-              notify.set_Image = 'izquierdo.png';
+              notify.set_Image = 'lib/assets/izquierdo.png';
               testData.set_Notification = true;
             }
             Future.delayed(Duration(seconds: 3), () {
@@ -362,7 +362,7 @@ class _ToolBarState extends State<ToolBar> {
           }
         } else {
           notify.set_Aviso = 'No hay tiempo';
-          notify.set_Image = 'warning.png';
+          notify.set_Image = 'lib/assets/warning.png';
           testData.set_Notification = true;
         }
       });
