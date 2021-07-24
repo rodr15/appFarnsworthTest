@@ -1,4 +1,4 @@
-name: anthony
+name: farnsworth
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -23,11 +23,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  provider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -46,8 +45,12 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/
-  #   - images/a_dot_ham.jpeg
+    - lib/assets/
+    - lib/assets/derecho.png
+    - lib/assets/izquierdo.png
+    - lib/assets/SmartVisionPortada.jpeg
+    - lib/assets/warning.png
+    # - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

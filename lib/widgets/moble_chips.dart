@@ -1,15 +1,13 @@
+import 'package:farnsworth/provider/aplication_colors.dart';
+import 'package:farnsworth/provider/data_mobile_chips.dart';
+import 'package:farnsworth/provider/data_objective_chips.dart';
+import 'package:farnsworth/provider/test_data.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MobileChips extends StatefulWidget {
   final int id;
-  final double len;
-  final List chipsData;
-  final List objectiveData;
-  final List acceptedColors;
-  final List noMove;
-
-  MobileChips(this.id,this.len,this.chipsData,this.objectiveData,this.acceptedColors,this.noMove);
-
+  MobileChips(this.id);
   @override
   _MobileChipsState createState() => _MobileChipsState();
 }
@@ -17,27 +15,33 @@ class MobileChips extends StatefulWidget {
 class _MobileChipsState extends State<MobileChips> {
   int id = 0;
   double len = 50;
-  Offset initialPosition = Offset(0.0,0.0);
-  Offset position = Offset(0.0,0.0);
+  Offset initialPosition = Offset(0.0, 0.0);
+  Offset position = Offset(0.0, 0.0);
   Color color = Colors.red;
   List acceptedColors = [];
-  List noMove =[];
+  List noMove = [];
+  List data = [];
   //List noMove = [Color(0xffcb4154) , Color(0xff104f06),Color(0xff005000) , Color(0xff56b8ab),Color(0xff5dc1b9) , Color(0xff4d3486),Color(0xff4c2882) , Color(0xffc13f58)];
   @override
   void initState() {
     super.initState();
     id = widget.id;
-    len = widget.len;
-    initialPosition = widget.chipsData[1][id];
-    position = initialPosition;
-    acceptedColors = widget.acceptedColors;
-    color = widget.chipsData[0][id];
-    noMove = widget.noMove;
-
   }
 
   @override
   Widget build(BuildContext context) {
+    final chips = Provider.of<ChipsData>(context);
+    final objective = Provider.of<ObjectiveData>(context);
+    final appColor = Provider.of<AppColors>(context);
+    final testData = Provider.of<TestData>(context);
+
+    id = widget.id;
+    chips.set_id = id;
+    len = chips.get_len;
+    position = chips.get_positions;
+    color = chips.get_colores;
+    initialPosition = chips.get_initalPositions;
+
     final chip = Container(
       height: len,
       width: len,
@@ -48,42 +52,31 @@ class _MobileChipsState extends State<MobileChips> {
       ),*/
     );
 
-    final chipDragging = Container(
-        height: len,
-        width: len,
-        color: Colors.transparent
-    );
-
+    final chipDragging =
+        Container(height: len, width: len, color: Colors.transparent);
 
     return Positioned(
-      top:position.dx,
+      top: position.dx,
       left: position.dy,
       child: Draggable(
-        data: color,
+        data: id,
         child: chip,
         feedback: chip,
         childWhenDragging: chipDragging,
         onDragCompleted: () {
-          if (!(noMove.contains(color))) {
-            setState(() {
-              if (acceptedColors.contains(color)) {
-                if (widget.objectiveData[1].contains(color)) {
-                  position =
-                  widget.objectiveData[2][widget.objectiveData[1].indexOf(
-                      color)];
-                }
-              }
-            });
-          }
-
-        },
-        onDraggableCanceled: (velocity,Offset){
+          data = testData.consult;
           setState(() {
-            position = initialPosition;
-            if(widget.objectiveData[1].contains(color)){
-              widget.objectiveData[0][widget.objectiveData[1].indexOf(color)] = true;
-              widget.objectiveData[1][widget.objectiveData[1].indexOf(color)] = Colors.black;
+            chips.set_id = id;
+            if (data.contains(id)) {
+              objective.set_id = data.indexOf(id);
+              chips.set_position = objective.get_positions;
             }
+          });
+        },
+        onDraggableCanceled: (velocity, Offset) {
+          setState(() {
+            chips.set_id = id;
+            chips.set_position = chips.get_initalPositions;
           });
         },
       ),
