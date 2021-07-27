@@ -23,7 +23,7 @@ class _ToolBarState extends State<ToolBar> {
   double tiempoWidth = 61.0;
   bool optTiempoChange = false;
   bool backgroundChange = false;
-
+  bool optStart = false;
   int minutes = 0;
   int seconds = 0;
 
@@ -32,7 +32,7 @@ class _ToolBarState extends State<ToolBar> {
 
   Timer _Testtimer = Timer.periodic(Duration(seconds: 1), (timer) {});
 
-  int repeticiones = 2;
+  int repeticiones = 4;
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +191,7 @@ class _ToolBarState extends State<ToolBar> {
 
     void masTiempo() {
       setState(() {
-        seconds += 1; // AUMENTO
+        seconds += 2; // AUMENTO
         if (seconds >= 60) {
           minutes++;
           seconds = 0;
@@ -317,8 +317,9 @@ class _ToolBarState extends State<ToolBar> {
           if (_TimerMinutescounter < 0) {
             _Testtimer.cancel();
             testData.startCronometer = false;
+            optStart = false;
             _TimerMinutescounter = 0;
-            if (testData.get_repeticion == repeticiones) {
+            if (testData.get_repeticion == 0) {
               notify.set_Aviso = 'TEST FINALIZADO';
               notify.set_Image = 'lib/assets/warning.png';
               testData.set_Notification = true;
@@ -339,31 +340,36 @@ class _ToolBarState extends State<ToolBar> {
         tiempoWidth = minWidth;
         optColorChange = false;
         optTiempoChange = false;
-        if (!(minutes == 0 && seconds == 0)) {
-          testData.aumentarRepeticion();
-          if (testData.get_repeticion <= repeticiones) {
-            if (testData.get_repeticion % 2 == 1) {
-              notify.set_Aviso = 'OJO DERECHO';
-              notify.set_Image = 'lib/assets/derecho.png';
-              testData.set_Notification = true;
-            } else {
-              notify.set_Aviso = 'OJO IZQUIERDO';
-              notify.set_Image = 'lib/assets/izquierdo.png';
-              testData.set_Notification = true;
-            }
-            Future.delayed(Duration(seconds: 3), () {
-              testData.set_Notification = false;
-              if (!testData.isactiveCronometer) {
-                TestTimer();
-                chips.shuffle();
+        if (!testData.get_testfinished) {
+          if (minutes == 0 && seconds == 0) {
+            notify.set_Aviso = 'No hay tiempo';
+            notify.set_Image = 'lib/assets/warning.png';
+            testData.set_Notification = true;
+          } else {
+            if (!optStart) {
+              optStart = true;
+              testData.disminuirRepeticion();
+              if (testData.get_repeticion <= repeticiones) {
+                if (testData.get_repeticion > 1) {
+                  notify.set_Aviso = 'OJO DERECHO';
+                  notify.set_Image = 'lib/assets/derecho.png';
+                  testData.set_Notification = true;
+                } else {
+                  notify.set_Aviso = 'OJO IZQUIERDO';
+                  notify.set_Image = 'lib/assets/izquierdo.png';
+                  testData.set_Notification = true;
+                }
+                Future.delayed(Duration(seconds: 3), () {
+                  if (!testData.isactiveCronometer) {
+                    TestTimer();
+                    chips.shuffle();
+                  }
+                  testData.set_Notification = false;
+                  testData.startCronometer = true;
+                });
               }
-              testData.startCronometer = true;
-            });
+            }
           }
-        } else {
-          notify.set_Aviso = 'No hay tiempo';
-          notify.set_Image = 'lib/assets/warning.png';
-          testData.set_Notification = true;
         }
       });
     }

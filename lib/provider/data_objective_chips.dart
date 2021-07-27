@@ -78,7 +78,8 @@ class ObjectiveData with ChangeNotifier {
     return _len;
   }
 
-  get get_positions {
+  void init_positions() {
+    get_len;
     _positions.clear();
     if (_numChips < 24) {
       for (int i = 0; i <= _numChips; i++) {
@@ -94,7 +95,10 @@ class ObjectiveData with ChangeNotifier {
         }
       }
     }
+    notifyListeners();
+  }
 
+  get get_positions {
     return _positions[_id];
   }
 }

@@ -22,10 +22,6 @@ class Option extends StatelessWidget {
       onTap: () {
         switch (name) {
           case '15 Fichas':
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => FarnsworthTest()),
-            );
             testData.set_tiempo = [0, 0];
             chips.clearall();
             objective.clearall();
@@ -37,13 +33,14 @@ class Option extends StatelessWidget {
             objective.set_screenWidth = MediaQuery.of(context).size.width;
             testData.initState(chips.get_numChips);
             chips.init_positions();
-
-            break;
-          case '100 Fichas':
+            objective.init_positions();
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => FarnsworthTest()),
             );
+
+            break;
+          case '100 Fichas':
             testData.set_tiempo = [0, 0];
             chips.clearall();
             objective.clearall();
@@ -55,6 +52,11 @@ class Option extends StatelessWidget {
             objective.set_screenWidth = MediaQuery.of(context).size.width;
             testData.initState(chips.get_numChips);
             chips.init_positions();
+            objective.init_positions();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FarnsworthTest()),
+            );
 
             break;
         }

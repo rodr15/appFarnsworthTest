@@ -3,10 +3,7 @@ import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/notify_avisos.dart';
 import 'package:farnsworth/provider/test_data.dart';
-import 'package:farnsworth/screens/FifteenChips.dart';
 import 'package:farnsworth/screens/farsworthTest.dart';
-import 'package:farnsworth/screens/hundred_chips.dart';
-import 'package:farnsworth/widgets/warning.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +41,6 @@ class _MenuPrincipal extends State<MenuPrincipal> {
 
     void _handleKeyEvent(RawKeyEvent event) {
       setState(() {
-        print(event.physicalKey.toStringShort());
         _pulsaciones++;
         if (_pulsaciones == 2) {
           teclado = event.physicalKey.debugName.toString();
@@ -53,28 +49,24 @@ class _MenuPrincipal extends State<MenuPrincipal> {
               opciones[i][2] = false;
             }
           }
-          switch (event.physicalKey.debugName) {
-            case 'Arrow Left':
+          switch (event.physicalKey.usbHidUsage) {
+            case 458832: // Izquierda
               _controller.animateTo(
                   _controller.offset + MediaQuery.of(context).size.width / 2,
                   curve: Curves.linear,
                   duration: Duration(milliseconds: 500));
               _contador++;
               break;
-            case 'Arrow Right':
+            case 458831: // Derecha
               _controller.animateTo(
                   _controller.offset - MediaQuery.of(context).size.width / 2,
                   curve: Curves.linear,
                   duration: Duration(milliseconds: 500));
               _contador--;
               break;
-            case 'Enter':
+            case 458792: //Enter
               switch (_contador) {
                 case 0:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => FarnsworthTest()),
-                  );
                   testData.set_tiempo = [0, 0];
                   chips.clearall();
                   objective.clearall();
@@ -87,13 +79,13 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   objective.set_screenWidth = MediaQuery.of(context).size.width;
                   testData.initState(chips.get_numChips);
                   chips.init_positions();
-
-                  break;
-                case 1:
+                  objective.init_positions();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => FarnsworthTest()),
                   );
+                  break;
+                case 1:
                   testData.set_tiempo = [0, 0];
                   chips.clearall();
                   objective.clearall();
@@ -106,7 +98,11 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   objective.set_screenWidth = MediaQuery.of(context).size.width;
                   testData.initState(chips.get_numChips);
                   chips.init_positions();
-
+                  objective.init_positions();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FarnsworthTest()),
+                  );
                   break;
               }
               break;
@@ -134,7 +130,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
     return Scaffold(
         body: Stack(
       children: <Widget>[
-        Container(
+        /*Container(
             child: Positioned(
           top: 0,
           left: 0,
@@ -142,13 +138,13 @@ class _MenuPrincipal extends State<MenuPrincipal> {
             teclado,
             style: TextStyle(color: Colors.black, fontSize: 30),
           ),
-        )),
-        /*Image.asset(
+        )),*/
+        Image.asset(
           "lib/assets/SmartVisionPortada.jpeg",
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.fill,
-        ),*/
+        ),
         RawKeyboardListener(
             autofocus: true,
             focusNode: _focusNode,

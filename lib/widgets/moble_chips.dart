@@ -20,7 +20,8 @@ class _MobileChipsState extends State<MobileChips> {
   Color color = Colors.red;
   List acceptedColors = [];
   List noMove = [];
-  List data = [];
+  List data = [[], [], []];
+  int repeticion = 0;
   //List noMove = [Color(0xffcb4154) , Color(0xff104f06),Color(0xff005000) , Color(0xff56b8ab),Color(0xff5dc1b9) , Color(0xff4d3486),Color(0xff4c2882) , Color(0xffc13f58)];
   @override
   void initState() {
@@ -65,10 +66,11 @@ class _MobileChipsState extends State<MobileChips> {
         childWhenDragging: chipDragging,
         onDragCompleted: () {
           data = testData.consult;
+          repeticion = testData.get_repeticion;
           setState(() {
             chips.set_id = id;
-            if (data.contains(id)) {
-              objective.set_id = data.indexOf(id);
+            if (data[repeticion].contains(id)) {
+              objective.set_id = data[repeticion].indexOf(id);
               chips.set_position = objective.get_positions;
             }
           });

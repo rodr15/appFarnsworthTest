@@ -38,10 +38,16 @@ class _FarnsworthTestState extends State<FarnsworthTest> {
       setState(() {
         _pulsaciones++;
         if (_pulsaciones == 2) {
-          print(event.physicalKey.debugName);
-          switch (event.physicalKey.debugName) {
-            case 'Enter':
+          switch (event.physicalKey.usbHidUsage) {
+            case 458792:
               if (testData.get_testfinished) {
+                testData.set_parameters_results = [
+                  chips.get_numChips,
+                  chips.get_len,
+                  MediaQuery.of(context).size.height,
+                  MediaQuery.of(context).size.width,
+                ];
+                testData.results_positions();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Results()),

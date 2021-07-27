@@ -14,11 +14,12 @@ class ObjectiveChips extends StatefulWidget {
 
 class _ObjectiveChipsState extends State<ObjectiveChips> {
   int id = 0;
+  int repeticion = 0;
   double len = 50;
   Offset position = Offset(0.0, 0.0);
   List accepted = [];
   List noMove = [];
-  List data = [];
+  List data = [[], [], []];
   //List noMove = [Color(0xffcb4154) , Color(0xff104f06),Color(0xff005000) , Color(0xff56b8ab),Color(0xff5dc1b9) , Color(0xff4d3486),Color(0xff4c2882) , Color(0xffc13f58)];
   @override
   void initState() {
@@ -44,9 +45,10 @@ class _ObjectiveChipsState extends State<ObjectiveChips> {
         onAccept: (int c_id) {
           setState(() {
             data = testData.consult;
+            repeticion = testData.get_repeticion;
             if (accepted.contains(c_id)) {
-              if (data.contains(c_id)) {
-                testData.modifyData = [data.indexOf(c_id), null];
+              if (data[repeticion].contains(c_id)) {
+                testData.modifyData = [data[repeticion].indexOf(c_id), null];
               }
               testData.modifyData = [id, c_id];
             }
@@ -57,7 +59,7 @@ class _ObjectiveChipsState extends State<ObjectiveChips> {
             height: len,
             width: len,
             child: Text(
-              id.toString(),
+              '', //id.toString(),
               textScaleFactor: 1,
               style: TextStyle(color: appColor.getLetterColor),
             ),
