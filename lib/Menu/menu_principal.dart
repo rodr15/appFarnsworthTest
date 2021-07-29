@@ -6,6 +6,7 @@ import 'package:farnsworth/provider/test_data.dart';
 import 'package:farnsworth/screens/farsworthTest.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'menu_15_fichas.dart';
@@ -21,8 +22,10 @@ class _MenuPrincipal extends State<MenuPrincipal> {
   int _pulsaciones = 0;
   int _contador = 0;
   List opciones = [
-    ['hola', '15 Fichas', true],
+    ['hola', 'Tradicional', true],
+    ['hola', '15 Fichas', false],
     ['hola', '100 Fichas', false],
+    ['hola', 'Salir', false],
   ];
   String teclado = '';
   final FocusNode _focusNode = FocusNode();
@@ -50,14 +53,14 @@ class _MenuPrincipal extends State<MenuPrincipal> {
             }
           }
           switch (event.physicalKey.usbHidUsage) {
-            case 458832: // Izquierda
+            case 458831: // Derecha
               _controller.animateTo(
                   _controller.offset + MediaQuery.of(context).size.width / 2,
                   curve: Curves.linear,
                   duration: Duration(milliseconds: 500));
               _contador++;
               break;
-            case 458831: // Derecha
+            case 458832: // Izquierda
               _controller.animateTo(
                   _controller.offset - MediaQuery.of(context).size.width / 2,
                   curve: Curves.linear,
@@ -66,12 +69,13 @@ class _MenuPrincipal extends State<MenuPrincipal> {
               break;
             case 458792: //Enter
               switch (_contador) {
-                case 0:
+                case 0: // Tradicional
+                  chips.setTradicional = true;
                   testData.set_tiempo = [0, 0];
                   chips.clearall();
                   objective.clearall();
-                  chips.set_numChips = 15;
-                  objective.set_numChips = 15;
+                  chips.set_numChips = 16;
+                  objective.set_numChips = 16;
                   chips.set_screenHeigth = MediaQuery.of(context).size.height;
                   chips.set_screenWidth = MediaQuery.of(context).size.width;
                   objective.set_screenHeigth =
@@ -86,6 +90,27 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   );
                   break;
                 case 1:
+                  chips.setTradicional = false;
+                  testData.set_tiempo = [0, 0];
+                  chips.clearall();
+                  objective.clearall();
+                  chips.set_numChips = 16;
+                  objective.set_numChips = 16;
+                  chips.set_screenHeigth = MediaQuery.of(context).size.height;
+                  chips.set_screenWidth = MediaQuery.of(context).size.width;
+                  objective.set_screenHeigth =
+                      MediaQuery.of(context).size.height;
+                  objective.set_screenWidth = MediaQuery.of(context).size.width;
+                  testData.initState(chips.get_numChips);
+                  chips.init_positions();
+                  objective.init_positions();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FarnsworthTest()),
+                  );
+                  break;
+                case 2:
+                  chips.setTradicional = false;
                   testData.set_tiempo = [0, 0];
                   chips.clearall();
                   objective.clearall();

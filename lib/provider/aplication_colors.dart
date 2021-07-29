@@ -7,12 +7,12 @@ class AppColors with ChangeNotifier {
 
   set setAppColor(bool tema) {
     if (tema) {
-      this._backGroundColors = Colors.black;
-      this._letterColors = Colors.white;
-      this._borderColors = Colors.amber;
-    } else {
       this._backGroundColors = Colors.white;
       this._letterColors = Colors.black;
+      this._borderColors = Colors.amber;
+    } else {
+      this._backGroundColors = Colors.black;
+      this._letterColors = Colors.white;
       this._borderColors = Colors.amber;
     }
     notifyListeners();

@@ -4,6 +4,7 @@ import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/test_data.dart';
 import 'package:farnsworth/screens/farsworthTest.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class Option extends StatelessWidget {
@@ -21,7 +22,27 @@ class Option extends StatelessWidget {
     final opcion = InkWell(
       onTap: () {
         switch (name) {
+          case 'Tradicional':
+            chips.setTradicional = true;
+            testData.set_tiempo = [0, 0];
+            chips.clearall();
+            objective.clearall();
+            chips.set_numChips = 16;
+            objective.set_numChips = 16;
+            chips.set_screenHeigth = MediaQuery.of(context).size.height;
+            chips.set_screenWidth = MediaQuery.of(context).size.width;
+            objective.set_screenHeigth = MediaQuery.of(context).size.height;
+            objective.set_screenWidth = MediaQuery.of(context).size.width;
+            testData.initState(chips.get_numChips);
+            chips.init_positions();
+            objective.init_positions();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FarnsworthTest()),
+            );
+            break;
           case '15 Fichas':
+            chips.setTradicional = false;
             testData.set_tiempo = [0, 0];
             chips.clearall();
             objective.clearall();
@@ -41,6 +62,7 @@ class Option extends StatelessWidget {
 
             break;
           case '100 Fichas':
+            chips.setTradicional = false;
             testData.set_tiempo = [0, 0];
             chips.clearall();
             objective.clearall();
@@ -59,11 +81,14 @@ class Option extends StatelessWidget {
             );
 
             break;
+          case 'Salir':
+            SystemNavigator.pop();
+            break;
         }
       },
       child: Container(
-        height: MediaQuery.of(context).size.height / 3,
-        width: MediaQuery.of(context).size.width / 3,
+        height: MediaQuery.of(context).size.height / 4,
+        width: MediaQuery.of(context).size.width / 4,
         decoration: BoxDecoration(
             color: Colors.blue,
             /*image: DecorationImage(
@@ -80,7 +105,7 @@ class Option extends StatelessWidget {
             ],
             border: (selection
                 ? Border.all(color: Colors.orange, width: 10)
-                : null)),
+                : Border.all(color: Colors.blueGrey.shade50, width: 10))),
       ),
     );
     final nombre = Container(
@@ -92,13 +117,13 @@ class Option extends StatelessWidget {
         style: TextStyle(
           color: Colors.white,
           backgroundColor: Colors.transparent,
-          fontSize: MediaQuery.of(context).size.height / 10,
+          fontSize: MediaQuery.of(context).size.height * 0.8 / 10,
         ),
       ),
     );
     return Padding(
       padding:
-          EdgeInsets.only(top: MediaQuery.of(context).size.height * 15 / 30),
+          EdgeInsets.only(top: MediaQuery.of(context).size.height * 18 / 30),
       child: Column(
         children: <Widget>[
           opcion,

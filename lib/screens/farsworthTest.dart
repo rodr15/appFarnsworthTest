@@ -18,6 +18,7 @@ class FarnsworthTest extends StatefulWidget {
 
 class _FarnsworthTestState extends State<FarnsworthTest> {
   int _pulsaciones = 0;
+
   final FocusNode _focusNode = FocusNode();
   final ScrollController _controller = ScrollController();
 
@@ -39,7 +40,7 @@ class _FarnsworthTestState extends State<FarnsworthTest> {
         _pulsaciones++;
         if (_pulsaciones == 2) {
           switch (event.physicalKey.usbHidUsage) {
-            case 458792:
+            case 458792: // Enter
               if (testData.get_testfinished) {
                 testData.set_parameters_results = [
                   chips.get_numChips,
@@ -53,6 +54,7 @@ class _FarnsworthTestState extends State<FarnsworthTest> {
                   MaterialPageRoute(builder: (context) => Results()),
                 );
               }
+              break;
           }
           _pulsaciones = 0;
         }
@@ -68,11 +70,6 @@ class _FarnsworthTestState extends State<FarnsworthTest> {
           Juego(),
           Cronometer(),
           (testData.get_Notification ? Warnings() : Container()),
-          RawKeyboardListener(
-              autofocus: true,
-              focusNode: _focusNode,
-              onKey: _handleKeyEvent,
-              child: Container())
         ],
       ),
     );

@@ -6,8 +6,10 @@ import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/notify_avisos.dart';
 import 'package:farnsworth/provider/test_data.dart';
+import 'package:farnsworth/screens/results.dart';
 import 'package:farnsworth/widgets/moble_chips.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class ToolBar extends StatefulWidget {
@@ -16,6 +18,7 @@ class ToolBar extends StatefulWidget {
 }
 
 class _ToolBarState extends State<ToolBar> {
+  final FocusNode _focusNode = FocusNode();
   double minWidth = 61;
   double maxWidth = 270;
   double colorWidth = 61.0;
@@ -33,6 +36,17 @@ class _ToolBarState extends State<ToolBar> {
   Timer _Testtimer = Timer.periodic(Duration(seconds: 1), (timer) {});
 
   int repeticiones = 4;
+  List selected = [true, false, false, false];
+  List subSelected = [true, false, false, false, false];
+  int indexSelected = 0;
+  int indexSubSelected = 0;
+  int _pulsaciones = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //selected = widget.selected;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +58,7 @@ class _ToolBarState extends State<ToolBar> {
 
     minutes = testData.get_minutes;
     seconds = testData.get_seconds;
+
     void optcolorPressed() {
       setState(() {
         optColorChange = !optColorChange;
@@ -68,7 +83,9 @@ class _ToolBarState extends State<ToolBar> {
                   Icons.color_lens,
                   color: appColor.getLetterColor,
                 ),
-                backgroundColor: appColor.getBackgroundColor,
+                backgroundColor: (selected[0]
+                    ? appColor.getBorderColor
+                    : appColor.getBackgroundColor),
               ),
               Text(
                 'COLORES',
@@ -97,7 +114,9 @@ class _ToolBarState extends State<ToolBar> {
                           Color.fromARGB(255, 0, 80, 0)
                         ])),
                   ),
-                  backgroundColor: appColor.getBackgroundColor,
+                  backgroundColor: (subSelected[1]
+                      ? appColor.getBorderColor
+                      : appColor.getBackgroundColor),
                   elevation: 0,
                 )
               : Container()),
@@ -122,7 +141,9 @@ class _ToolBarState extends State<ToolBar> {
                           Color.fromARGB(255, 93, 193, 185)
                         ])),
                   ),
-                  backgroundColor: appColor.getBackgroundColor,
+                  backgroundColor: (subSelected[2]
+                      ? appColor.getBorderColor
+                      : appColor.getBackgroundColor),
                   elevation: 0,
                 )
               : Container()),
@@ -147,7 +168,9 @@ class _ToolBarState extends State<ToolBar> {
                           Color.fromARGB(255, 76, 40, 130)
                         ])),
                   ),
-                  backgroundColor: appColor.getBackgroundColor,
+                  backgroundColor: (subSelected[3]
+                      ? appColor.getBorderColor
+                      : appColor.getBackgroundColor),
                   elevation: 0,
                 )
               : Container()),
@@ -172,7 +195,9 @@ class _ToolBarState extends State<ToolBar> {
                           Color.fromARGB(255, 203, 65, 84)
                         ])),
                   ),
-                  backgroundColor: appColor.getBackgroundColor,
+                  backgroundColor: (subSelected[4]
+                      ? appColor.getBorderColor
+                      : appColor.getBackgroundColor),
                   elevation: 0,
                 )
               : Container()),
@@ -227,10 +252,12 @@ class _ToolBarState extends State<ToolBar> {
                 heroTag: 'Btn2',
                 onPressed: opttiempoPressed,
                 child: Icon(
-                  Icons.lock_clock,
+                  Icons.timer_outlined,
                   color: appColor.getLetterColor,
                 ),
-                backgroundColor: appColor.getBackgroundColor,
+                backgroundColor: (selected[1]
+                    ? appColor.getBorderColor
+                    : appColor.getBackgroundColor),
               ),
               Text(
                 'TIEMPO',
@@ -248,7 +275,9 @@ class _ToolBarState extends State<ToolBar> {
                     Icons.remove,
                     color: appColor.getLetterColor,
                   ),
-                  backgroundColor: appColor.getBackgroundColor,
+                  backgroundColor: (subSelected[1]
+                      ? appColor.getBorderColor
+                      : appColor.getBackgroundColor),
                 )
               : Container()),
           (optTiempoChange
@@ -272,27 +301,32 @@ class _ToolBarState extends State<ToolBar> {
                     Icons.add,
                     color: appColor.getLetterColor,
                   ),
-                  backgroundColor: appColor.getBackgroundColor,
+                  backgroundColor: (subSelected[2]
+                      ? appColor.getBorderColor
+                      : appColor.getBackgroundColor),
                 )
               : Container()),
         ],
       ),
     );
+    void optBackPressed() {
+      setState(() {
+        backgroundChange = !backgroundChange;
+        appColor.setAppColor = backgroundChange;
+      });
+    }
 
     Column opcionBackGround = Column(children: <Widget>[
       FloatingActionButton(
         heroTag: 'Btn3',
-        onPressed: () {
-          setState(() {
-            backgroundChange = !backgroundChange;
-            appColor.setAppColor = backgroundChange;
-          });
-        },
+        onPressed: optBackPressed,
         child: Icon(
           Icons.stop,
           color: appColor.getLetterColor,
         ),
-        backgroundColor: appColor.getBackgroundColor,
+        backgroundColor: (selected[2]
+            ? appColor.getBorderColor
+            : appColor.getBackgroundColor),
       ),
       Text(
         'FONDO',
@@ -336,6 +370,7 @@ class _ToolBarState extends State<ToolBar> {
 
     void startPressed() {
       setState(() {
+        print(selected[0]);
         colorWidth = minWidth;
         tiempoWidth = minWidth;
         optColorChange = false;
@@ -382,17 +417,113 @@ class _ToolBarState extends State<ToolBar> {
           Icons.play_arrow,
           color: appColor.getLetterColor,
         ),
-        backgroundColor: appColor.getBackgroundColor,
+        backgroundColor: (selected[3]
+            ? appColor.getBorderColor
+            : appColor.getBackgroundColor),
       ),
     );
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        opcionColor,
-        opcionTiempo,
-        opcionBackGround,
-        start,
-      ],
-    );
+
+    void _handleKeyEvent(RawKeyEvent event) {
+      setState(() {
+        _pulsaciones++;
+        if (_pulsaciones == 2) {
+          indexSelected = selected.indexOf(true);
+          indexSubSelected = subSelected.indexOf(true);
+          switch (event.physicalKey.usbHidUsage) {
+            case 458834: // Arriba
+              if (indexSelected != 0) {
+                selected[indexSelected - 1] = true;
+                selected[indexSelected] = false;
+              }
+              break;
+            case 458833: // Abajo
+              if (indexSelected != selected.length - 1) {
+                selected[indexSelected + 1] = true;
+                selected[indexSelected] = false;
+              }
+              break;
+            case 458831: // Derecha
+              switch (indexSelected) {
+                case 0: // Colores
+                  if (indexSubSelected != subSelected.length - 1) {
+                    subSelected[indexSubSelected + 1] = true;
+                    subSelected[indexSubSelected] = false;
+                  }
+                  break;
+                case 1:
+                  if (indexSubSelected != 2) {
+                    subSelected[indexSubSelected + 1] = true;
+                    subSelected[indexSubSelected] = false;
+                  }
+                  break;
+              }
+              break;
+            case 458832: // Izquierda
+              if (indexSubSelected != 0) {
+                subSelected[indexSubSelected - 1] = true;
+                subSelected[indexSubSelected] = false;
+              }
+              break;
+            case 458792: // Enter
+              if (testData.get_testfinished) {
+                testData.set_parameters_results = [
+                  chips.get_numChips,
+                  chips.get_len,
+                  MediaQuery.of(context).size.height,
+                  MediaQuery.of(context).size.width,
+                ];
+                testData.results_positions();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Results()),
+                );
+              } else {
+                switch (indexSelected) {
+                  case 0: // Colores
+                    if (subSelected[0]) {
+                      subSelected = [true, false, false, false, false];
+                      optcolorPressed();
+                    } else {
+                      chips.set_opcion = indexSubSelected - 1;
+                    }
+                    break;
+                  case 1:
+                    if (subSelected[0]) {
+                      subSelected = [true, false, false, false, false];
+                      opttiempoPressed();
+                    } else if (subSelected[1]) {
+                      menosTiempo();
+                    } else if (subSelected[2]) {
+                      masTiempo();
+                    }
+                    break;
+                  case 2:
+                    optBackPressed();
+                    break;
+                  case 3:
+                    startPressed();
+                    break;
+                }
+              }
+              break;
+          }
+          _pulsaciones = 0;
+        }
+      });
+    }
+
+    return RawKeyboardListener(
+        autofocus: true,
+        focusNode: _focusNode,
+        onKey: _handleKeyEvent,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            opcionColor,
+            opcionTiempo,
+            opcionBackGround,
+            start,
+          ],
+        ));
   }
 }
