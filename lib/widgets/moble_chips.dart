@@ -38,8 +38,9 @@ class _MobileChipsState extends State<MobileChips> {
 
     id = widget.id;
     chips.set_id = id;
+    objective.set_id = id;
     len = chips.get_len;
-    position = chips.get_positions;
+    position = (id == 0 ? objective.get_positions : chips.get_positions);
     color = chips.get_colores;
     initialPosition = chips.get_initalPositions;
 
@@ -79,6 +80,9 @@ class _MobileChipsState extends State<MobileChips> {
           setState(() {
             chips.set_id = id;
             chips.set_position = chips.get_initalPositions;
+            if (data[repeticion].contains(id)) {
+              testData.modifyData = [data[repeticion].indexOf(id), null];
+            }
           });
         },
       ),

@@ -34,33 +34,6 @@ class _FarnsworthTestState extends State<FarnsworthTest> {
     final objective = Provider.of<ObjectiveData>(context);
     final appColor = Provider.of<AppColors>(context);
     final testData = Provider.of<TestData>(context);
-
-    void _handleKeyEvent(RawKeyEvent event) {
-      setState(() {
-        _pulsaciones++;
-        if (_pulsaciones == 2) {
-          switch (event.physicalKey.usbHidUsage) {
-            case 458792: // Enter
-              if (testData.get_testfinished) {
-                testData.set_parameters_results = [
-                  chips.get_numChips,
-                  chips.get_len,
-                  MediaQuery.of(context).size.height,
-                  MediaQuery.of(context).size.width,
-                ];
-                testData.results_positions();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Results()),
-                );
-              }
-              break;
-          }
-          _pulsaciones = 0;
-        }
-      });
-    }
-
     return Scaffold(
       backgroundColor: appColor.getBackgroundColor,
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
@@ -68,7 +41,7 @@ class _FarnsworthTestState extends State<FarnsworthTest> {
       body: Stack(
         children: <Widget>[
           Juego(),
-          Cronometer(),
+          (testData.showcronometer ? Cronometer() : Container()),
           (testData.get_Notification ? Warnings() : Container()),
         ],
       ),

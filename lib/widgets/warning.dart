@@ -39,6 +39,7 @@ class _WarningsState extends State<Warnings> {
                   fit: BoxFit.contain,
                 ),
               ),
+              Spacer(),
               Container(
                 child: Center(
                   child: Text(
@@ -51,6 +52,7 @@ class _WarningsState extends State<Warnings> {
                   ),
                 ),
               ),
+              Spacer(),
               (testData.get_testfinished
                   ? Container(
                       child: Center(
@@ -66,6 +68,53 @@ class _WarningsState extends State<Warnings> {
                       ),
                     )
                   : Container()),
+              (notify.get_Aviso == 'Has Terminado?'
+                  ? Container(
+                      child: Center(
+                      child: ButtonBar(
+                          alignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        appColor.getBorderColor)),
+                                onPressed: () {
+                                  setState(() {
+                                    testData.setContinue = true;
+                                    testData.setModify = false;
+                                  });
+                                },
+                                child: Text(
+                                  'Continuar',
+                                  style: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            1 /
+                                            30,
+                                  ),
+                                )),
+                            ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        appColor.getBorderColor)),
+                                onPressed: () {
+                                  setState(() {
+                                    testData.setModify = true;
+                                    testData.setContinue = false;
+                                  });
+                                },
+                                child: Text(
+                                  'Modificar',
+                                  style: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            1 /
+                                            30,
+                                  ),
+                                )),
+                          ]),
+                    ))
+                  : Container())
             ],
           )),
     );

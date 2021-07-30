@@ -3,11 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class TestData with ChangeNotifier {
+  bool _showCronometer = true;
+  bool _modify = false; // true -> Modificar // false -> No Modificar
+  bool _continue = false; // true -> Continuar // false -> REordenar
+  bool _full = false;
   bool _finished = false;
   bool _notification = false;
   int _repeticion = 4;
   List _data = [[], [], [], [], []]; // data = [chip_ids];
   List _tiempo = []; // tiempo = [min,sec];
+  List _tiempoData = [[], [], [], [], []];
   bool _start = false;
   int _cronometerSeconds = 0;
   int _cronometerMinutes = 0;
@@ -20,12 +25,49 @@ class TestData with ChangeNotifier {
   double _screenWidth = 0;
   int _id = 0;
   ////////////////////////////////////////////77
+
+  void initTestData() {
+    _showCronometer = false;
+    _modify = false; // true -> Modificar // false -> No Modificar
+    _continue = false; // true -> Continuar // false -> REordenar
+    _full = false;
+    _finished = false;
+    _notification = false;
+    _repeticion = 4;
+    _data = [[], [], [], [], []]; // data = [chip_ids];
+    _tiempo = []; // tiempo = [min,sec];
+    _tiempoData = [[], [], [], [], []];
+    _start = false;
+    _cronometerSeconds = 0;
+    _cronometerMinutes = 0;
+    _cronometer = Timer(Duration(seconds: 0), () {});
+    _positions = [[], [], [], [], []];
+    _numChips = 0;
+    _len = 0;
+    _screenHeight = 0;
+    _screenWidth = 0;
+    _id = 0;
+  }
+
+  set setshowcronometer(bool n_show) {
+    this._showCronometer = n_show;
+    notifyListeners();
+  }
+
+  get showcronometer {
+    return _showCronometer;
+  }
+
   void initState(int _numChips) {
     _data.clear();
     _data = [[], [], [], [], []];
     for (int j = 0; j <= _repeticion; j++) {
       for (int i = 0; i < _numChips; i++) {
-        this._data[j].add(null);
+        if (i == 0) {
+          this._data[j].add(0);
+        } else {
+          this._data[j].add(null);
+        }
       }
     }
   }
@@ -36,6 +78,47 @@ class TestData with ChangeNotifier {
     this._data[_repeticion][ids[0]] = ids[1];
 
     notifyListeners();
+  }
+
+  set modifyTiempoData(List n_tiempo) {
+    this._tiempoData[_repeticion] = n_tiempo;
+  }
+
+  set setObjectivesFull(bool n_full) {
+    this._full = n_full;
+
+    notifyListeners();
+  }
+
+  void isObjectiveFull() {
+    if (!_data[_repeticion].contains(null)) {
+      _full = true;
+    } else {
+      _full = false;
+    }
+    //notifyListeners();
+  }
+
+  get getObjectivesFull {
+    return _full;
+  }
+
+  set setContinue(bool n_cont) {
+    this._continue = n_cont;
+    notifyListeners();
+  }
+
+  get getContinue {
+    return _continue;
+  }
+
+  set setModify(bool n_mod) {
+    this._modify = n_mod;
+    notifyListeners();
+  }
+
+  get getModify {
+    return _modify;
   }
 
   get consult {
@@ -97,9 +180,9 @@ class TestData with ChangeNotifier {
 
   void disminuirRepeticion() {
     this._repeticion--;
-    if (this._repeticion < 0) {
+    /*if (this._repeticion < 0) {
       this._repeticion = 0;
-    }
+    }*/
     notifyListeners();
   }
 
@@ -109,7 +192,7 @@ class TestData with ChangeNotifier {
 
   set set_repeticion(int n_repeticion) {
     this._repeticion = n_repeticion;
-    print(_repeticion);
+
     //notifyListeners();
   }
 
@@ -142,11 +225,8 @@ class TestData with ChangeNotifier {
         _positions[cols - j].add(Offset(
             (_screenHeight / 10) + ((j / cols) * _screenHeight * 9 / 10),
             (_screenWidth / 10) + i * _len));
-        print((_screenHeight / 10) + ((j / cols) * _screenHeight * 9 / 10));
       }
     }
-    print(' Heig -> ${_screenHeight}');
-    print(_positions);
     notifyListeners();
   }
 

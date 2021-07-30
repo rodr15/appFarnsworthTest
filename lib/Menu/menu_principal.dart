@@ -70,6 +70,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
             case 458792: //Enter
               switch (_contador) {
                 case 0: // Tradicional
+                  testData.initTestData();
                   chips.setTradicional = true;
                   testData.set_tiempo = [0, 0];
                   chips.clearall();
@@ -90,6 +91,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   );
                   break;
                 case 1:
+                  testData.initTestData();
                   chips.setTradicional = false;
                   testData.set_tiempo = [0, 0];
                   chips.clearall();
@@ -110,6 +112,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   );
                   break;
                 case 2:
+                  testData.initTestData();
                   chips.setTradicional = false;
                   testData.set_tiempo = [0, 0];
                   chips.clearall();

@@ -41,6 +41,7 @@ class _ToolBarState extends State<ToolBar> {
   int indexSelected = 0;
   int indexSubSelected = 0;
   int _pulsaciones = 0;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -208,104 +209,32 @@ class _ToolBarState extends State<ToolBar> {
     void opttiempoPressed() {
       setState(() {
         optTiempoChange = !optTiempoChange;
+        testData.setshowcronometer = optTiempoChange;
         optColorChange = false;
         (optTiempoChange ? tiempoWidth = maxWidth : tiempoWidth = minWidth);
         colorWidth = minWidth;
       });
     }
 
-    void masTiempo() {
-      setState(() {
-        seconds += 2; // AUMENTO
-        if (seconds >= 60) {
-          minutes++;
-          seconds = 0;
-        }
-        testData.set_tiempo = [minutes, seconds];
-      });
-    }
-
-    void menosTiempo() {
-      setState(() {
-        seconds -= 30;
-        if (seconds < 0) {
-          minutes--;
-          seconds = 30;
-        }
-        if (minutes < 0) {
-          minutes = 0;
-          seconds = 0;
-        }
-        testData.set_tiempo = [minutes, seconds];
-      });
-    }
-
-    AnimatedContainer opcionTiempo = AnimatedContainer(
+    Container opcionTiempo = Container(
       color: appColor.getBackgroundColor,
-      width: tiempoWidth,
-      duration: Duration(seconds: 0),
-      child: Row(
+      child: Column(
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              FloatingActionButton(
-                heroTag: 'Btn2',
-                onPressed: opttiempoPressed,
-                child: Icon(
-                  Icons.timer_outlined,
-                  color: appColor.getLetterColor,
-                ),
-                backgroundColor: (selected[1]
-                    ? appColor.getBorderColor
-                    : appColor.getBackgroundColor),
-              ),
-              Text(
-                'TIEMPO',
-                style: TextStyle(color: appColor.getLetterColor),
-              ),
-            ],
+          FloatingActionButton(
+            heroTag: 'Btn2',
+            onPressed: opttiempoPressed,
+            child: Icon(
+              Icons.timer_outlined,
+              color: appColor.getLetterColor,
+            ),
+            backgroundColor: (selected[1]
+                ? appColor.getBorderColor
+                : appColor.getBackgroundColor),
           ),
-          (optTiempoChange
-              ? FloatingActionButton(
-                  heroTag: 'Btn21',
-                  elevation: 0,
-                  mini: true,
-                  onPressed: menosTiempo,
-                  child: Icon(
-                    Icons.remove,
-                    color: appColor.getLetterColor,
-                  ),
-                  backgroundColor: (subSelected[1]
-                      ? appColor.getBorderColor
-                      : appColor.getBackgroundColor),
-                )
-              : Container()),
-          (optTiempoChange
-              ? Container(
-                  width: 80,
-                  child: Text(
-                    (seconds < 10 ? '$minutes:0$seconds' : '$minutes:$seconds'),
-                    style: TextStyle(
-                      color: appColor.getLetterColor,
-                    ),
-                  ),
-                )
-              : Container()),
-          (optTiempoChange
-              ? FloatingActionButton(
-                  heroTag: 'Btn22',
-                  elevation: 0,
-                  mini: true,
-                  onPressed: masTiempo,
-                  child: Icon(
-                    Icons.add,
-                    color: appColor.getLetterColor,
-                  ),
-                  backgroundColor: (subSelected[2]
-                      ? appColor.getBorderColor
-                      : appColor.getBackgroundColor),
-                )
-              : Container()),
+          Text(
+            'TIEMPO',
+            style: TextStyle(color: appColor.getLetterColor),
+          ),
         ],
       ),
     );
@@ -339,52 +268,44 @@ class _ToolBarState extends State<ToolBar> {
       _TimerSecondscounter = seconds;
       _Testtimer = Timer.periodic(Duration(seconds: 1), (timer) {
         setState(() {
-          _TimerSecondscounter--;
-          if (_TimerSecondscounter < 0) {
-            if (_TimerMinutescounter != 0) {
-              _TimerSecondscounter = 59;
-            } else {
-              _TimerSecondscounter = 0;
-            }
-            _TimerMinutescounter--;
-          }
-          if (_TimerMinutescounter < 0) {
-            _Testtimer.cancel();
-            testData.startCronometer = false;
-            optStart = false;
-            _TimerMinutescounter = 0;
-            if (testData.get_repeticion == 0) {
-              notify.set_Aviso = 'TEST FINALIZADO';
-              notify.set_Image = 'lib/assets/warning.png';
-              testData.set_Notification = true;
-              testData.testfinished();
-            }
+          testData.startCronometer = true;
+          _TimerSecondscounter++;
+          if (_TimerSecondscounter > 59) {
+            _TimerSecondscounter = 0;
+            _TimerMinutescounter++;
           }
           testData.set_Cronometertiempo = [
             _TimerMinutescounter,
             _TimerSecondscounter
           ];
-        });
-      });
-    }
-
-    void startPressed() {
-      setState(() {
-        print(selected[0]);
-        colorWidth = minWidth;
-        tiempoWidth = minWidth;
-        optColorChange = false;
-        optTiempoChange = false;
-        if (!testData.get_testfinished) {
-          if (minutes == 0 && seconds == 0) {
-            notify.set_Aviso = 'No hay tiempo';
-            notify.set_Image = 'lib/assets/warning.png';
+          testData.isObjectiveFull();
+          if (testData.getModify) {
+            if (!testData.getObjectivesFull) {
+              testData.setModify = false;
+            }
+            testData.setObjectivesFull = false;
+          }
+          if (testData.getObjectivesFull) {
+            notify.set_Aviso = 'Has Terminado?';
             testData.set_Notification = true;
-          } else {
-            if (!optStart) {
-              optStart = true;
+            if (testData.getContinue) {
+              print(testData.get_repeticion);
+              print(testData.consult);
+              // CONTINUAR
+              testData.setContinue = false;
+              testData.modifyTiempoData = [
+                _TimerMinutescounter,
+                _TimerSecondscounter
+              ];
+              _Testtimer.cancel();
+              testData.startCronometer = false;
               testData.disminuirRepeticion();
-              if (testData.get_repeticion <= repeticiones) {
+
+              if (testData.get_repeticion < 0) {
+                notify.set_Aviso = 'Ha terminado el test';
+                testData.set_Notification = true;
+                testData.testfinished();
+              } else {
                 if (testData.get_repeticion > 1) {
                   notify.set_Aviso = 'OJO DERECHO';
                   notify.set_Image = 'lib/assets/derecho.png';
@@ -400,11 +321,35 @@ class _ToolBarState extends State<ToolBar> {
                     chips.shuffle();
                   }
                   testData.set_Notification = false;
-                  testData.startCronometer = true;
                 });
               }
+            } else if (testData.getModify) {
+              testData.set_Notification = false;
             }
+          } else {
+            testData.set_Notification = false;
           }
+        });
+      });
+    }
+
+    void startPressed() {
+      setState(() {
+        optStart = true;
+        colorWidth = minWidth;
+        tiempoWidth = minWidth;
+        optColorChange = false;
+
+        if (testData.get_repeticion == repeticiones) {
+          testData.disminuirRepeticion();
+          notify.set_Aviso = 'OJO DERECHO';
+          notify.set_Image = 'lib/assets/derecho.png';
+          testData.set_Notification = true;
+          Future.delayed(Duration(seconds: 3), () {
+            TestTimer();
+            chips.shuffle();
+            testData.set_Notification = false;
+          });
         }
       });
     }
@@ -449,12 +394,7 @@ class _ToolBarState extends State<ToolBar> {
                     subSelected[indexSubSelected + 1] = true;
                     subSelected[indexSubSelected] = false;
                   }
-                  break;
-                case 1:
-                  if (indexSubSelected != 2) {
-                    subSelected[indexSubSelected + 1] = true;
-                    subSelected[indexSubSelected] = false;
-                  }
+
                   break;
               }
               break;
@@ -488,14 +428,8 @@ class _ToolBarState extends State<ToolBar> {
                     }
                     break;
                   case 1:
-                    if (subSelected[0]) {
-                      subSelected = [true, false, false, false, false];
-                      opttiempoPressed();
-                    } else if (subSelected[1]) {
-                      menosTiempo();
-                    } else if (subSelected[2]) {
-                      masTiempo();
-                    }
+                    opttiempoPressed();
+
                     break;
                   case 2:
                     optBackPressed();

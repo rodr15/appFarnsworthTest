@@ -23,6 +23,7 @@ class Option extends StatelessWidget {
       onTap: () {
         switch (name) {
           case 'Tradicional':
+            testData.initTestData();
             chips.setTradicional = true;
             testData.set_tiempo = [0, 0];
             chips.clearall();
@@ -42,6 +43,7 @@ class Option extends StatelessWidget {
             );
             break;
           case '15 Fichas':
+            testData.initTestData();
             chips.setTradicional = false;
             testData.set_tiempo = [0, 0];
             chips.clearall();
@@ -62,6 +64,7 @@ class Option extends StatelessWidget {
 
             break;
           case '100 Fichas':
+            testData.initTestData();
             chips.setTradicional = false;
             testData.set_tiempo = [0, 0];
             chips.clearall();
