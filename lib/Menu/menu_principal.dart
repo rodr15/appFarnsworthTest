@@ -148,6 +148,15 @@ class _MenuPrincipal extends State<MenuPrincipal> {
     }
 
     GridView listaOpciones = GridView.count(
+      padding: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * 18 / 30,
+          left: MediaQuery.of(context).size.width * 0.2 / 10),
+      shrinkWrap: true,
+      // primary: true,
+      physics: new NeverScrollableScrollPhysics(),
+
+      childAspectRatio: 1.1,
+      mainAxisSpacing: 0,
       scrollDirection: Axis.horizontal,
       controller: _controller,
       crossAxisCount: 1,
@@ -174,10 +183,17 @@ class _MenuPrincipal extends State<MenuPrincipal> {
           fit: BoxFit.fill,
         ),
         RawKeyboardListener(
-            autofocus: true,
-            focusNode: _focusNode,
-            onKey: _handleKeyEvent,
-            child: listaOpciones),
+          autofocus: true,
+          focusNode: _focusNode,
+          onKey: _handleKeyEvent,
+          child: listaOpciones,
+
+          /*Row(
+          children: <Widget>[
+            Option(opciones[0]),
+            Option(opciones[1]),
+          ],),*/
+        )
       ],
     ));
   }

@@ -90,8 +90,8 @@ class Option extends StatelessWidget {
         }
       },
       child: Container(
-        height: MediaQuery.of(context).size.height / 4,
-        width: MediaQuery.of(context).size.width / 4,
+        height: MediaQuery.of(context).size.height / 5,
+        width: MediaQuery.of(context).size.width / 5,
         decoration: BoxDecoration(
             color: Colors.blue,
             /*image: DecorationImage(
@@ -113,20 +113,20 @@ class Option extends StatelessWidget {
     );
     final nombre = Container(
       alignment: Alignment.center,
-      height: MediaQuery.of(context).size.height * 1.5 / 10,
+      height: MediaQuery.of(context).size.height * 1 / 10,
       width: MediaQuery.of(context).size.width / 3,
       child: Text(
         name,
         style: TextStyle(
           color: Colors.white,
           backgroundColor: Colors.transparent,
-          fontSize: MediaQuery.of(context).size.height * 0.8 / 10,
+          fontSize: MediaQuery.of(context).size.height * 0.6 / 10,
         ),
       ),
     );
-    return Padding(
-      padding:
-          EdgeInsets.only(top: MediaQuery.of(context).size.height * 18 / 30),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 5,
+      height: MediaQuery.of(context).size.height * 1.5 / 5,
       child: Column(
         children: <Widget>[
           opcion,
