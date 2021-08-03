@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/test_data.dart';
+import 'package:farnsworth/screens/configuration.dart';
 import 'package:farnsworth/screens/farsworthTest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -83,6 +84,12 @@ class Option extends StatelessWidget {
               MaterialPageRoute(builder: (context) => FarnsworthTest()),
             );
 
+            break;
+          case 'Configuración':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ConfigurationPage()),
+            );
             break;
           case 'Salir':
             SystemNavigator.pop();

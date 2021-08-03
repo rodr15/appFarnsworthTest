@@ -1,15 +1,14 @@
 import 'package:farnsworth/Menu/options.dart';
+import 'package:farnsworth/provider/config_provider.dart';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
-import 'package:farnsworth/provider/notify_avisos.dart';
 import 'package:farnsworth/provider/test_data.dart';
+import 'package:farnsworth/screens/configuration.dart';
 import 'package:farnsworth/screens/farsworthTest.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
-import 'menu_15_fichas.dart';
 
 class MenuPrincipal extends StatefulWidget {
   const MenuPrincipal({Key? key}) : super(key: key);
@@ -25,6 +24,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
     ['hola', 'Tradicional', true],
     ['hola', '15 Fichas', false],
     ['hola', '100 Fichas', false],
+    ['hola', 'Configuración', false],
     ['hola', 'Salir', false],
   ];
   String teclado = '';
@@ -41,6 +41,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
     final chips = Provider.of<ChipsData>(context);
     final objective = Provider.of<ObjectiveData>(context);
     final testData = Provider.of<TestData>(context);
+    final configuration = Provider.of<ConfigProvider>(context);
 
     void _handleKeyEvent(RawKeyEvent event) {
       setState(() {
@@ -130,6 +131,20 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => FarnsworthTest()),
+                  );
+                  break;
+                case 3: // conf
+                  chips.set_numChips = 16;
+                  chips.setTradicional = true;
+                  configuration.init_positions(
+                      MediaQuery.of(context).size.width,
+                      MediaQuery.of(context).size.height,
+                      chips.get_len,
+                      16);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ConfigurationPage()),
                   );
                   break;
               }

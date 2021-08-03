@@ -1,4 +1,5 @@
 import 'package:farnsworth/provider/aplication_colors.dart';
+import 'package:farnsworth/provider/config_provider.dart';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/notify_avisos.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => AppColors()),
           ChangeNotifierProvider(create: (context) => TestData()),
           ChangeNotifierProvider(create: (context) => Avisos()),
+          ChangeNotifierProvider(create: (context) => ConfigProvider()),
         ],
         child: MaterialApp(initialRoute: 'home', routes: {
           'home': (context) => MenuPrincipal(),

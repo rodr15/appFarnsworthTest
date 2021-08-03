@@ -68,7 +68,7 @@ class ObjectiveData with ChangeNotifier {
 
   get get_len {
     if (_numChips < 25) {
-      _len = (_screenWidth * (4 / 5)) / (_numChips);
+      _len = (_screenWidth * (4 / 5) - _numChips * 10) / (_numChips);
     } else {
       _len = (_screenWidth * (4 / 5)) / (_numChips / 4);
     }
@@ -83,8 +83,8 @@ class ObjectiveData with ChangeNotifier {
     _positions.clear();
     if (_numChips < 24) {
       for (int i = 0; i <= _numChips; i++) {
-        _positions
-            .add(Offset(_screenHeight * 3 / 10, i * _len + _screenWidth / 10));
+        _positions.add(Offset(
+            _screenHeight * 3 / 10, i * (_len + 10) + _screenWidth / 10));
       }
     } else {
       int cols = 4;
