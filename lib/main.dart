@@ -4,6 +4,7 @@ import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/notify_avisos.dart';
 import 'package:farnsworth/provider/test_data.dart';
+import 'package:farnsworth/screens/configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(initialRoute: 'home', routes: {
           'home': (context) => MenuPrincipal(),
+          'configuration': (context) => ConfigurationPage(),
           //FifteenChips(0, false, 0, 0, Colors.black),
         }));
   }

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:farnsworth/provider/config_provider.dart';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/test_data.dart';
@@ -17,13 +18,14 @@ class Option extends StatelessWidget {
     final chips = Provider.of<ChipsData>(context);
     final objective = Provider.of<ObjectiveData>(context);
     final testData = Provider.of<TestData>(context);
+    final configuration = Provider.of<ConfigProvider>(context);
     String image = option[0];
     String name = option[1];
     bool selection = option[2];
     final opcion = InkWell(
       onTap: () {
         switch (name) {
-          case 'Tradicional':
+          case 'D15':
             testData.initTestData();
             chips.setTradicional = true;
             testData.set_tiempo = [0, 0];
@@ -43,7 +45,7 @@ class Option extends StatelessWidget {
               MaterialPageRoute(builder: (context) => FarnsworthTest()),
             );
             break;
-          case '15 Fichas':
+          case 'D15E':
             testData.initTestData();
             chips.setTradicional = false;
             testData.set_tiempo = [0, 0];
@@ -64,7 +66,7 @@ class Option extends StatelessWidget {
             );
 
             break;
-          case '100 Fichas':
+          case 'HUE100':
             testData.initTestData();
             chips.setTradicional = false;
             testData.set_tiempo = [0, 0];
@@ -85,14 +87,17 @@ class Option extends StatelessWidget {
             );
 
             break;
-          case 'Configuración':
+          case 'CONFIGURACIÓN':
+            chips.set_numChips = 16;
+            chips.setTradicional = true;
+            configuration.init_positions(MediaQuery.of(context).size.width,
+                MediaQuery.of(context).size.height, chips.get_len, 16);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ConfigurationPage()),
             );
             break;
-          case 'Salir':
-            SystemNavigator.pop();
+          default:
             break;
         }
       },
@@ -100,11 +105,8 @@ class Option extends StatelessWidget {
         height: MediaQuery.of(context).size.height / 5,
         width: MediaQuery.of(context).size.width / 5,
         decoration: BoxDecoration(
-            color: Colors.blue,
-            /*image: DecorationImage(
-          fit: BoxFit.cover,
-          image: AssetImage(image)
-        ),*/
+            image:
+                DecorationImage(fit: BoxFit.fitWidth, image: AssetImage(image)),
             borderRadius: BorderRadius.all(Radius.circular(20)),
             boxShadow: <BoxShadow>[
               BoxShadow(
@@ -114,8 +116,8 @@ class Option extends StatelessWidget {
               ),
             ],
             border: (selection
-                ? Border.all(color: Colors.orange, width: 10)
-                : Border.all(color: Colors.blueGrey.shade50, width: 10))),
+                ? Border.all(color: Colors.orange, width: 5)
+                : Border.all(color: Colors.blueGrey.shade50, width: 5))),
       ),
     );
     final nombre = Container(
@@ -137,7 +139,7 @@ class Option extends StatelessWidget {
       child: Column(
         children: <Widget>[
           opcion,
-          nombre,
+          //nombre,
         ],
       ),
     );

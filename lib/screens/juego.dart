@@ -1,6 +1,7 @@
 import 'package:farnsworth/provider/aplication_colors.dart';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
+import 'package:farnsworth/widgets/caja.dart';
 import 'package:farnsworth/widgets/objective_chips.dart';
 import 'package:farnsworth/widgets/moble_chips.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class _JuegoState extends State<Juego> {
       backgroundColor: appColor.getBackgroundColor,
       body: Stack(
         children: <Widget>[
+          Caja(appColor.getBackgroundColor == Colors.black ? true : false),
           objetivos,
           mobile,
         ],

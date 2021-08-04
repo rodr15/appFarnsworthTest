@@ -1,4 +1,5 @@
 import 'package:farnsworth/provider/aplication_colors.dart';
+import 'package:farnsworth/provider/config_provider.dart';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/test_data.dart';
@@ -33,6 +34,7 @@ class _ObjectiveChipsState extends State<ObjectiveChips> {
     final objective = Provider.of<ObjectiveData>(context);
     final appColor = Provider.of<AppColors>(context);
     final testData = Provider.of<TestData>(context);
+    final configuration = Provider.of<ConfigProvider>(context);
     id = widget.id;
     objective.set_id = id;
     len = objective.get_len;
@@ -56,19 +58,37 @@ class _ObjectiveChipsState extends State<ObjectiveChips> {
         },
         builder: (BuildContext context, accepted, rejected) {
           return Container(
-            height: len,
             width: len,
-            child: Text(
-              '', //id.toString(),
-              textScaleFactor: 1,
-              style: TextStyle(color: appColor.getLetterColor),
-            ),
+            height: len,
             decoration: BoxDecoration(
-                border: Border.all(color: appColor.getBorderColor),
-                color: accepted.isEmpty ? Colors.transparent : Colors.grey),
+              color: accepted.isEmpty ? Colors.transparent : Colors.grey,
+              border: Border.all(
+                  color: (configuration.getCajaContorno && configuration.getCaja
+                      ? (appColor.getBackgroundColor == Colors.black
+                          ? Colors.black
+                          : Colors.white)
+                      : Colors.orange),
+                  width: (configuration.getObjectiveContorno ? 2 : 1)),
+              borderRadius: BorderRadius.all(
+                Radius.circular((configuration.getObjectiveForma ? 10 : 100)),
+              ),
+            ),
           );
         },
       ),
     );
   }
 }
+
+          // Container(
+          //   height: len,
+          //   width: len,
+          //   child: Text(
+          //     '', //id.toString(),
+          //     textScaleFactor: 1,
+          //     style: TextStyle(color: appColor.getLetterColor),
+          //   ),
+          //   decoration: BoxDecoration(
+          //       border: Border.all(color: appColor.getBorderColor),
+          //       color: accepted.isEmpty ? Colors.transparent : Colors.grey),
+          // );

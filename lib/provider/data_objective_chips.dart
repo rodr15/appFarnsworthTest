@@ -10,6 +10,8 @@ class ObjectiveData with ChangeNotifier {
   double _screenHeight = 0.0;
   int _id = 0;
 
+  List<Offset> cajaPosition = [];
+
   void clearall() {
     _acepted.clear();
     _positions.clear();
@@ -81,6 +83,7 @@ class ObjectiveData with ChangeNotifier {
   void init_positions() {
     get_len;
     _positions.clear();
+    cajaPosition.clear();
     if (_numChips < 24) {
       for (int i = 0; i <= _numChips; i++) {
         _positions.add(Offset(
@@ -95,10 +98,16 @@ class ObjectiveData with ChangeNotifier {
         }
       }
     }
+    cajaPosition.add(_positions.first);
+    cajaPosition.add(_positions.last);
     notifyListeners();
   }
 
   get get_positions {
     return _positions[_id];
+  }
+
+  get getCajaPosition {
+    return cajaPosition;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:farnsworth/provider/aplication_colors.dart';
+import 'package:farnsworth/provider/config_provider.dart';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/test_data.dart';
@@ -35,6 +36,7 @@ class _MobileChipsState extends State<MobileChips> {
     final objective = Provider.of<ObjectiveData>(context);
     final appColor = Provider.of<AppColors>(context);
     final testData = Provider.of<TestData>(context);
+    final configuration = Provider.of<ConfigProvider>(context);
 
     id = widget.id;
     chips.set_id = id;
@@ -43,17 +45,42 @@ class _MobileChipsState extends State<MobileChips> {
     position = (id == 0 ? objective.get_positions : chips.get_positions);
     color = chips.get_colores;
     initialPosition = chips.get_initalPositions;
-
-    final chip = Container(
-      height: len,
+    data = testData.consult;
+    repeticion = testData.get_repeticion;
+    Container chip = Container(
       width: len,
-      color: color,
-      /*child: Text(
-        id.toString(),
-        textScaleFactor: 0.5,
-      ),*/
+      height: len,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.all(
+          Radius.circular((configuration.getChipForma ? 10 : 100)),
+        ),
+        border: (configuration.getChipContorno
+            ? Border.all(
+                color: (appColor.getBackgroundColor == Colors.black
+                    ? Colors.white
+                    : Colors.black),
+                width: 2)
+            : null),
+      ),
     );
-
+    Container chipAccepted = Container(
+      width: len,
+      height: len,
+      decoration: BoxDecoration(
+        color: color,
+        border: (configuration.getChipContorno
+            ? Border.all(
+                color: (appColor.getBackgroundColor == Colors.black
+                    ? Colors.white
+                    : Colors.black),
+                width: 2)
+            : null),
+        borderRadius: BorderRadius.all(
+          Radius.circular((configuration.getObjectiveForma ? 10 : 100)),
+        ),
+      ),
+    );
     final chipDragging =
         Container(height: len, width: len, color: Colors.transparent);
 
@@ -62,12 +89,10 @@ class _MobileChipsState extends State<MobileChips> {
       left: position.dy,
       child: Draggable(
         data: id,
-        child: chip,
+        child: (data[repeticion].contains(id) ? chipAccepted : chip),
         feedback: chip,
         childWhenDragging: chipDragging,
         onDragCompleted: () {
-          data = testData.consult;
-          repeticion = testData.get_repeticion;
           setState(() {
             chips.set_id = id;
             if (data[repeticion].contains(id)) {

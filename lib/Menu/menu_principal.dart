@@ -21,11 +21,10 @@ class _MenuPrincipal extends State<MenuPrincipal> {
   int _pulsaciones = 0;
   int _contador = 0;
   List opciones = [
-    ['hola', 'Tradicional', true],
-    ['hola', '15 Fichas', false],
-    ['hola', '100 Fichas', false],
-    ['hola', 'Configuración', false],
-    ['hola', 'Salir', false],
+    ['lib/assets/D15.jpg', 'D15', true],
+    ['lib/assets/D15E.jpg', 'D15ESPECIFICO', false],
+    ['lib/assets/HUE100.jpg', 'HUE100', false],
+    ['lib/assets/CONFIG.jpg', 'CONFIGURACIÓN', false],
   ];
   String teclado = '';
   final FocusNode _focusNode = FocusNode();
@@ -56,14 +55,14 @@ class _MenuPrincipal extends State<MenuPrincipal> {
           switch (event.physicalKey.usbHidUsage) {
             case 458831: // Derecha
               _controller.animateTo(
-                  _controller.offset + MediaQuery.of(context).size.width / 2,
+                  _controller.offset + MediaQuery.of(context).size.width / 4,
                   curve: Curves.linear,
                   duration: Duration(milliseconds: 500));
               _contador++;
               break;
             case 458832: // Izquierda
               _controller.animateTo(
-                  _controller.offset - MediaQuery.of(context).size.width / 2,
+                  _controller.offset - MediaQuery.of(context).size.width / 4,
                   curve: Curves.linear,
                   duration: Duration(milliseconds: 500));
               _contador--;
@@ -97,8 +96,8 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   testData.set_tiempo = [0, 0];
                   chips.clearall();
                   objective.clearall();
-                  chips.set_numChips = 16;
-                  objective.set_numChips = 16;
+                  chips.set_numChips = 15;
+                  objective.set_numChips = 15;
                   chips.set_screenHeigth = MediaQuery.of(context).size.height;
                   chips.set_screenWidth = MediaQuery.of(context).size.width;
                   objective.set_screenHeigth =
@@ -111,6 +110,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                     context,
                     MaterialPageRoute(builder: (context) => FarnsworthTest()),
                   );
+
                   break;
                 case 2:
                   testData.initTestData();
@@ -132,6 +132,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                     context,
                     MaterialPageRoute(builder: (context) => FarnsworthTest()),
                   );
+
                   break;
                 case 3: // conf
                   chips.set_numChips = 16;
@@ -146,6 +147,10 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                     MaterialPageRoute(
                         builder: (context) => ConfigurationPage()),
                   );
+                  break;
+                case 4: // Salir
+                  break;
+                default:
                   break;
               }
               break;
@@ -164,14 +169,16 @@ class _MenuPrincipal extends State<MenuPrincipal> {
 
     GridView listaOpciones = GridView.count(
       padding: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 18 / 30,
-          left: MediaQuery.of(context).size.width * 0.2 / 10),
+        top: MediaQuery.of(context).size.height * 18 / 30,
+        left: MediaQuery.of(context).size.width * 4 / 10,
+        right: MediaQuery.of(context).size.width * 4 / 10,
+      ),
       shrinkWrap: true,
       // primary: true,
       physics: new NeverScrollableScrollPhysics(),
 
       childAspectRatio: 1.1,
-      mainAxisSpacing: 0,
+      mainAxisSpacing: 100,
       scrollDirection: Axis.horizontal,
       controller: _controller,
       crossAxisCount: 1,
@@ -192,7 +199,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
           ),
         )),*/
         Image.asset(
-          "lib/assets/SmartVisionPortada.jpeg",
+          "lib/assets/FONDO.jpg",
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.fill,

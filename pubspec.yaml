@@ -50,6 +50,12 @@ flutter:
     - lib/assets/izquierdo.png
     - lib/assets/SmartVisionPortada.jpeg
     - lib/assets/warning.png
+    - lib/assets/LOGO.jpg
+    - lib/assets/HUE100.jpg
+    - lib/assets/D15.jpg
+    - lib/assets/D15E.jpg
+    - lib/assets/CONFIG.jpg
+    - lib/assets/FONDO.jpg
     # - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
