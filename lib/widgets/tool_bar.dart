@@ -49,6 +49,31 @@ class _ToolBarState extends State<ToolBar> {
     //selected = widget.selected;
   }
 
+  void _validation(BuildContext context) async {
+    final result = await showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+              content: Text('Estas seguro de devolverte?'),
+              actions: <Widget>[
+                OutlinedButton(
+                  child: Text('Cancelar'),
+                  onPressed: () => Navigator.of(context).pop(false),
+                ),
+                OutlinedButton(
+                  child: Text('Ok'),
+                  onPressed: () => Navigator.of(context).pop(true),
+                ),
+              ]);
+        });
+    if (result) {
+      setState(() {
+        _Testtimer.cancel();
+      });
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final chips = Provider.of<ChipsData>(context);
@@ -446,6 +471,12 @@ class _ToolBarState extends State<ToolBar> {
       });
     }
 
+    BackButton ReturnButton = BackButton(
+      color: appColor.getLetterColor,
+      onPressed: () {
+        _validation(context);
+      },
+    );
     return RawKeyboardListener(
         autofocus: true,
         focusNode: _focusNode,
@@ -453,6 +484,7 @@ class _ToolBarState extends State<ToolBar> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            ReturnButton,
             opcionColor,
             opcionTiempo,
             opcionBackGround,

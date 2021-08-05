@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfigProvider with ChangeNotifier {
   List<Offset> blackChipsPositions = [];

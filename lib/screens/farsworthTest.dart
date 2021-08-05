@@ -28,22 +28,33 @@ class _FarnsworthTestState extends State<FarnsworthTest> {
     _focusNode.dispose();
   }
 
+  void _validation(BuildContext context) async {
+    final result = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final chips = Provider.of<ChipsData>(context);
     final objective = Provider.of<ObjectiveData>(context);
     final appColor = Provider.of<AppColors>(context);
     final testData = Provider.of<TestData>(context);
-    return Scaffold(
-      backgroundColor: appColor.getBackgroundColor,
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      floatingActionButton: ToolBar(),
-      body: Stack(
-        children: <Widget>[
-          Juego(),
-          (testData.showcronometer ? Cronometer() : Container()),
-          (testData.get_Notification ? Warnings() : Container()),
-        ],
+
+    return WillPopScope(
+      onWillPop: () {
+        _validation(context);
+        return Future.value(false);
+      },
+      child: Scaffold(
+        backgroundColor: appColor.getBackgroundColor,
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+        floatingActionButton: ToolBar(),
+        body: Stack(
+          children: <Widget>[
+            Juego(),
+            (testData.showcronometer ? Cronometer() : Container()),
+            (testData.get_Notification ? Warnings() : Container()),
+          ],
+        ),
       ),
     );
   }

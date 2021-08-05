@@ -175,7 +175,6 @@ class _MenuPrincipal extends State<MenuPrincipal> {
       ),
       shrinkWrap: true,
       // primary: true,
-      physics: new NeverScrollableScrollPhysics(),
 
       childAspectRatio: 1.1,
       mainAxisSpacing: 100,

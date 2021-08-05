@@ -157,9 +157,9 @@ class ChipsData with ChangeNotifier {
     if (_numChips < 25) {
       for (int i = 0; i <= _numChips; i++) {
         _positions.add(Offset(
-            _screenHeight * 5 / 10, i * (_len + 10) + _screenWidth / 10));
+            _screenHeight * 5 / 10, 61 + i * (_len + 10) + _screenWidth / 10));
         _initPositions.add(Offset(
-            _screenHeight * 5 / 10, i * (_len + 10) + _screenWidth / 10));
+            _screenHeight * 5 / 10, 61 + i * (_len + 10) + _screenWidth / 10));
       }
     } else {
       int cols = 4;

@@ -87,7 +87,7 @@ class ObjectiveData with ChangeNotifier {
     if (_numChips < 24) {
       for (int i = 0; i <= _numChips; i++) {
         _positions.add(Offset(
-            _screenHeight * 3 / 10, i * (_len + 10) + _screenWidth / 10));
+            _screenHeight * 3 / 10, 61 + i * (_len + 10) + _screenWidth / 10));
       }
     } else {
       int cols = 4;

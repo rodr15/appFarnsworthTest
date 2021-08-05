@@ -1,4 +1,5 @@
 import 'package:farnsworth/Menu/menu_principal.dart';
+import 'package:farnsworth/provider/aplication_colors.dart';
 import 'package:farnsworth/provider/config_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
   @override
   Widget build(BuildContext context) {
     final configuration = Provider.of<ConfigProvider>(context);
+    final appColor = Provider.of<AppColors>(context);
     TextStyle Titulo = TextStyle(
         fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white);
     TextStyle SubTitulo = TextStyle(
@@ -43,7 +45,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         child: Icon(
           Icons.done,
           color: Colors.green,
-          size: 30,
+          size: MediaQuery.of(context).size.width / 55,
         ),
       ),
     );
@@ -62,7 +64,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         child: Icon(
           Icons.close,
           color: Colors.red,
-          size: 30,
+          size: MediaQuery.of(context).size.width / 55,
         ),
       ),
     );
@@ -82,7 +84,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         child: Icon(
           Icons.done,
           color: Colors.grey,
-          size: 30,
+          size: MediaQuery.of(context).size.width / 55,
         ),
       ),
     );
@@ -101,9 +103,59 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         child: Icon(
           Icons.close,
           color: Colors.grey,
-          size: 30,
+          size: MediaQuery.of(context).size.width / 55,
         ),
       ),
+    );
+
+    Container BotonCirculo = Container(
+      height: MediaQuery.of(context).size.width / 35,
+      width: MediaQuery.of(context).size.width / 35,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              MediaQuery.of(context).size.width / 50,
+            ),
+          ),
+          border: Border.all(color: appColor.getBorderColor, width: 4)),
+    );
+    Container BotonCuadrado = Container(
+      height: MediaQuery.of(context).size.width / 35,
+      width: MediaQuery.of(context).size.width / 35,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              MediaQuery.of(context).size.width / 100,
+            ),
+          ),
+          border: Border.all(color: appColor.getBorderColor, width: 4)),
+    );
+
+    Container BotonCirculoGrey = Container(
+      height: MediaQuery.of(context).size.width / 35,
+      width: MediaQuery.of(context).size.width / 35,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              MediaQuery.of(context).size.width / 50,
+            ),
+          ),
+          border: Border.all(color: Colors.grey, width: 4)),
+    );
+    Container BotonCuadradoGrey = Container(
+      height: MediaQuery.of(context).size.width / 35,
+      width: MediaQuery.of(context).size.width / 35,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              MediaQuery.of(context).size.width / 100,
+            ),
+          ),
+          border: Border.all(color: Colors.grey, width: 4)),
     );
 
     void chipFormaOn() {
@@ -189,12 +241,12 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
             children: [
               Spacer(),
               InkWell(
-                child: (chipForma ? BotonFlecha : BotonFlechaGrey),
+                child: (chipForma ? BotonCuadrado : BotonCuadradoGrey),
                 onTap: chipFormaOn,
               ),
               Spacer(),
               InkWell(
-                child: (!chipForma ? BotonX : BotonXGrey),
+                child: (!chipForma ? BotonCirculo : BotonCirculoGrey),
                 onTap: chipFormaOff,
               ),
               Spacer(),
@@ -304,12 +356,12 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
             children: [
               Spacer(),
               InkWell(
-                child: (objectiveForma ? BotonFlecha : BotonFlechaGrey),
+                child: (objectiveForma ? BotonCuadrado : BotonCuadradoGrey),
                 onTap: objectiveFormaOn,
               ),
               Spacer(),
               InkWell(
-                child: (!objectiveForma ? BotonX : BotonXGrey),
+                child: (!objectiveForma ? BotonCirculo : BotonCirculoGrey),
                 onTap: objectiveFormaOff,
               ),
               Spacer(),
@@ -450,12 +502,12 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
             children: [
               Spacer(),
               InkWell(
-                child: (cajaForma ? BotonFlecha : BotonFlechaGrey),
+                child: (cajaForma ? BotonCuadrado : BotonCuadradoGrey),
                 onTap: cajaFormaOn,
               ),
               Spacer(),
               InkWell(
-                child: (!cajaForma ? BotonX : BotonXGrey),
+                child: (!cajaForma ? BotonCirculo : BotonCirculoGrey),
                 onTap: cajaFormaOff,
               ),
               Spacer(),
@@ -472,7 +524,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
             ),
             child: Center(
               child: Text(
-                'CONTORNO',
+                'FONDO',
                 style: Accion,
               ),
             )),
