@@ -399,6 +399,7 @@ class _ToolBarState extends State<ToolBar> {
         if (_pulsaciones == 2) {
           indexSelected = selected.indexOf(true);
           indexSubSelected = subSelected.indexOf(true);
+          print(event.physicalKey.usbHidUsage);
           switch (event.physicalKey.usbHidUsage) {
             case 458834: // Arriba
               if (indexSelected != 0) {

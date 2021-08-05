@@ -24,6 +24,7 @@ class Option extends StatelessWidget {
     bool selection = option[2];
     final opcion = InkWell(
       onTap: () {
+        ConfigProvider();
         switch (name) {
           case 'D15':
             testData.initTestData();
@@ -45,14 +46,14 @@ class Option extends StatelessWidget {
               MaterialPageRoute(builder: (context) => FarnsworthTest()),
             );
             break;
-          case 'D15E':
+          case 'D15ESPECIFICO':
             testData.initTestData();
             chips.setTradicional = false;
             testData.set_tiempo = [0, 0];
             chips.clearall();
             objective.clearall();
-            chips.set_numChips = 15;
-            objective.set_numChips = 15;
+            chips.set_numChips = 16;
+            objective.set_numChips = 16;
             chips.set_screenHeigth = MediaQuery.of(context).size.height;
             chips.set_screenWidth = MediaQuery.of(context).size.width;
             objective.set_screenHeigth = MediaQuery.of(context).size.height;

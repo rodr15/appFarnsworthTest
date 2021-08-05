@@ -7,7 +7,7 @@ import 'package:farnsworth/provider/test_data.dart';
 import 'package:farnsworth/screens/configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:farnsworth/Preferences/user_preferences.dart';
 import 'Menu/menu_15_fichas.dart';
 import 'Menu/menu_principal.dart';
 

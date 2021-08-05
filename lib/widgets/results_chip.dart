@@ -20,7 +20,7 @@ class _ResultsChipsState extends State<ResultsChips> {
   int repeticion = 0;
   Offset position = Offset(0, 0);
   List data = [[], [], []];
-
+  Color color = Colors.transparent;
   @override
   void initState() {
     // TODO: implement initState

@@ -1,5 +1,4 @@
-import 'dart:ffi';
-
+import 'package:farnsworth/Preferences/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,8 +20,42 @@ class ConfigProvider with ChangeNotifier {
   bool caja = false;
   bool cajaForma = false;
   bool cajaContorno = false;
-
   bool cajaBlack = false;
+
+  SharedPreferences? _preferences;
+
+  ConfigProvider() {
+    _loadSettingsFromPrefs();
+  }
+
+  _initializePrefs() async {
+    if (_preferences == null) {
+      _preferences = await SharedPreferences.getInstance();
+    }
+  }
+
+  _loadSettingsFromPrefs() async {
+    await _initializePrefs();
+    chipForma = _preferences?.getBool('chipForma') ?? false;
+    chipContorno = _preferences?.getBool('chipContorno') ?? false;
+    objectiveForma = _preferences?.getBool('objectiveForma') ?? false;
+    objectiveContorno = _preferences?.getBool('objectiveContorno') ?? false;
+    caja = _preferences?.getBool('caja') ?? false;
+    cajaForma = _preferences?.getBool('cajaForma') ?? false;
+    cajaContorno = _preferences?.getBool('cajaContorno') ?? false;
+    cajaBlack = _preferences?.getBool('cajaBlack') ?? false;
+    notifyListeners();
+  }
+
+  _saveSettingsToPrefs() async {
+    await _initializePrefs();
+    _preferences?.setBool('chipForma', chipForma);
+  }
+
+  void savingConfigurations() {
+    _saveSettingsToPrefs();
+    notifyListeners();
+  }
 
   void init_positions(
       double _screenWidth, double _screenHeight, double _len, int _numChips) {

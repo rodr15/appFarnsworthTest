@@ -1,4 +1,5 @@
 import 'package:farnsworth/Menu/menu_principal.dart';
+import 'package:farnsworth/Preferences/user_preferences.dart';
 import 'package:farnsworth/provider/aplication_colors.dart';
 import 'package:farnsworth/provider/config_provider.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +20,42 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
   bool caja = false;
   bool cajaForma = false;
   bool cajaContorno = false;
+
+  void _validation(BuildContext context) async {
+    final result = await showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+              content: Text('Estas seguro de devolverte?'),
+              actions: <Widget>[
+                OutlinedButton(
+                  child: Text('Cancelar'),
+                  onPressed: () => Navigator.of(context).pop(false),
+                ),
+                OutlinedButton(
+                  child: Text('Ok'),
+                  onPressed: () => Navigator.of(context).pop(true),
+                ),
+              ]);
+        });
+    if (result) {
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final configuration = Provider.of<ConfigProvider>(context);
     final appColor = Provider.of<AppColors>(context);
+
+    chipForma = configuration.getChipForma;
+    chipContorno = configuration.getChipContorno;
+    objectiveForma = configuration.getObjectiveForma;
+    objectiveContorno = configuration.getObjectiveContorno;
+    caja = configuration.getCaja;
+    cajaForma = configuration.getCajaForma;
+    cajaContorno = configuration.cajaContorno;
+
     TextStyle Titulo = TextStyle(
         fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white);
     TextStyle SubTitulo = TextStyle(
@@ -548,8 +581,15 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
       ]),
     );
 
+    BackButton ReturnButton = BackButton(
+      color: appColor.getLetterColor,
+      onPressed: () {
+        _validation(context);
+        configuration.savingConfigurations();
+      },
+    );
     return Container(
-      height: MediaQuery.of(context).size.height * 9.6 / 10,
+      height: MediaQuery.of(context).size.height * 9.8 / 10,
       width: MediaQuery.of(context).size.width / 10,
       decoration: BoxDecoration(
         color: Colors.yellow,
@@ -564,6 +604,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
       ),
       child: Column(
         children: [
+          ReturnButton,
           Spacer(),
           Configuracion,
           Spacer(),

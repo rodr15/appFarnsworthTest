@@ -1,4 +1,5 @@
 import 'package:farnsworth/Menu/menu_principal.dart';
+import 'package:farnsworth/Preferences/user_preferences.dart';
 import 'package:farnsworth/main.dart';
 import 'package:farnsworth/provider/config_provider.dart';
 import 'package:farnsworth/widgets/configurationCaja.dart';
@@ -15,6 +16,10 @@ class ConfigurationPage extends StatefulWidget {
 }
 
 class _ConfigurationPageState extends State<ConfigurationPage> {
+  void _validation(BuildContext context) async {
+    final result = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final configuration = Provider.of<ConfigProvider>(context);
@@ -40,31 +45,31 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
         return ConfigurationChip(false, false, index);
       }),
     );
-    return Scaffold(
-      floatingActionButton: ConfigurationToolBar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      body: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height / 2,
-            color: Colors.black,
+    return WillPopScope(
+        onWillPop: () {
+          _validation(context);
+          return Future.value(false);
+        },
+        child: SafeArea(
+          child: Scaffold(
+            floatingActionButton: ConfigurationToolBar(),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.startFloat,
+            body: Stack(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height / 2,
+                  color: Colors.black,
+                ),
+                ConfigurationCaja(true),
+                ConfigurationCaja(false),
+                blackObjectives,
+                blackChips,
+                whiteObjectives,
+                whiteChips,
+              ],
+            ),
           ),
-          ConfigurationCaja(true),
-          ConfigurationCaja(false),
-          blackObjectives,
-          blackChips,
-          whiteObjectives,
-          whiteChips,
-          FloatingActionButton(
-              mini: true,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MenuPrincipal()),
-                );
-              })
-        ],
-      ),
-    );
+        ));
   }
 }

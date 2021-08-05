@@ -68,6 +68,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
               _contador--;
               break;
             case 458792: //Enter
+              ConfigProvider();
               switch (_contador) {
                 case 0: // Tradicional
                   testData.initTestData();
@@ -96,8 +97,8 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   testData.set_tiempo = [0, 0];
                   chips.clearall();
                   objective.clearall();
-                  chips.set_numChips = 15;
-                  objective.set_numChips = 15;
+                  chips.set_numChips = 16;
+                  objective.set_numChips = 16;
                   chips.set_screenHeigth = MediaQuery.of(context).size.height;
                   chips.set_screenWidth = MediaQuery.of(context).size.width;
                   objective.set_screenHeigth =

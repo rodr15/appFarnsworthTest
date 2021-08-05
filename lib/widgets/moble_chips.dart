@@ -47,6 +47,7 @@ class _MobileChipsState extends State<MobileChips> {
     initialPosition = chips.get_initalPositions;
     data = testData.consult;
     repeticion = testData.get_repeticion;
+
     Container chip = Container(
       width: len,
       height: len,
@@ -69,11 +70,13 @@ class _MobileChipsState extends State<MobileChips> {
       height: len,
       decoration: BoxDecoration(
         color: color,
-        border: (configuration.getChipContorno
+        border: (configuration.getObjectiveContorno
             ? Border.all(
-                color: (appColor.getBackgroundColor == Colors.black
-                    ? Colors.white
-                    : Colors.black),
+                color: (configuration.cajaContorno && configuration.caja
+                    ? (appColor.getBackgroundColor == Colors.black
+                        ? Colors.black
+                        : Colors.black)
+                    : Colors.amber),
                 width: 2)
             : null),
         borderRadius: BorderRadius.all(
@@ -89,7 +92,9 @@ class _MobileChipsState extends State<MobileChips> {
       left: position.dy,
       child: Draggable(
         data: id,
-        child: (data[repeticion].contains(id) ? chipAccepted : chip),
+        child: (id != 0
+            ? (data[repeticion].contains(id) ? chipAccepted : chip)
+            : chipAccepted),
         feedback: chip,
         childWhenDragging: chipDragging,
         onDragCompleted: () {
