@@ -65,7 +65,7 @@ class _ObjectiveChipsState extends State<ObjectiveChips> {
               color: accepted.isEmpty ? Colors.transparent : Colors.grey,
               border: Border.all(
                   color: (configuration.getObjectiveContorno
-                      ? (configuration.getCajaContorno
+                      ? (configuration.getCajaContorno && configuration.getCaja
                           ? (appColor.getBackgroundColor == Colors.black
                               ? Colors.black
                               : Colors.white)

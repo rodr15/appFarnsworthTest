@@ -19,9 +19,7 @@ class Caja extends StatelessWidget {
     final chips = Provider.of<ChipsData>(context);
     configuration.setCajaParameters(black);
     position = objective.getCajaPosition;
-    width = position[1].dy -
-        position[0].dy +
-        2 * (chips.get_numChips < 25 ? chips.get_len / 2 : 10);
+    width = position[1].dy - position[0].dy + 2 * chips.get_len;
     height = chips.get_len + 20;
 
     return Positioned(

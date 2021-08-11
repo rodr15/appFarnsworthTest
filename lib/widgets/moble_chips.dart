@@ -43,7 +43,8 @@ class _MobileChipsState extends State<MobileChips> {
     chips.set_id = id;
     objective.set_id = id;
     len = chips.get_len;
-    position = ((notMove.contains(id) && (testData.get_opcion != 4 || chips.get_numChips < 25))
+    position = ((notMove.contains(id) &&
+            (testData.get_opcion != 4 || chips.get_numChips < 25))
         ? objective.get_positions
         : chips.get_positions);
     color = chips.get_colores;
@@ -80,7 +81,7 @@ class _MobileChipsState extends State<MobileChips> {
         border: (configuration.getObjectiveContorno
             ? Border.all(
                 color: (configuration.getObjectiveContorno
-                    ? (configuration.getCajaContorno
+                    ? (configuration.getCajaContorno && configuration.getCaja
                         ? (appColor.getBackgroundColor == Colors.black
                             ? Colors.black
                             : Colors.white)
@@ -104,8 +105,8 @@ class _MobileChipsState extends State<MobileChips> {
       child: Draggable(
         data: id,
         child: (notMove.contains(id)
-            ? (data[repeticion].contains(id) ? chipAccepted : chip)
-            : chipAccepted),
+            ? chipAccepted
+            : (data[repeticion].contains(id) ? chipAccepted : chip)),
         feedback: chip,
         childWhenDragging: chipDragging,
         onDragCompleted: () {

@@ -86,7 +86,7 @@ class ObjectiveData with ChangeNotifier {
     _positions.clear();
     cajaPosition.clear();
     if (_numChips < 25) {
-      for (int i = 0; i <= _numChips; i++) {
+      for (int i = 0; i < _numChips; i++) {
         _positions.add(Offset(
             _screenHeight * 3 / 10, 61 + i * (_len + 10) + _screenWidth / 10));
       }
@@ -109,6 +109,8 @@ class ObjectiveData with ChangeNotifier {
         _positions.add(Offset(
             _screenHeight * y / 10, 61 + x * (_len + 10) + _screenWidth / 10));
       }
+      cajaPosition.add(_positions.first);
+      cajaPosition.add(_positions[23]);
     }
 
     notifyListeners();

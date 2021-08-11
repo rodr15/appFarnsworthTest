@@ -111,7 +111,8 @@ class _JuegoState extends State<Juego> {
       backgroundColor: appColor.getBackgroundColor,
       body: Stack(
         children: <Widget>[
-          // Caja(appColor.getBackgroundColor == Colors.black ? true : false),
+          if (testData.get_opcion != 4 || chips.get_numChips < 25)
+            Caja(appColor.getBackgroundColor == Colors.black ? true : false),
           objetivos,
           mobile,
         ],

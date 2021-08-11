@@ -1,4 +1,3 @@
-import 'package:farnsworth/Preferences/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -71,7 +70,7 @@ class ConfigProvider with ChangeNotifier {
     blackObjectivesPositions.clear();
     whiteChipsPositions.clear();
     whiteObjectivesPositions.clear();
-    for (int i = 0; i <= _numChips; i++) {
+    for (int i = 0; i < _numChips; i++) {
       blackObjectivesPositions.add(
           Offset(_screenHeight * 1 / 10, i * (_len + 10) + _screenWidth / 6));
       blackChipsPositions.add(

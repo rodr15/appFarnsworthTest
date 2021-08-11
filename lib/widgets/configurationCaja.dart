@@ -17,12 +17,12 @@ class ConfigurationCaja extends StatelessWidget {
     final chips = Provider.of<ChipsData>(context);
     configuration.setCajaParameters(black);
     position = configuration.getCajaPosition;
-    width = position[1].dy - position[0].dy + 20;
+    width = position[1].dy - position[0].dy + 2 * chips.get_len;
     height = chips.get_len + 20;
 
     return Positioned(
         top: position[0].dx - 10,
-        left: position[0].dy - 20,
+        left: position[0].dy - chips.get_len / 2,
         child: Container(
           width: (configuration.getCaja ? width : 0),
           height: (configuration.getCaja ? height : 0),
