@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:farnsworth/Menu/options.dart';
 import 'package:farnsworth/provider/config_provider.dart';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
@@ -5,6 +7,7 @@ import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/test_data.dart';
 import 'package:farnsworth/screens/configuration.dart';
 import 'package:farnsworth/screens/farsworthTest.dart';
+import 'package:farnsworth/screens/results.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +28,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
     ['lib/assets/D15E.jpg', 'D15ESPECIFICO', false],
     ['lib/assets/HUE100.jpg', 'HUE100', false],
     ['lib/assets/CONFIG.jpg', 'CONFIGURACIÓN', false],
+    ['lib/assets/RESULTS.jpg', 'RESULTADOS', false],
   ];
   String teclado = '';
   final FocusNode _focusNode = FocusNode();
@@ -33,6 +37,21 @@ class _MenuPrincipal extends State<MenuPrincipal> {
   void dispose() {
     super.dispose();
     _focusNode.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _contador = 0;
+
+    opciones = [
+      ['lib/assets/D15.jpg', 'D15', true],
+      ['lib/assets/D15E.jpg', 'D15ESPECIFICO', false],
+      ['lib/assets/HUE100.jpg', 'HUE100', false],
+      ['lib/assets/CONFIG.jpg', 'CONFIGURACIÓN', false],
+      ['lib/assets/RESULTS.jpg', 'RESULTADOS', false],
+    ];
+    super.initState();
   }
 
   @override
@@ -46,25 +65,19 @@ class _MenuPrincipal extends State<MenuPrincipal> {
       setState(() {
         _pulsaciones++;
         if (_pulsaciones == 2) {
-          teclado = event.physicalKey.debugName.toString();
-          for (int i = 0; i < opciones.length; i++) {
-            if (opciones[i][2] == true) {
-              opciones[i][2] = false;
-            }
-          }
           switch (event.physicalKey.usbHidUsage) {
             case 458831: // Derecha
               _controller.animateTo(
                   _controller.offset + MediaQuery.of(context).size.width / 4,
                   curve: Curves.linear,
-                  duration: Duration(milliseconds: 500));
+                  duration: Duration(milliseconds: 100));
               _contador++;
               break;
             case 458832: // Izquierda
               _controller.animateTo(
                   _controller.offset - MediaQuery.of(context).size.width / 4,
                   curve: Curves.linear,
-                  duration: Duration(milliseconds: 500));
+                  duration: Duration(milliseconds: 100));
               _contador--;
               break;
             case 458792: //Enter
@@ -117,17 +130,19 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   testData.initTestData();
                   chips.setTradicional = false;
                   testData.set_tiempo = [0, 0];
+                  testData.set_opcion = 4;
                   chips.clearall();
                   objective.clearall();
-                  chips.set_numChips = 100;
-                  objective.set_numChips = 100;
+                  chips.set_numChips = 93;
+                  objective.set_numChips = 93;
+                  testData.set_numChips = 93;
                   chips.set_screenHeigth = MediaQuery.of(context).size.height;
                   chips.set_screenWidth = MediaQuery.of(context).size.width;
                   objective.set_screenHeigth =
                       MediaQuery.of(context).size.height;
                   objective.set_screenWidth = MediaQuery.of(context).size.width;
                   testData.initState(chips.get_numChips);
-                  chips.init_positions();
+                  chips.init_hundred_positions();
                   objective.init_positions();
                   Navigator.push(
                     context,
@@ -149,11 +164,46 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                         builder: (context) => ConfigurationPage()),
                   );
                   break;
-                case 4: // Salir
-                  break;
-                default:
+                case 4: // RESULTADOS
+                  List dataConsult = testData.consult;
+                  if (dataConsult[0].isEmpty) {
+                    testData.initTestData();
+                    testData.initState(chips.get_numChips); // -> Cambiar esto
+                  }
+                  testData.set_parameters_results = [
+                    chips.get_numChips,
+                    chips.get_len,
+                    MediaQuery.of(context).size.height,
+                    MediaQuery.of(context).size.width,
+                  ];
+                  testData.results_positions();
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Results()),
+                  );
                   break;
               }
+              break;
+            case 458773:
+              List dataConsult = testData.consult;
+
+              if (dataConsult[0].isEmpty) {
+                testData.initTestData();
+                testData.initState(chips.get_numChips); // -> Cambiar esto
+              }
+              testData.set_parameters_results = [
+                chips.get_numChips,
+                chips.get_len,
+                MediaQuery.of(context).size.height,
+                MediaQuery.of(context).size.width,
+              ];
+              testData.results_positions();
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Results()),
+              );
               break;
           }
           if (_contador < 0) {
@@ -161,6 +211,11 @@ class _MenuPrincipal extends State<MenuPrincipal> {
           }
           if (_contador >= opciones.length) {
             _contador = opciones.length - 1;
+          }
+          for (int i = 0; i < opciones.length; i++) {
+            if (opciones[i][2]) {
+              opciones[i][2] = false;
+            }
           }
           opciones[_contador][2] = true;
           _pulsaciones = 0;
@@ -209,13 +264,12 @@ class _MenuPrincipal extends State<MenuPrincipal> {
           focusNode: _focusNode,
           onKey: _handleKeyEvent,
           child: listaOpciones,
-
-          /*Row(
-          children: <Widget>[
-            Option(opciones[0]),
-            Option(opciones[1]),
-          ],),*/
-        )
+        ),
+        // Container(
+        //     child: Text(
+        //   '${opciones[_contador][1].toString()}',
+        //   style: TextStyle(fontSize: 100, backgroundColor: Colors.white),
+        // ))
       ],
     ));
   }

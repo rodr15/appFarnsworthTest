@@ -53,8 +53,7 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
         child: SafeArea(
           child: Scaffold(
             floatingActionButton: ConfigurationToolBar(),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.startFloat,
+            floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
             body: Stack(
               children: [
                 Container(

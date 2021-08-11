@@ -1,6 +1,8 @@
 import 'package:farnsworth/provider/aplication_colors.dart';
+import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/notify_avisos.dart';
 import 'package:farnsworth/provider/test_data.dart';
+import 'package:farnsworth/screens/results.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +15,7 @@ class _WarningsState extends State<Warnings> {
   @override
   Widget build(BuildContext context) {
     final notify = Provider.of<Avisos>(context);
+    final chips = Provider.of<ChipsData>(context);
     final testData = Provider.of<TestData>(context);
     final appColor = Provider.of<AppColors>(context);
     return Positioned(
@@ -54,18 +57,68 @@ class _WarningsState extends State<Warnings> {
               ),
               Spacer(),
               (testData.get_testfinished
-                  ? Container(
-                      child: Center(
-                        child: Text(
-                          'Presione Enter para ver los resultados',
-                          style: TextStyle(
-                              backgroundColor: Colors.transparent,
-                              color: appColor.getBackgroundColor,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 1 / 30,
-                              fontWeight: FontWeight.bold),
+                  ? Row(
+                      children: [
+                        Container(
+                          child: Center(
+                            child: Text(
+                              'Presione ',
+                              style: TextStyle(
+                                  backgroundColor: Colors.transparent,
+                                  color: appColor.getBackgroundColor,
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      1 /
+                                      30,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ),
-                      ),
+                        TextButton(
+                          onPressed: () {
+                            testData.set_parameters_results = [
+                              chips.get_numChips,
+                              chips.get_len,
+                              MediaQuery.of(context).size.height,
+                              MediaQuery.of(context).size.width,
+                            ];
+                            testData.results_positions();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Results()),
+                            );
+                          },
+                          child: Container(
+                            child: Center(
+                              child: Text(
+                                'ENTER',
+                                style: TextStyle(
+                                    backgroundColor: Colors.transparent,
+                                    color: appColor.getBackgroundColor,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            1 /
+                                            30,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: Center(
+                            child: Text(
+                              ' para ver los resultados',
+                              style: TextStyle(
+                                  backgroundColor: Colors.transparent,
+                                  color: appColor.getBackgroundColor,
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      1 /
+                                      30,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ],
                     )
                   : Container()),
               (notify.get_Aviso == 'Has Terminado?'

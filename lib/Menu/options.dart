@@ -5,6 +5,7 @@ import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/test_data.dart';
 import 'package:farnsworth/screens/configuration.dart';
 import 'package:farnsworth/screens/farsworthTest.dart';
+import 'package:farnsworth/screens/results.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -71,16 +72,18 @@ class Option extends StatelessWidget {
             testData.initTestData();
             chips.setTradicional = false;
             testData.set_tiempo = [0, 0];
+            testData.set_opcion = 4;
             chips.clearall();
             objective.clearall();
-            chips.set_numChips = 100;
-            objective.set_numChips = 100;
+            chips.set_numChips = 93;
+            objective.set_numChips = 93;
+            testData.set_numChips = 93;
             chips.set_screenHeigth = MediaQuery.of(context).size.height;
             chips.set_screenWidth = MediaQuery.of(context).size.width;
             objective.set_screenHeigth = MediaQuery.of(context).size.height;
             objective.set_screenWidth = MediaQuery.of(context).size.width;
             testData.initState(chips.get_numChips);
-            chips.init_positions();
+            chips.init_hundred_positions();
             objective.init_positions();
             Navigator.push(
               context,
@@ -96,6 +99,25 @@ class Option extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ConfigurationPage()),
+            );
+            break;
+          case 'RESULTADOS':
+            List dataConsult = testData.consult;
+            if (dataConsult[0].isEmpty) {
+              testData.initTestData();
+              testData.initState(chips.get_numChips); // -> Cambiar esto
+            }
+            testData.set_parameters_results = [
+              chips.get_numChips,
+              chips.get_len,
+              MediaQuery.of(context).size.height,
+              MediaQuery.of(context).size.width,
+            ];
+            testData.results_positions();
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Results()),
             );
             break;
           default:

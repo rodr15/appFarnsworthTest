@@ -23,6 +23,7 @@ class _MobileChipsState extends State<MobileChips> {
   List noMove = [];
   List data = [[], [], []];
   int repeticion = 0;
+  List notMove = [0, 23, 24, 46, 47, 69, 70, 92];
   //List noMove = [Color(0xffcb4154) , Color(0xff104f06),Color(0xff005000) , Color(0xff56b8ab),Color(0xff5dc1b9) , Color(0xff4d3486),Color(0xff4c2882) , Color(0xffc13f58)];
   @override
   void initState() {
@@ -42,13 +43,19 @@ class _MobileChipsState extends State<MobileChips> {
     chips.set_id = id;
     objective.set_id = id;
     len = chips.get_len;
-    position = (id == 0 ? objective.get_positions : chips.get_positions);
+    position = ((notMove.contains(id) && (testData.get_opcion != 4 || chips.get_numChips < 25))
+        ? objective.get_positions
+        : chips.get_positions);
     color = chips.get_colores;
     initialPosition = chips.get_initalPositions;
     data = testData.consult;
-    repeticion = testData.get_repeticion;
+    repeticion = (testData.get_repeticion < 0 ? 0 : testData.get_repeticion);
 
     Container chip = Container(
+      //child: Text(
+      //  id.toString(),
+      //  style: TextStyle(backgroundColor: Colors.white),
+      // ),
       width: len,
       height: len,
       decoration: BoxDecoration(
@@ -72,11 +79,15 @@ class _MobileChipsState extends State<MobileChips> {
         color: color,
         border: (configuration.getObjectiveContorno
             ? Border.all(
-                color: (configuration.cajaContorno && configuration.caja
-                    ? (appColor.getBackgroundColor == Colors.black
-                        ? Colors.black
-                        : Colors.black)
-                    : Colors.amber),
+                color: (configuration.getObjectiveContorno
+                    ? (configuration.getCajaContorno
+                        ? (appColor.getBackgroundColor == Colors.black
+                            ? Colors.black
+                            : Colors.white)
+                        : (appColor.getBackgroundColor == Colors.black
+                            ? Colors.white
+                            : Colors.black))
+                    : Colors.orange),
                 width: 2)
             : null),
         borderRadius: BorderRadius.all(
@@ -92,7 +103,7 @@ class _MobileChipsState extends State<MobileChips> {
       left: position.dy,
       child: Draggable(
         data: id,
-        child: (id != 0
+        child: (notMove.contains(id)
             ? (data[repeticion].contains(id) ? chipAccepted : chip)
             : chipAccepted),
         feedback: chip,
@@ -110,7 +121,7 @@ class _MobileChipsState extends State<MobileChips> {
           setState(() {
             chips.set_id = id;
             chips.set_position = chips.get_initalPositions;
-            if (data[repeticion].contains(id)) {
+            if (data[repeticion].contains(id) && !(notMove.contains(id))) {
               testData.modifyData = [data[repeticion].indexOf(id), null];
             }
           });

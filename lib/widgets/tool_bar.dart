@@ -36,7 +36,7 @@ class _ToolBarState extends State<ToolBar> {
   Timer _Testtimer = Timer.periodic(Duration(seconds: 1), (timer) {});
 
   int repeticiones = 4;
-  List selected = [true, false, false, false];
+  List selected = [true, false, false, false, false];
   List subSelected = [true, false, false, false, false];
   int indexSelected = 0;
   int indexSubSelected = 0;
@@ -54,14 +54,14 @@ class _ToolBarState extends State<ToolBar> {
         context: context,
         builder: (_) {
           return AlertDialog(
-              content: Text('Estas seguro de devolverte?'),
+              content: Text('¿ Está seguro de volver ?'),
               actions: <Widget>[
                 OutlinedButton(
-                  child: Text('Cancelar'),
+                  child: Text(' Cancelar '),
                   onPressed: () => Navigator.of(context).pop(false),
                 ),
                 OutlinedButton(
-                  child: Text('Ok'),
+                  child: Text(' Ir '),
                   onPressed: () => Navigator.of(context).pop(true),
                 ),
               ]);
@@ -109,7 +109,7 @@ class _ToolBarState extends State<ToolBar> {
                   Icons.color_lens,
                   color: appColor.getLetterColor,
                 ),
-                backgroundColor: (selected[0]
+                backgroundColor: (selected[1]
                     ? appColor.getBorderColor
                     : appColor.getBackgroundColor),
               ),
@@ -252,7 +252,7 @@ class _ToolBarState extends State<ToolBar> {
               Icons.timer_outlined,
               color: appColor.getLetterColor,
             ),
-            backgroundColor: (selected[1]
+            backgroundColor: (selected[2]
                 ? appColor.getBorderColor
                 : appColor.getBackgroundColor),
           ),
@@ -278,7 +278,7 @@ class _ToolBarState extends State<ToolBar> {
           Icons.stop,
           color: appColor.getLetterColor,
         ),
-        backgroundColor: (selected[2]
+        backgroundColor: (selected[3]
             ? appColor.getBorderColor
             : appColor.getBackgroundColor),
       ),
@@ -287,8 +287,74 @@ class _ToolBarState extends State<ToolBar> {
         style: TextStyle(color: appColor.getLetterColor),
       )
     ]);
+    void TestTimer100() {
+      _TimerMinutescounter = minutes;
+      _TimerSecondscounter = seconds;
+      _Testtimer = Timer.periodic(Duration(seconds: 1), (timer) {
+        setState(() {
+          testData.startCronometer = true;
+          _TimerSecondscounter++;
+          if (_TimerSecondscounter > 59) {
+            _TimerSecondscounter = 0;
+            _TimerMinutescounter++;
+          }
+          testData.set_Cronometertiempo = [
+            _TimerMinutescounter,
+            _TimerSecondscounter
+          ];
+          testData.isObjectiveFull();
+          if (testData.getModify) {
+            if (!testData.getObjectivesFull) {
+              testData.setModify = false;
+            }
+            testData.setObjectivesFull = false;
+          }
+          if (testData.getObjectivesFull) {
+            notify.set_Aviso = 'Has Terminado?';
+            testData.set_Notification = true;
 
-    void TestTimer() {
+            if (testData.getContinue) {
+              chips.set_repeticion = chips.get_repeticion - 1;
+              testData.set_opcion = chips.get_repeticion;
+
+              // CONTINUAR
+              testData.setContinue = false;
+              testData.modifyTiempoData = [
+                _TimerMinutescounter,
+                _TimerSecondscounter
+              ];
+              _Testtimer.cancel();
+              testData.startCronometer = false;
+
+              if (testData.get_opcion < 0) {
+                notify.set_Aviso = 'Ha terminado el test';
+                testData.set_Notification = true;
+                testData.testfinished();
+              } else {
+                if (testData.get_repeticion > 1) {
+                  notify.set_Aviso = 'AMBOS OJOS';
+                  notify.set_Image = 'lib/assets/binocular.png';
+                  testData.set_Notification = true;
+                }
+                Future.delayed(Duration(seconds: 3), () {
+                  if (!testData.isactiveCronometer) {
+                    TestTimer100();
+                    chips.shuffle();
+                  }
+                  testData.set_Notification = false;
+                });
+              }
+            } else if (testData.getModify) {
+              testData.set_Notification = false;
+            }
+          } else {
+            testData.set_Notification = false;
+          }
+        });
+      });
+    }
+
+    void TestTimer15() {
       _TimerMinutescounter = minutes;
       _TimerSecondscounter = seconds;
       _Testtimer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -314,8 +380,6 @@ class _ToolBarState extends State<ToolBar> {
             notify.set_Aviso = 'Has Terminado?';
             testData.set_Notification = true;
             if (testData.getContinue) {
-              print(testData.get_repeticion);
-              print(testData.consult);
               // CONTINUAR
               testData.setContinue = false;
               testData.modifyTiempoData = [
@@ -342,7 +406,7 @@ class _ToolBarState extends State<ToolBar> {
                 }
                 Future.delayed(Duration(seconds: 3), () {
                   if (!testData.isactiveCronometer) {
-                    TestTimer();
+                    TestTimer15();
                     chips.shuffle();
                   }
                   testData.set_Notification = false;
@@ -366,15 +430,31 @@ class _ToolBarState extends State<ToolBar> {
         optColorChange = false;
 
         if (testData.get_repeticion == repeticiones) {
-          testData.disminuirRepeticion();
-          notify.set_Aviso = 'OJO DERECHO';
-          notify.set_Image = 'lib/assets/derecho.png';
-          testData.set_Notification = true;
-          Future.delayed(Duration(seconds: 3), () {
-            TestTimer();
-            chips.shuffle();
-            testData.set_Notification = false;
-          });
+          if (chips.get_numChips < 25) {
+            testData.disminuirRepeticion();
+            notify.set_Image = 'lib/assets/derecho.png';
+            notify.set_Aviso = 'OJO DERECHO';
+            testData.set_Notification = true;
+            Future.delayed(Duration(seconds: 3), () {
+              TestTimer15();
+              chips.shuffle();
+              testData.set_Notification = false;
+            });
+          } else {
+            chips.init_positions();
+            testData.disminuirRepeticion();
+
+            notify.set_Image = 'lib/assets/binocular.png';
+            notify.set_Aviso = 'AMBOS OJOS';
+            testData.set_Notification = true;
+            Future.delayed(Duration(seconds: 3), () {
+              testData.disminuirRepeticion();
+              testData.set_opcion = testData.get_opcion - 1;
+              TestTimer100();
+              chips.shuffle();
+              testData.set_Notification = false;
+            });
+          }
         }
       });
     }
@@ -387,7 +467,7 @@ class _ToolBarState extends State<ToolBar> {
           Icons.play_arrow,
           color: appColor.getLetterColor,
         ),
-        backgroundColor: (selected[3]
+        backgroundColor: (selected[4]
             ? appColor.getBorderColor
             : appColor.getBackgroundColor),
       ),
@@ -399,23 +479,33 @@ class _ToolBarState extends State<ToolBar> {
         if (_pulsaciones == 2) {
           indexSelected = selected.indexOf(true);
           indexSubSelected = subSelected.indexOf(true);
-          print(event.physicalKey.usbHidUsage);
+
           switch (event.physicalKey.usbHidUsage) {
             case 458834: // Arriba
+              int avance = 1;
+              if ((chips.getTradicional || chips.get_numChips > 20) &&
+                  indexSelected == 2) {
+                avance = 2;
+              }
               if (indexSelected != 0) {
-                selected[indexSelected - 1] = true;
+                selected[indexSelected - avance] = true;
                 selected[indexSelected] = false;
               }
               break;
             case 458833: // Abajo
+              int avance = 1;
+              if ((chips.getTradicional || chips.get_numChips > 20) &&
+                  indexSelected == 0) {
+                avance = 2;
+              }
               if (indexSelected != selected.length - 1) {
-                selected[indexSelected + 1] = true;
+                selected[indexSelected + avance] = true;
                 selected[indexSelected] = false;
               }
               break;
             case 458831: // Derecha
               switch (indexSelected) {
-                case 0: // Colores
+                case 1: // Colores
                   if (indexSubSelected != subSelected.length - 1) {
                     subSelected[indexSubSelected + 1] = true;
                     subSelected[indexSubSelected] = false;
@@ -445,7 +535,10 @@ class _ToolBarState extends State<ToolBar> {
                 );
               } else {
                 switch (indexSelected) {
-                  case 0: // Colores
+                  case 0:
+                    _validation(context);
+                    break;
+                  case 1: // Colores
                     if (subSelected[0]) {
                       subSelected = [true, false, false, false, false];
                       optcolorPressed();
@@ -453,14 +546,14 @@ class _ToolBarState extends State<ToolBar> {
                       chips.set_opcion = indexSubSelected - 1;
                     }
                     break;
-                  case 1:
+                  case 2:
                     opttiempoPressed();
 
                     break;
-                  case 2:
+                  case 3:
                     optBackPressed();
                     break;
-                  case 3:
+                  case 4:
                     startPressed();
                     break;
                 }
@@ -472,11 +565,16 @@ class _ToolBarState extends State<ToolBar> {
       });
     }
 
-    BackButton ReturnButton = BackButton(
-      color: appColor.getLetterColor,
+    FloatingActionButton ReturnButton = FloatingActionButton(
       onPressed: () {
         _validation(context);
       },
+      child: Icon(
+        Icons.arrow_back,
+        color: appColor.getLetterColor,
+      ),
+      backgroundColor:
+          (selected[0] ? appColor.getBorderColor : appColor.getBackgroundColor),
     );
     return RawKeyboardListener(
         autofocus: true,
@@ -486,7 +584,9 @@ class _ToolBarState extends State<ToolBar> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             ReturnButton,
-            opcionColor,
+            ((chips.getTradicional || chips.get_numChips > 20)
+                ? Container()
+                : opcionColor),
             opcionTiempo,
             opcionBackGround,
             start,

@@ -21,6 +21,7 @@ class _ObjectiveChipsState extends State<ObjectiveChips> {
   List accepted = [];
   List noMove = [];
   List data = [[], [], []];
+  List notMove = [0, 23, 24, 46, 47, 69, 70, 92];
   //List noMove = [Color(0xffcb4154) , Color(0xff104f06),Color(0xff005000) , Color(0xff56b8ab),Color(0xff5dc1b9) , Color(0xff4d3486),Color(0xff4c2882) , Color(0xffc13f58)];
   @override
   void initState() {
@@ -63,16 +64,21 @@ class _ObjectiveChipsState extends State<ObjectiveChips> {
             decoration: BoxDecoration(
               color: accepted.isEmpty ? Colors.transparent : Colors.grey,
               border: Border.all(
-                  color: (configuration.getCajaContorno && configuration.getCaja
-                      ? (appColor.getBackgroundColor == Colors.black
-                          ? Colors.black
-                          : Colors.white)
+                  color: (configuration.getObjectiveContorno
+                      ? (configuration.getCajaContorno
+                          ? (appColor.getBackgroundColor == Colors.black
+                              ? Colors.black
+                              : Colors.white)
+                          : (appColor.getBackgroundColor == Colors.black
+                              ? Colors.white
+                              : Colors.black))
                       : Colors.orange),
                   width: (configuration.getObjectiveContorno ? 2 : 1)),
               borderRadius: BorderRadius.all(
                 Radius.circular((configuration.getObjectiveForma ? 10 : 100)),
               ),
             ),
+            //child: Text(id.toString(), style: TextStyle(color: Colors.red)),
           );
         },
       ),

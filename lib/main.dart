@@ -5,13 +5,18 @@ import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/notify_avisos.dart';
 import 'package:farnsworth/provider/test_data.dart';
 import 'package:farnsworth/screens/configuration.dart';
+import 'package:farnsworth/screens/splash_Scren.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:farnsworth/Preferences/user_preferences.dart';
-import 'Menu/menu_15_fichas.dart';
+
 import 'Menu/menu_principal.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.light));
   runApp(MyApp());
 }
 
@@ -28,6 +33,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => ConfigProvider()),
         ],
         child: MaterialApp(initialRoute: 'home', routes: {
+          'splash': (context) => SplashScreen(),
           'home': (context) => MenuPrincipal(),
           'configuration': (context) => ConfigurationPage(),
           //FifteenChips(0, false, 0, 0, Colors.black),

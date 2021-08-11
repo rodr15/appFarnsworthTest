@@ -19,7 +19,6 @@ class ConfigurationCaja extends StatelessWidget {
     position = configuration.getCajaPosition;
     width = position[1].dy - position[0].dy + 20;
     height = chips.get_len + 20;
-    print(position[0]);
 
     return Positioned(
         top: position[0].dx - 10,

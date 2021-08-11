@@ -47,7 +47,7 @@ class _ResultsChipsState extends State<ResultsChips> {
       left: position.dy,
       child: Container(
         width: objective.get_len,
-        height: objective.get_len,
+        height: objective.get_len + 20,
         decoration: BoxDecoration(
           border: Border.all(color: appColor.getBorderColor),
         ),
@@ -61,7 +61,13 @@ class _ResultsChipsState extends State<ResultsChips> {
                 backgroundColor: Colors.transparent,
               ),
             )),
-            Spacer(),
+            Center(
+                child: (id == data[repeticion][id]
+                    ? Icon(Icons.done, color: Colors.green)
+                    : Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      ))),
             Center(
                 child: Text(
               data[repeticion][id].toString(),

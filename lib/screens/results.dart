@@ -1,3 +1,4 @@
+import 'package:farnsworth/Menu/menu_principal.dart';
 import 'package:farnsworth/main.dart';
 import 'package:farnsworth/provider/aplication_colors.dart';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
@@ -15,6 +16,26 @@ class Results extends StatefulWidget {
 
 class _ResultsState extends State<Results> {
   int repeticion = 2;
+
+  void _validationButton(BuildContext context) async {
+    final result = await showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+              content:
+                  Text('¿ Está seguro de volver a la pantalla principal ?'),
+              actions: <Widget>[
+                OutlinedButton(child: Text(' Cancelar '), onPressed: () {}),
+                OutlinedButton(
+                    child: Text(' Ir '),
+                    onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, "home", (route) => false);
+                    }),
+              ]);
+        });
+  }
+
   void _validation(BuildContext context) async {
     final result = false;
   }
@@ -57,10 +78,7 @@ class _ResultsState extends State<Results> {
           floatingActionButton: BackButton(
               color: appColor.getLetterColor,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyApp()),
-                );
+                _validationButton(context);
               }),
           backgroundColor: appColor.getBackgroundColor,
           body: Stack(

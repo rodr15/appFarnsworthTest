@@ -50,6 +50,13 @@ class ConfigProvider with ChangeNotifier {
   _saveSettingsToPrefs() async {
     await _initializePrefs();
     _preferences?.setBool('chipForma', chipForma);
+    _preferences?.setBool('chipContorno', chipContorno);
+    _preferences?.setBool('objectiveForma', objectiveForma);
+    _preferences?.setBool('objectiveContorno', objectiveContorno);
+    _preferences?.setBool('caja', caja);
+    _preferences?.setBool('cajaForma', cajaForma);
+    _preferences?.setBool('cajaContorno', cajaContorno);
+    _preferences?.setBool('cajaBlack', cajaBlack);
   }
 
   void savingConfigurations() {

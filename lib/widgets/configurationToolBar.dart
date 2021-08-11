@@ -13,6 +13,7 @@ class ConfigurationToolBar extends StatefulWidget {
 }
 
 class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
+  final FocusNode _focusNode = FocusNode();
   bool chipForma = false;
   bool chipContorno = false;
   bool objectiveForma = false;
@@ -20,7 +21,26 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
   bool caja = false;
   bool cajaForma = false;
   bool cajaContorno = false;
-
+  int _pulsaciones = 0;
+  List selected = [
+    true, //0
+    false, //1
+    false, //2
+    false, //3
+    false, //4
+    false, //5
+    false, //6
+    false, //7
+    false, //8
+    false, //9
+    false, //10
+    false, //11
+    false, //12
+    false,
+    false,
+  ];
+  int indexSelected = 0;
+  int indexSubSelected = 0;
   void _validation(BuildContext context) async {
     final result = await showDialog(
         context: context,
@@ -64,13 +84,13 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white);
 
     Container BotonFlecha = Container(
-      height: MediaQuery.of(context).size.width / 35,
-      width: MediaQuery.of(context).size.width / 35,
+      height: MediaQuery.of(context).size.width / 40,
+      width: MediaQuery.of(context).size.width / 40,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
             Radius.circular(
-              MediaQuery.of(context).size.width / 50,
+              MediaQuery.of(context).size.width / 40,
             ),
           ),
           border: Border.all(color: Colors.green, width: 4)),
@@ -78,18 +98,18 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         child: Icon(
           Icons.done,
           color: Colors.green,
-          size: MediaQuery.of(context).size.width / 55,
+          size: MediaQuery.of(context).size.width / 60,
         ),
       ),
     );
     Container BotonX = Container(
-      height: MediaQuery.of(context).size.width / 35,
-      width: MediaQuery.of(context).size.width / 35,
+      height: MediaQuery.of(context).size.width / 40,
+      width: MediaQuery.of(context).size.width / 40,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
             Radius.circular(
-              MediaQuery.of(context).size.width / 50,
+              MediaQuery.of(context).size.width / 40,
             ),
           ),
           border: Border.all(color: Colors.red, width: 4)),
@@ -97,19 +117,19 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         child: Icon(
           Icons.close,
           color: Colors.red,
-          size: MediaQuery.of(context).size.width / 55,
+          size: MediaQuery.of(context).size.width / 60,
         ),
       ),
     );
 
     Container BotonFlechaGrey = Container(
-      height: MediaQuery.of(context).size.width / 35,
-      width: MediaQuery.of(context).size.width / 35,
+      height: MediaQuery.of(context).size.width / 40,
+      width: MediaQuery.of(context).size.width / 40,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
             Radius.circular(
-              MediaQuery.of(context).size.width / 50,
+              MediaQuery.of(context).size.width / 40,
             ),
           ),
           border: Border.all(color: Colors.grey, width: 4)),
@@ -117,18 +137,18 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         child: Icon(
           Icons.done,
           color: Colors.grey,
-          size: MediaQuery.of(context).size.width / 55,
+          size: MediaQuery.of(context).size.width / 60,
         ),
       ),
     );
     Container BotonXGrey = Container(
-      height: MediaQuery.of(context).size.width / 35,
-      width: MediaQuery.of(context).size.width / 35,
+      height: MediaQuery.of(context).size.width / 40,
+      width: MediaQuery.of(context).size.width / 40,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
             Radius.circular(
-              MediaQuery.of(context).size.width / 50,
+              MediaQuery.of(context).size.width / 40,
             ),
           ),
           border: Border.all(color: Colors.grey, width: 4)),
@@ -136,26 +156,26 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         child: Icon(
           Icons.close,
           color: Colors.grey,
-          size: MediaQuery.of(context).size.width / 55,
+          size: MediaQuery.of(context).size.width / 60,
         ),
       ),
     );
 
     Container BotonCirculo = Container(
-      height: MediaQuery.of(context).size.width / 35,
-      width: MediaQuery.of(context).size.width / 35,
+      height: MediaQuery.of(context).size.width / 40,
+      width: MediaQuery.of(context).size.width / 40,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
             Radius.circular(
-              MediaQuery.of(context).size.width / 50,
+              MediaQuery.of(context).size.width / 40,
             ),
           ),
           border: Border.all(color: appColor.getBorderColor, width: 4)),
     );
     Container BotonCuadrado = Container(
-      height: MediaQuery.of(context).size.width / 35,
-      width: MediaQuery.of(context).size.width / 35,
+      height: MediaQuery.of(context).size.width / 40,
+      width: MediaQuery.of(context).size.width / 40,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
@@ -167,20 +187,20 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
     );
 
     Container BotonCirculoGrey = Container(
-      height: MediaQuery.of(context).size.width / 35,
-      width: MediaQuery.of(context).size.width / 35,
+      height: MediaQuery.of(context).size.width / 40,
+      width: MediaQuery.of(context).size.width / 40,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
             Radius.circular(
-              MediaQuery.of(context).size.width / 50,
+              MediaQuery.of(context).size.width / 40,
             ),
           ),
           border: Border.all(color: Colors.grey, width: 4)),
     );
     Container BotonCuadradoGrey = Container(
-      height: MediaQuery.of(context).size.width / 35,
-      width: MediaQuery.of(context).size.width / 35,
+      height: MediaQuery.of(context).size.width / 40,
+      width: MediaQuery.of(context).size.width / 40,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
@@ -189,6 +209,21 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
             ),
           ),
           border: Border.all(color: Colors.grey, width: 4)),
+    );
+
+    FloatingActionButton ReturnButton = FloatingActionButton(
+      heroTag: 'Btn0',
+      mini: true,
+      onPressed: () {
+        _validation(context);
+        configuration.savingConfigurations();
+      },
+      child: Icon(
+        Icons.arrow_back,
+        color: appColor.getLetterColor,
+      ),
+      backgroundColor:
+          (selected[0] ? appColor.getBorderColor : appColor.getBackgroundColor),
     );
 
     void chipFormaOn() {
@@ -228,7 +263,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         ),
         child: Center(
           child: Text(
-            'CONFIGURACIÓN',
+            'SET UP',
             style: Titulo,
           ),
         ));
@@ -273,14 +308,24 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
           child: Row(
             children: [
               Spacer(),
-              InkWell(
+              FloatingActionButton(
+                mini: true,
+                heroTag: 'Btn10',
                 child: (chipForma ? BotonCuadrado : BotonCuadradoGrey),
-                onTap: chipFormaOn,
+                onPressed: chipFormaOn,
+                backgroundColor: (selected[1]
+                    ? appColor.getBorderColor
+                    : appColor.getBackgroundColor),
               ),
               Spacer(),
-              InkWell(
+              FloatingActionButton(
+                mini: true,
+                heroTag: 'Btn01',
                 child: (!chipForma ? BotonCirculo : BotonCirculoGrey),
-                onTap: chipFormaOff,
+                onPressed: chipFormaOff,
+                backgroundColor: (selected[2]
+                    ? appColor.getBorderColor
+                    : appColor.getBackgroundColor),
               ),
               Spacer(),
             ],
@@ -304,14 +349,24 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         Row(
           children: [
             Spacer(),
-            InkWell(
+            FloatingActionButton(
+              mini: true,
+              heroTag: 'Btn20',
               child: (chipContorno ? BotonFlecha : BotonFlechaGrey),
-              onTap: chipContornoOn,
+              onPressed: chipContornoOn,
+              backgroundColor: (selected[3]
+                  ? appColor.getBorderColor
+                  : appColor.getBackgroundColor),
             ),
             Spacer(),
-            InkWell(
+            FloatingActionButton(
+              mini: true,
+              heroTag: 'Btn21',
               child: (!chipContorno ? BotonX : BotonXGrey),
-              onTap: chipContornoOff,
+              onPressed: chipContornoOff,
+              backgroundColor: (selected[4]
+                  ? appColor.getBorderColor
+                  : appColor.getBackgroundColor),
             ),
             Spacer(),
           ],
@@ -388,14 +443,24 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
           child: Row(
             children: [
               Spacer(),
-              InkWell(
+              FloatingActionButton(
+                mini: true,
+                heroTag: 'Btn30',
                 child: (objectiveForma ? BotonCuadrado : BotonCuadradoGrey),
-                onTap: objectiveFormaOn,
+                onPressed: objectiveFormaOn,
+                backgroundColor: (selected[5]
+                    ? appColor.getBorderColor
+                    : appColor.getBackgroundColor),
               ),
               Spacer(),
-              InkWell(
+              FloatingActionButton(
+                mini: true,
+                heroTag: 'Btn31',
                 child: (!objectiveForma ? BotonCirculo : BotonCirculoGrey),
-                onTap: objectiveFormaOff,
+                onPressed: objectiveFormaOff,
+                backgroundColor: (selected[6]
+                    ? appColor.getBorderColor
+                    : appColor.getBackgroundColor),
               ),
               Spacer(),
             ],
@@ -419,14 +484,24 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         Row(
           children: [
             Spacer(),
-            InkWell(
+            FloatingActionButton(
+              mini: true,
+              heroTag: 'Btn40',
               child: (objectiveContorno ? BotonFlecha : BotonFlechaGrey),
-              onTap: objectiveContornoOn,
+              onPressed: objectiveContornoOn,
+              backgroundColor: (selected[7]
+                  ? appColor.getBorderColor
+                  : appColor.getBackgroundColor),
             ),
             Spacer(),
-            InkWell(
+            FloatingActionButton(
+              mini: true,
+              heroTag: 'Btn41',
               child: (!objectiveContorno ? BotonX : BotonXGrey),
-              onTap: objectiveContornoOff,
+              onPressed: objectiveContornoOff,
+              backgroundColor: (selected[8]
+                  ? appColor.getBorderColor
+                  : appColor.getBackgroundColor),
             ),
             Spacer(),
           ],
@@ -482,14 +557,24 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
       child: Row(
         children: [
           Spacer(),
-          InkWell(
+          FloatingActionButton(
+            mini: true,
+            heroTag: 'Btn50',
             child: (caja ? BotonFlecha : BotonFlechaGrey),
-            onTap: cajaOn,
+            onPressed: cajaOn,
+            backgroundColor: (selected[9]
+                ? appColor.getBorderColor
+                : appColor.getBackgroundColor),
           ),
           Spacer(),
-          InkWell(
+          FloatingActionButton(
+            mini: true,
+            heroTag: 'Btn51',
             child: (!caja ? BotonX : BotonXGrey),
-            onTap: cajaOff,
+            onPressed: cajaOff,
+            backgroundColor: (selected[10]
+                ? appColor.getBorderColor
+                : appColor.getBackgroundColor),
           ),
           Spacer(),
         ],
@@ -534,14 +619,22 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
           child: Row(
             children: [
               Spacer(),
-              InkWell(
+              FloatingActionButton(
+                heroTag: 'Btn60',
                 child: (cajaForma ? BotonCuadrado : BotonCuadradoGrey),
-                onTap: cajaFormaOn,
+                onPressed: cajaFormaOn,
+                backgroundColor: (selected[11]
+                    ? appColor.getBorderColor
+                    : appColor.getBackgroundColor),
               ),
               Spacer(),
-              InkWell(
+              FloatingActionButton(
+                heroTag: 'Btn61',
                 child: (!cajaForma ? BotonCirculo : BotonCirculoGrey),
-                onTap: cajaFormaOff,
+                onPressed: cajaFormaOff,
+                backgroundColor: (selected[12]
+                    ? appColor.getBorderColor
+                    : appColor.getBackgroundColor),
               ),
               Spacer(),
             ],
@@ -565,14 +658,22 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         Row(
           children: [
             Spacer(),
-            InkWell(
+            FloatingActionButton(
+              heroTag: 'Btn70',
               child: (cajaContorno ? BotonFlecha : BotonFlechaGrey),
-              onTap: cajaContornoOn,
+              onPressed: cajaContornoOn,
+              backgroundColor: (selected[13]
+                  ? appColor.getBorderColor
+                  : appColor.getBackgroundColor),
             ),
             Spacer(),
-            InkWell(
+            FloatingActionButton(
+              heroTag: 'Btn71',
               child: (!cajaContorno ? BotonX : BotonXGrey),
-              onTap: cajaContornoOff,
+              onPressed: cajaContornoOff,
+              backgroundColor: (selected[14]
+                  ? appColor.getBorderColor
+                  : appColor.getBackgroundColor),
             ),
             Spacer(),
           ],
@@ -581,51 +682,164 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
       ]),
     );
 
-    BackButton ReturnButton = BackButton(
-      color: appColor.getLetterColor,
-      onPressed: () {
-        _validation(context);
-        configuration.savingConfigurations();
-      },
-    );
-    return Container(
-      height: MediaQuery.of(context).size.height * 9.8 / 10,
-      width: MediaQuery.of(context).size.width / 10,
-      decoration: BoxDecoration(
-        color: Colors.yellow,
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.black38,
-            blurRadius: 10.0,
-            offset: Offset(0.0, 10.0),
+    void _handleKeyEvent(RawKeyEvent event) {
+      setState(() {
+        _pulsaciones++;
+        if (_pulsaciones == 2) {
+          indexSelected = selected.indexOf(true);
+
+          switch (event.physicalKey.usbHidUsage) {
+            case 458831: // Derecha
+              if (!configuration.caja && indexSelected >= 9) {
+                indexSelected = 9;
+              }
+              if (indexSelected != selected.length - 1) {
+                selected[indexSelected + 1] = true;
+                selected[indexSelected] = false;
+              }
+
+              break;
+            case 458832: // Izquierda
+              if (indexSelected != 0) {
+                selected[indexSelected - 1] = true;
+                selected[indexSelected] = false;
+              }
+              break;
+            case 458833: // Abajo
+              if (!configuration.caja && indexSelected >= 8) {
+                indexSelected = 8;
+              }
+              if (indexSelected < selected.length - 2) {
+                selected[indexSelected + 2] = true;
+                selected[indexSelected] = false;
+              }
+              break;
+            case 458834: // Arriba
+              if (indexSelected > 2) {
+                selected[indexSelected - 2] = true;
+                selected[indexSelected] = false;
+              } else if (indexSelected != 0) {
+                selected[0] = true;
+                selected[indexSelected] = false;
+              }
+
+              break;
+
+            case 458792: // Enter
+              switch (indexSelected) {
+                case 0:
+                  _validation(context);
+                  break;
+                case 1:
+                  chipForma = true;
+                  configuration.setChipForma = chipForma;
+                  break;
+                case 2:
+                  chipForma = false;
+                  configuration.setChipForma = chipForma;
+                  break;
+                case 3:
+                  chipContorno = true;
+                  configuration.setChipContorno = chipContorno;
+                  break;
+                case 4:
+                  chipContorno = false;
+                  configuration.setChipContorno = chipContorno;
+                  break;
+                case 5:
+                  objectiveForma = true;
+                  configuration.setObjectiveForma = objectiveForma;
+                  break;
+                case 6:
+                  objectiveForma = false;
+                  configuration.setObjectiveForma = objectiveForma;
+                  break;
+                case 7:
+                  objectiveContorno = true;
+                  configuration.setObjectiveContorno = objectiveContorno;
+                  break;
+                case 8:
+                  objectiveContorno = false;
+                  configuration.setObjectiveContorno = objectiveContorno;
+                  break;
+                case 9:
+                  caja = true;
+                  configuration.setCaja = caja;
+                  break;
+                case 10:
+                  caja = false;
+                  configuration.setCaja = caja;
+                  break;
+                case 11:
+                  cajaForma = true;
+                  configuration.setCajaForma = cajaForma;
+                  break;
+                case 12:
+                  cajaForma = false;
+                  configuration.setCajaForma = cajaForma;
+                  break;
+                case 13:
+                  cajaContorno = true;
+                  configuration.setCajaContorno = cajaContorno;
+                  break;
+                case 14:
+                  cajaContorno = false;
+                  configuration.setCajaContorno = cajaContorno;
+                  break;
+                case 15:
+                  break;
+                default:
+                  break;
+              }
+              break;
+            default:
+              break;
+          }
+          _pulsaciones = 0;
+        }
+      });
+    }
+
+    return RawKeyboardListener(
+        autofocus: true,
+        focusNode: _focusNode,
+        onKey: _handleKeyEvent,
+        child: Container(
+          height: MediaQuery.of(context).size.height * 10 / 10,
+          width: MediaQuery.of(context).size.width / 10,
+          decoration: BoxDecoration(
+            color: Colors.yellow,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Colors.black38,
+                blurRadius: 10.0,
+                offset: Offset(0.0, 10.0),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Column(
-        children: [
-          ReturnButton,
-          Spacer(),
-          Configuracion,
-          Spacer(),
-          FichaText,
-          FichaStack,
-          Spacer(
-            flex: 2,
+          child: Column(
+            children: [
+              ReturnButton,
+              Spacer(),
+              Configuracion,
+              Spacer(),
+              FichaText,
+              FichaStack,
+              Spacer(),
+              ObjetivoText,
+              ObjetivoStack,
+              Spacer(
+                flex: 5,
+              ),
+              CajaText,
+              Caja,
+              (caja ? CajaStack : Container()),
+              Spacer(
+                flex: 5,
+              ),
+            ],
           ),
-          ObjetivoText,
-          ObjetivoStack,
-          Spacer(
-            flex: 10,
-          ),
-          CajaText,
-          Caja,
-          (caja ? CajaStack : Container()),
-          Spacer(
-            flex: 10,
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class TestData with ChangeNotifier {
+  int opcion = 4;
   bool _showCronometer = true;
   bool _modify = false; // true -> Modificar // false -> No Modificar
   bool _continue = false; // true -> Continuar // false -> REordenar
@@ -61,12 +62,24 @@ class TestData with ChangeNotifier {
   void initState(int _numChips) {
     _data.clear();
     _data = [[], [], [], [], []];
-    for (int j = 0; j <= _repeticion; j++) {
+
+    if (_numChips < 25) {
+      for (int j = 0; j <= _repeticion; j++) {
+        for (int i = 0; i < _numChips; i++) {
+          if (i == 0) {
+            this._data[j].add(0);
+          } else {
+            this._data[j].add(null);
+          }
+        }
+      }
+    } else {
+      List notMove = [0, 23, 24, 46, 47, 69, 70, 92];
       for (int i = 0; i < _numChips; i++) {
-        if (i == 0) {
-          this._data[j].add(0);
+        if (notMove.contains(i)) {
+          this._data[0].add(i);
         } else {
-          this._data[j].add(null);
+          this._data[0].add(null);
         }
       }
     }
@@ -90,12 +103,70 @@ class TestData with ChangeNotifier {
     notifyListeners();
   }
 
+  set set_opcion(n_opc) {
+    this.opcion = n_opc;
+    notifyListeners();
+  }
+
+  get get_opcion {
+    return opcion;
+  }
+
   void isObjectiveFull() {
-    if (!_data[_repeticion].contains(null)) {
-      _full = true;
+    if (_numChips < 25) {
+      if (!_data[_repeticion].contains(null)) {
+        _full = true;
+      } else {
+        _full = false;
+      }
     } else {
-      _full = false;
+      _repeticion = 0;
+      switch (opcion) {
+        case 3:
+          for (int i = 0; i < 24; i++) {
+            if (_data[0][i] == null) {
+              _full = false;
+              break;
+            } else {
+              _full = true;
+            }
+          }
+
+          break;
+        case 2:
+          for (int i = 24; i < 47; i++) {
+            if (_data[0][i] == null) {
+              _full = false;
+              break;
+            } else {
+              _full = true;
+            }
+          }
+          break;
+        case 1:
+          for (int i = 47; i < 70; i++) {
+            if (_data[0][i] == null) {
+              _full = false;
+              break;
+            } else {
+              _full = true;
+            }
+          }
+          break;
+        case 0:
+          for (int i = 70; i < _numChips; i++) {
+            if (_data[0][i] == null) {
+              _full = false;
+              break;
+            } else {
+              _full = true;
+            }
+          }
+          break;
+        default:
+      }
     }
+
     //notifyListeners();
   }
 
@@ -209,6 +280,10 @@ class TestData with ChangeNotifier {
     this._id = n_id;
   }
 
+  set set_numChips(int n_num) {
+    this._numChips = n_num;
+  }
+
   set set_parameters_results(List parameters) {
     this._numChips = parameters[0];
     this._len = parameters[1];
@@ -224,9 +299,10 @@ class TestData with ChangeNotifier {
       for (int i = 0; i < _numChips; i++) {
         _positions[cols - j].add(Offset(
             (_screenHeight / 10) + ((j / cols) * _screenHeight * 9 / 10),
-            (_screenWidth / 10) + i * _len));
+            (_screenWidth / 10) + i * (_len + 10)));
       }
     }
+
     notifyListeners();
   }
 

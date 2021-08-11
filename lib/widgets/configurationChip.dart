@@ -57,9 +57,10 @@ class _ConfigurationChipState extends State<ConfigurationChip> {
                 decoration: BoxDecoration(
                   color: Colors.transparent,
                   border: Border.all(
-                      color: (configuration.getCajaContorno &&
-                              configuration.getCaja
-                          ? (widget.black ? Colors.black : Colors.white)
+                      color: (configuration.getObjectiveContorno
+                          ? (configuration.getCajaContorno
+                              ? (widget.black ? Colors.black : Colors.white)
+                              : (widget.black ? Colors.white : Colors.black))
                           : Colors.orange),
                       width: (configuration.getObjectiveContorno ? 2 : 1)),
                   borderRadius: BorderRadius.all(

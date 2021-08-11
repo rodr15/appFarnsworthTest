@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ObjectiveData with ChangeNotifier {
   List _acepted = [];
   List<Offset> _positions = [];
-  int _numChips = 15;
+  int _numChips = 16;
   int _opcion = 0;
   double _len = 50;
   double _screenWidth = 0.0;
@@ -55,16 +55,17 @@ class ObjectiveData with ChangeNotifier {
 
   get get_accepted {
     int cols = 0;
-    if (_id < 25) {
+    if (_id < 24) {
       cols = 0;
-    } else if (_id < 50) {
+    } else if (_id < 47) {
       cols = 1;
-    } else if (_id < 75) {
+    } else if (_id < 70) {
       cols = 2;
-    } else if (_id < 100) {
+    } else if (_id < 92) {
       cols = 3;
     }
-    _acepted = List.generate(25, (index) => cols * 25 + index);
+    _acepted = List.generate(24, (index) => cols * 23 + index);
+
     return _acepted;
   }
 
@@ -72,7 +73,7 @@ class ObjectiveData with ChangeNotifier {
     if (_numChips < 25) {
       _len = (_screenWidth * (4 / 5) - _numChips * 10) / (_numChips);
     } else {
-      _len = (_screenWidth * (4 / 5)) / (_numChips / 4);
+      _len = (_screenWidth * (4 / 5) - 250) / 25;
     }
     if (_len < 1) {
       _len = 50;
@@ -84,22 +85,32 @@ class ObjectiveData with ChangeNotifier {
     get_len;
     _positions.clear();
     cajaPosition.clear();
-    if (_numChips < 24) {
+    if (_numChips < 25) {
       for (int i = 0; i <= _numChips; i++) {
         _positions.add(Offset(
             _screenHeight * 3 / 10, 61 + i * (_len + 10) + _screenWidth / 10));
       }
+      cajaPosition.add(_positions.first);
+      cajaPosition.add(_positions.last);
     } else {
-      int cols = 4;
-      for (int j = 0; j < cols; j++) {
-        for (int i = 0; i <= (_numChips / cols) - 1; i++) {
-          _positions.add(Offset(j * _len + (_screenHeight * 2 * j / 10),
-              i * _len + _screenWidth / 10));
+      int y = 3;
+      int x = 0;
+      for (int i = 0; i <= _numChips; i++) {
+        if (i < 24) {
+          x = i;
+        } else if (i < 47) {
+          x = i - 24;
+        } else if (i < 70) {
+          x = i - 47;
+        } else {
+          x = i - 70;
         }
+
+        _positions.add(Offset(
+            _screenHeight * y / 10, 61 + x * (_len + 10) + _screenWidth / 10));
       }
     }
-    cajaPosition.add(_positions.first);
-    cajaPosition.add(_positions.last);
+
     notifyListeners();
   }
 

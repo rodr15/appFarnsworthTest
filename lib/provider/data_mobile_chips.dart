@@ -1,13 +1,16 @@
 import 'dart:math';
 
+import 'package:farnsworth/provider/test_data.dart';
 import 'package:flutter/material.dart';
 
 class ChipsData with ChangeNotifier {
+  List notMove = [];
+  int _repeticion = 3;
   bool _tradicional = false;
   List<Color> _colores = [];
   List<Offset> _positions = [];
   List<Offset> _initPositions = [];
-  int _numChips = 15;
+  int _numChips = 16;
   int _opcion = 0;
   double _len = 61;
   double _screenWidth = 0.0;
@@ -66,6 +69,15 @@ class ChipsData with ChangeNotifier {
     notifyListeners();
   }
 
+  get get_repeticion {
+    return _repeticion;
+  }
+
+  set set_repeticion(int n_repet) {
+    this._repeticion = n_repet;
+    notifyListeners();
+  }
+
   get get_colores {
     _colores.clear();
     if (_tradicional) {
@@ -88,22 +100,18 @@ class ChipsData with ChangeNotifier {
         Color.fromARGB(255, 127, 117, 176),
       ];
     } else {
-      List<int> rojoLadrillo = [203, 65, 84];
-      List<int> verde = [0, 80, 0];
-      List<int> azulVerdoso = [93, 193, 185];
-      List<int> violeta = [76, 40, 130];
       //List c = [Colors.blue,Colors.cyan,Colors.green,Colors.brown,Colors.red,Colors.purple,Colors.];
       List<dynamic> Po = [
-        rojoLadrillo,
-        verde,
-        azulVerdoso,
-        violeta
+        [178, 118, 111], // ROJO
+        [151, 145, 75],
+        [78, 150, 135],
+        [132, 132, 163],
       ]; // Rojo ladrillo - Verde - Azul(verdoso) - Violeta
       List<dynamic> P = [
-        verde,
-        azulVerdoso,
-        violeta,
-        rojoLadrillo
+        [151, 145, 75],
+        [82, 150, 135],
+        [123, 132, 163],
+        [179, 118, 115],
       ]; // Verde-Azul(verdoso)-Violeta-Rojoladrillo
       List<int> v = [];
       List<int> rgb = [];
@@ -119,19 +127,23 @@ class ChipsData with ChangeNotifier {
           rgb.clear();
         }
       } else {
-        for (int i = 0; i < 4; i++) {
-          for (int a = 0; a < 3; a++) {
-            v.add(P[i][a] - Po[i][a]);
+        for (int opcion = 0; opcion < 4; opcion++) {
+          for (int i = 0; i <= 2; i++) {
+            v.add(P[opcion][i] - Po[opcion][i]);
           }
-
-          for (int j = 0; j < (_numChips / 4); j++) {
-            for (int a = 0; a < 3; a++) {
-              rgb.add((Po[i][a] + v[a] * (j / ((_numChips / 4) + 1))).round());
+          int num = 0;
+          if (opcion == 0) {
+            num = 24;
+          } else {
+            num = 23;
+          }
+          for (int i = 0; i < num; i++) {
+            for (int j = 0; j <= 2; j++) {
+              rgb.add((Po[opcion][j] + v[j] * (i / (num + 1))).round());
             }
             _colores.add(Color.fromARGB(255, rgb[0], rgb[1], rgb[2]));
             rgb.clear();
           }
-          v.clear();
         }
       }
     }
@@ -143,7 +155,7 @@ class ChipsData with ChangeNotifier {
     if (_numChips < 25) {
       _len = (_screenWidth * (4 / 5) - _numChips * 10) / (_numChips);
     } else {
-      _len = (_screenWidth * (4 / 5)) / (_numChips / 4);
+      _len = (_screenWidth * (4 / 5) - 25 * 10) / 25;
     }
     if (_len < 1) {
       _len = 50;
@@ -151,9 +163,39 @@ class ChipsData with ChangeNotifier {
     return _len;
   }
 
+  void init_hundred_positions() {
+    _positions.clear();
+    _initPositions.clear();
+    get_len;
+    int y = 3;
+    int x = 0;
+    for (int i = 0; i <= _numChips; i++) {
+      if (i < 24) {
+        y = 3;
+        x = i;
+      } else if (i < 47) {
+        y = 4;
+        x = i - 24;
+      } else if (i < 70) {
+        y = 5;
+        x = i - 47;
+      } else {
+        y = 6;
+        x = i - 70;
+      }
+
+      _positions.add(Offset(
+          _screenHeight * y / 10, 61 + x * (_len + 10) + _screenWidth / 10));
+      _initPositions.add(Offset(
+          _screenHeight * y / 10, 61 + x * (_len + 10) + _screenWidth / 10));
+    }
+    notifyListeners();
+  }
+
   void init_positions() {
     get_len;
     _positions.clear();
+    _initPositions.clear();
     if (_numChips < 25) {
       for (int i = 0; i <= _numChips; i++) {
         _positions.add(Offset(
@@ -162,17 +204,26 @@ class ChipsData with ChangeNotifier {
             _screenHeight * 5 / 10, 61 + i * (_len + 10) + _screenWidth / 10));
       }
     } else {
-      int cols = 4;
-      for (int j = 0; j < cols; j++) {
-        for (int i = 0; i <= (_numChips / cols) - 1; i++) {
-          _positions.add(Offset(j * _len + (_screenHeight * (2 * j + 1) / 10),
-              i * _len + _screenWidth / 10));
-          _initPositions.add(Offset(
-              j * _len + (_screenHeight * (2 * j + 1) / 10),
-              i * _len + _screenWidth / 10));
+      int y = 5;
+      int x = 0;
+      for (int i = 0; i <= _numChips; i++) {
+        if (i < 24) {
+          x = i;
+        } else if (i < 47) {
+          x = i - 24;
+        } else if (i < 70) {
+          x = i - 47;
+        } else {
+          x = i - 70;
         }
+
+        _positions.add(Offset(
+            _screenHeight * y / 10, 61 + x * (_len + 10) + _screenWidth / 10));
+        _initPositions.add(Offset(
+            _screenHeight * y / 10, 61 + x * (_len + 10) + _screenWidth / 10));
       }
     }
+    notifyListeners();
   }
 
   get get_initalPositions {
@@ -189,33 +240,54 @@ class ChipsData with ChangeNotifier {
   }
 
   void shuffle() {
-    if (_numChips < 25) {
-      var random = Random();
-      for (int i = _initPositions.length - 2; i > 0; i--) {
-        var n = random.nextInt(i + 1);
-        if (n == 0) {
-          n = i;
+    var random = Random();
+
+    for (int i = _initPositions.length - 2; i > 0; i--) {
+      var n = random.nextInt(i + 1);
+      notMove.clear();
+      notMove = [0, 23, 24, 46, 47, 69, 70, 92];
+      if (_numChips > 25) {
+        switch (_repeticion) {
+          case 3:
+            for (int x = 24; x < _numChips; x++) {
+              notMove.add(x);
+            }
+
+            break;
+          case 2:
+            for (int x = 0; x < 24; x++) {
+              notMove.add(x);
+            }
+            for (int x = 47; x < _numChips; x++) {
+              notMove.add(x);
+            }
+            break;
+          case 1:
+            for (int x = 0; x < 47; x++) {
+              notMove.add(x);
+            }
+            for (int x = 70; x < _numChips; x++) {
+              notMove.add(x);
+            }
+            break;
+          case 0:
+            for (int x = 0; x < 70; x++) {
+              notMove.add(x);
+            }
+            break;
+
+          default:
         }
+      }
+
+      if (!(notMove.contains(n) || notMove.contains(i))) {
         var temp = _initPositions[i];
 
         _initPositions[i] = _initPositions[n];
         _initPositions[n] = temp;
       }
-    } else {
-      var random = Random();
-      for (int j = 0; j < 4; j++) {
-        for (int i = (_initPositions.length / 4).round() - 2; i > 0; i--) {
-          var n = random.nextInt(i + 1);
-
-          if (n == 0) {
-            n = i;
-          }
-          var temp = _initPositions[(j * 25) + i];
-          _initPositions[(j * 25) + i] = _initPositions[(j * 25) + n];
-          _initPositions[(j * 25) + n] = temp;
-        }
-      }
     }
+
     _positions.clear();
     _positions = List.from(_initPositions);
     notifyListeners();
