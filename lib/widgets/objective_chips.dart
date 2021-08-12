@@ -59,6 +59,10 @@ class _ObjectiveChipsState extends State<ObjectiveChips> {
         },
         builder: (BuildContext context, accepted, rejected) {
           return Container(
+            child: Text(
+              id.toString(),
+              style: TextStyle(backgroundColor: Colors.white),
+            ),
             width: len,
             height: len,
             decoration: BoxDecoration(

@@ -3,6 +3,7 @@ import 'package:farnsworth/provider/config_provider.dart';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/notify_avisos.dart';
+import 'package:farnsworth/provider/results_provider.dart';
 import 'package:farnsworth/provider/test_data.dart';
 import 'package:farnsworth/screens/configuration.dart';
 import 'package:farnsworth/screens/splash_Scren.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => TestData()),
           ChangeNotifierProvider(create: (context) => Avisos()),
           ChangeNotifierProvider(create: (context) => ConfigProvider()),
+          ChangeNotifierProvider(create: (context) => ResultsProvider()),
         ],
         child: MaterialApp(initialRoute: 'home', routes: {
           'splash': (context) => SplashScreen(),

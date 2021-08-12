@@ -4,6 +4,7 @@ import 'package:farnsworth/Menu/options.dart';
 import 'package:farnsworth/provider/config_provider.dart';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
+import 'package:farnsworth/provider/results_provider.dart';
 import 'package:farnsworth/provider/test_data.dart';
 import 'package:farnsworth/screens/configuration.dart';
 import 'package:farnsworth/screens/farsworthTest.dart';
@@ -60,6 +61,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
     final objective = Provider.of<ObjectiveData>(context);
     final testData = Provider.of<TestData>(context);
     final configuration = Provider.of<ConfigProvider>(context);
+    final results = Provider.of<ResultsProvider>(context);
 
     void _handleKeyEvent(RawKeyEvent event) {
       setState(() {
@@ -177,7 +179,8 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                     MediaQuery.of(context).size.width,
                   ];
                   testData.results_positions();
-
+                  results.setNumChips = chips.get_numChips;
+                  results.setResults = dataConsult;
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Results()),
@@ -187,7 +190,6 @@ class _MenuPrincipal extends State<MenuPrincipal> {
               break;
             case 458773:
               List dataConsult = testData.consult;
-
               if (dataConsult[0].isEmpty) {
                 testData.initTestData();
                 testData.initState(chips.get_numChips); // -> Cambiar esto
@@ -199,7 +201,8 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                 MediaQuery.of(context).size.width,
               ];
               testData.results_positions();
-
+              results.setNumChips = chips.get_numChips;
+              results.setResults = dataConsult;
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Results()),

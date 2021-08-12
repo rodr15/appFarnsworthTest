@@ -5,6 +5,7 @@ import 'package:farnsworth/provider/aplication_colors.dart';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/notify_avisos.dart';
+import 'package:farnsworth/provider/results_provider.dart';
 import 'package:farnsworth/provider/test_data.dart';
 import 'package:farnsworth/screens/results.dart';
 import 'package:farnsworth/widgets/moble_chips.dart';
@@ -81,6 +82,7 @@ class _ToolBarState extends State<ToolBar> {
     final appColor = Provider.of<AppColors>(context);
     final testData = Provider.of<TestData>(context);
     final notify = Provider.of<Avisos>(context);
+    final results = Provider.of<ResultsProvider>(context);
 
     minutes = testData.get_minutes;
     seconds = testData.get_seconds;
@@ -522,6 +524,11 @@ class _ToolBarState extends State<ToolBar> {
               break;
             case 458792: // Enter
               if (testData.get_testfinished) {
+                List dataConsult = testData.consult;
+                if (dataConsult[0].isEmpty) {
+                  testData.initTestData();
+                  testData.initState(chips.get_numChips); // -> Cambiar esto
+                }
                 testData.set_parameters_results = [
                   chips.get_numChips,
                   chips.get_len,
@@ -529,6 +536,8 @@ class _ToolBarState extends State<ToolBar> {
                   MediaQuery.of(context).size.width,
                 ];
                 testData.results_positions();
+                results.setNumChips = chips.get_numChips;
+                results.setResults = dataConsult;
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Results()),

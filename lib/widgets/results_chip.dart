@@ -2,6 +2,7 @@ import 'package:farnsworth/provider/aplication_colors.dart';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/data_objective_chips.dart';
 import 'package:farnsworth/provider/notify_avisos.dart';
+import 'package:farnsworth/provider/results_provider.dart';
 import 'package:farnsworth/provider/test_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,18 +37,29 @@ class _ResultsChipsState extends State<ResultsChips> {
     final appColor = Provider.of<AppColors>(context);
     final testData = Provider.of<TestData>(context);
     final notify = Provider.of<Avisos>(context);
+    final results = Provider.of<ResultsProvider>(context);
 
     testData.set_id = id;
     testData.set_repeticion = repeticion;
     position = testData.get_results_positions;
-    data = testData.consult;
+    data = results.getResults;
 
+    id = (results.getNumChips < 25
+        ? id
+        : (repeticion == 3
+            ? id
+            : repeticion == 2
+                ? id + 22
+                : repeticion == 1
+                    ? id + 43
+                    : id + 64));
+    int data_id = id + (chips.get_numChips * repeticion);
     return Positioned(
       top: position.dx,
       left: position.dy,
       child: Container(
         width: objective.get_len,
-        height: objective.get_len + 20,
+        height: objective.get_len + 45,
         decoration: BoxDecoration(
           border: Border.all(color: appColor.getBorderColor),
         ),
@@ -62,7 +74,11 @@ class _ResultsChipsState extends State<ResultsChips> {
               ),
             )),
             Center(
-                child: (id == data[repeticion][id]
+                child: ((id == 0 && results.getNumChips > 25 ? 85 : id)
+                            .toString() ==
+                        (chips.get_numChips > 25
+                            ? data[id].toString()
+                            : data[data_id].toString())
                     ? Icon(Icons.done, color: Colors.green)
                     : Icon(
                         Icons.close,
@@ -70,7 +86,9 @@ class _ResultsChipsState extends State<ResultsChips> {
                       ))),
             Center(
                 child: Text(
-              data[repeticion][id].toString(),
+              (results.getNumChips > 25
+                  ? data[id].toString()
+                  : data[data_id].toString()),
               style: TextStyle(
                 color: appColor.getLetterColor,
                 backgroundColor: Colors.transparent,

@@ -51,7 +51,7 @@ class ChipsData with ChangeNotifier {
     notifyListeners();
   }
 
-  get get_numChips {
+  int get get_numChips {
     return _numChips;
   }
 
