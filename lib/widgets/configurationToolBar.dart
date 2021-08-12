@@ -67,7 +67,8 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
   Widget build(BuildContext context) {
     final configuration = Provider.of<ConfigProvider>(context);
     final appColor = Provider.of<AppColors>(context);
-
+    double s = MediaQuery.of(context).size.height;
+    print(s);
     chipForma = configuration.getChipForma;
     chipContorno = configuration.getChipContorno;
     objectiveForma = configuration.getObjectiveForma;
@@ -297,7 +298,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                 style: Accion,
               ),
             )),
-        Spacer(),
+        if (s > 400) Spacer(),
         Container(
           height: MediaQuery.of(context).size.width / 29,
           width: MediaQuery.of(context).size.width / 12,
@@ -307,7 +308,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
           ),
           child: Row(
             children: [
-              Spacer(),
+              if (s > 400) Spacer(),
               FloatingActionButton(
                 mini: true,
                 heroTag: 'Btn10',
@@ -317,7 +318,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                     ? appColor.getBorderColor
                     : appColor.getBackgroundColor),
               ),
-              Spacer(),
+              if (s > 400) Spacer(),
               FloatingActionButton(
                 mini: true,
                 heroTag: 'Btn01',
@@ -327,11 +328,11 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                     ? appColor.getBorderColor
                     : appColor.getBackgroundColor),
               ),
-              Spacer(),
+              if (s > 400) Spacer(),
             ],
           ),
         ),
-        Spacer(),
+        if (s > 400) Spacer(),
         Container(
             height: MediaQuery.of(context).size.height / 25,
             width: MediaQuery.of(context).size.width / 10,
@@ -345,10 +346,10 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                 style: Accion,
               ),
             )),
-        Spacer(),
+        if (s > 400) Spacer(),
         Row(
           children: [
-            Spacer(),
+            if (s > 400) Spacer(),
             FloatingActionButton(
               mini: true,
               heroTag: 'Btn20',
@@ -358,7 +359,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                   ? appColor.getBorderColor
                   : appColor.getBackgroundColor),
             ),
-            Spacer(),
+            if (s > 400) Spacer(),
             FloatingActionButton(
               mini: true,
               heroTag: 'Btn21',
@@ -368,10 +369,10 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                   ? appColor.getBorderColor
                   : appColor.getBackgroundColor),
             ),
-            Spacer(),
+            if (s > 400) Spacer(),
           ],
         ),
-        Spacer(),
+        if (s > 400) Spacer(),
       ]),
     );
 
@@ -432,7 +433,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                 style: Accion,
               ),
             )),
-        Spacer(),
+        if (s > 400) Spacer(),
         Container(
           height: MediaQuery.of(context).size.width / 29,
           width: MediaQuery.of(context).size.width / 12,
@@ -442,7 +443,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
           ),
           child: Row(
             children: [
-              Spacer(),
+              if (s > 400) Spacer(),
               FloatingActionButton(
                 mini: true,
                 heroTag: 'Btn30',
@@ -452,7 +453,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                     ? appColor.getBorderColor
                     : appColor.getBackgroundColor),
               ),
-              Spacer(),
+              if (s > 400) Spacer(),
               FloatingActionButton(
                 mini: true,
                 heroTag: 'Btn31',
@@ -462,11 +463,11 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                     ? appColor.getBorderColor
                     : appColor.getBackgroundColor),
               ),
-              Spacer(),
+              if (s > 400) Spacer(),
             ],
           ),
         ),
-        Spacer(),
+        if (s > 400) Spacer(),
         Container(
             height: MediaQuery.of(context).size.height / 25,
             width: MediaQuery.of(context).size.width / 10,
@@ -480,10 +481,10 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                 style: Accion,
               ),
             )),
-        Spacer(),
+        if (s > 400) Spacer(),
         Row(
           children: [
-            Spacer(),
+            if (s > 400) Spacer(),
             FloatingActionButton(
               mini: true,
               heroTag: 'Btn40',
@@ -493,7 +494,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                   ? appColor.getBorderColor
                   : appColor.getBackgroundColor),
             ),
-            Spacer(),
+            if (s > 400) Spacer(),
             FloatingActionButton(
               mini: true,
               heroTag: 'Btn41',
@@ -503,10 +504,10 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                   ? appColor.getBorderColor
                   : appColor.getBackgroundColor),
             ),
-            Spacer(),
+            if (s > 400) Spacer(),
           ],
         ),
-        Spacer(),
+        if (s > 400) Spacer(),
       ]),
     );
 
@@ -556,7 +557,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
     Container Caja = Container(
       child: Row(
         children: [
-          Spacer(),
+          if (s > 400) Spacer(),
           FloatingActionButton(
             mini: true,
             heroTag: 'Btn50',
@@ -566,7 +567,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                 ? appColor.getBorderColor
                 : appColor.getBackgroundColor),
           ),
-          Spacer(),
+          if (s > 400) Spacer(),
           FloatingActionButton(
             mini: true,
             heroTag: 'Btn51',
@@ -576,7 +577,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                 ? appColor.getBorderColor
                 : appColor.getBackgroundColor),
           ),
-          Spacer(),
+          if (s > 400) Spacer(),
         ],
       ),
     );
@@ -608,7 +609,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                 style: Accion,
               ),
             )),
-        Spacer(),
+        if (s > 400) Spacer(),
         Container(
           height: MediaQuery.of(context).size.width / 29,
           width: MediaQuery.of(context).size.width / 12,
@@ -618,7 +619,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
           ),
           child: Row(
             children: [
-              Spacer(),
+              if (s > 400) Spacer(),
               FloatingActionButton(
                 heroTag: 'Btn60',
                 child: (cajaForma ? BotonCuadrado : BotonCuadradoGrey),
@@ -627,7 +628,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                     ? appColor.getBorderColor
                     : appColor.getBackgroundColor),
               ),
-              Spacer(),
+              if (s > 400) Spacer(),
               FloatingActionButton(
                 heroTag: 'Btn61',
                 child: (!cajaForma ? BotonCirculo : BotonCirculoGrey),
@@ -636,11 +637,11 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                     ? appColor.getBorderColor
                     : appColor.getBackgroundColor),
               ),
-              Spacer(),
+              if (s > 400) Spacer(),
             ],
           ),
         ),
-        Spacer(),
+        if (s > 400) Spacer(),
         Container(
             height: MediaQuery.of(context).size.height / 25,
             width: MediaQuery.of(context).size.width / 10,
@@ -654,10 +655,10 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                 style: Accion,
               ),
             )),
-        Spacer(),
+        if (s > 400) Spacer(),
         Row(
           children: [
-            Spacer(),
+            if (s > 400) Spacer(),
             FloatingActionButton(
               heroTag: 'Btn70',
               child: (cajaContorno ? BotonFlecha : BotonFlechaGrey),
@@ -666,7 +667,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                   ? appColor.getBorderColor
                   : appColor.getBackgroundColor),
             ),
-            Spacer(),
+            if (s > 400) Spacer(),
             FloatingActionButton(
               heroTag: 'Btn71',
               child: (!cajaContorno ? BotonX : BotonXGrey),
@@ -675,10 +676,10 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
                   ? appColor.getBorderColor
                   : appColor.getBackgroundColor),
             ),
-            Spacer(),
+            if (s > 400) Spacer(),
           ],
         ),
-        Spacer(),
+        if (s > 400) Spacer(),
       ]),
     );
 
@@ -821,23 +822,25 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
           child: Column(
             children: [
               ReturnButton,
-              Spacer(),
+              if (s > 400) Spacer(),
               Configuracion,
-              Spacer(),
+              if (s > 400) Spacer(),
               FichaText,
               FichaStack,
-              Spacer(),
+              if (s > 400) Spacer(),
               ObjetivoText,
               ObjetivoStack,
-              Spacer(
-                flex: 5,
-              ),
+              if (s > 400)
+                Spacer(
+                  flex: 5,
+                ),
               CajaText,
               Caja,
               (caja ? CajaStack : Container()),
-              Spacer(
-                flex: 5,
-              ),
+              if (s > 400)
+                Spacer(
+                  flex: 5,
+                ),
             ],
           ),
         ));

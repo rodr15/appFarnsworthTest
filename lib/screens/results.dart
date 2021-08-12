@@ -49,6 +49,67 @@ class _ResultsState extends State<Results> {
     final testData = Provider.of<TestData>(context);
     final notify = Provider.of<Avisos>(context);
     final results = Provider.of<ResultsProvider>(context);
+    double s = MediaQuery.of(context).size.height;
+    print(results.getTiempoData);
+    Stack Letreros = Stack(children: [
+      Positioned(
+          top: (s / 10) / 2,
+          child: Row(children: [
+            Text(
+              'RESULTADO PRUEBA 1  - OJO DERECHO',
+              style: TextStyle(color: appColor.getLetterColor),
+            ),
+            Text(
+              ' TIEMPO => ${results.getTiempoData[0]} : ${results.getTiempoData[1]} ',
+              style: TextStyle(color: appColor.getLetterColor),
+            ),
+          ])),
+      Positioned(
+        top: (13 * s / 40) + ((s / 10) - (13 * s / 40)) / 2,
+        child: Row(
+          children: [
+            Text(
+              'RESULTADO PRUEBA 2  - OJO DERECHO',
+              style: TextStyle(color: appColor.getLetterColor),
+            ),
+            Text(
+              ' TIEMPO => ${results.getTiempoData[2]} : ${results.getTiempoData[3]} ',
+              style: TextStyle(color: appColor.getLetterColor),
+            ),
+          ],
+        ),
+      ),
+      Positioned(
+        top: (22 * s / 40) + ((13 * s / 40) - (22 * s / 40)) / 2,
+        child: Row(
+          children: [
+            Text(
+              'RESULTADO PRUEBA 1  - OJO IZQUIERDO',
+              style: TextStyle(color: appColor.getLetterColor),
+            ),
+            Text(
+              ' TIEMPO => ${results.getTiempoData[4]} : ${results.getTiempoData[5]} ',
+              style: TextStyle(color: appColor.getLetterColor),
+            ),
+          ],
+        ),
+      ),
+      Positioned(
+        top: (31 * s / 40) + ((22 * s / 40) - (31 * s / 40)) / 2,
+        child: Row(
+          children: [
+            Text(
+              'RESULTADO PRUEBA 2  - OJO IZQUIERDO',
+              style: TextStyle(color: appColor.getLetterColor),
+            ),
+            Text(
+              ' TIEMPO => ${results.getTiempoData[6]} : ${results.getTiempoData[7]} ',
+              style: TextStyle(color: appColor.getLetterColor),
+            ),
+          ],
+        ),
+      ),
+    ]);
 
     Stack resultadosD1 = Stack(
       children: List.generate(
@@ -89,6 +150,7 @@ class _ResultsState extends State<Results> {
           backgroundColor: appColor.getBackgroundColor,
           body: Stack(
             children: <Widget>[
+              Letreros,
               resultadosD1,
               resultadosI1,
               resultadosD2,

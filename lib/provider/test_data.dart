@@ -13,7 +13,7 @@ class TestData with ChangeNotifier {
   int _repeticion = 4;
   List _data = [[], [], [], [], []]; // data = [chip_ids];
   List _tiempo = []; // tiempo = [min,sec];
-  List _tiempoData = [[], [], [], [], []];
+  List _tiempoData = [];
   bool _start = false;
   int _cronometerSeconds = 0;
   int _cronometerMinutes = 0;
@@ -37,7 +37,7 @@ class TestData with ChangeNotifier {
     _repeticion = 4;
     _data = [[], [], [], [], []]; // data = [chip_ids];
     _tiempo = []; // tiempo = [min,sec];
-    _tiempoData = [[], [], [], [], []];
+    List _tiempoData = [];
     _start = false;
     _cronometerSeconds = 0;
     _cronometerMinutes = 0;
@@ -94,7 +94,13 @@ class TestData with ChangeNotifier {
   }
 
   set modifyTiempoData(List n_tiempo) {
-    this._tiempoData[_repeticion] = n_tiempo;
+    for (int i = 0; i < n_tiempo.length; i++) {
+      this._tiempoData.add(n_tiempo[i]);
+    }
+  }
+
+  get getTiempoData {
+    return _tiempoData;
   }
 
   set setObjectivesFull(bool n_full) {

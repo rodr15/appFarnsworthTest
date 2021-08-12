@@ -1,6 +1,7 @@
 import 'package:farnsworth/provider/aplication_colors.dart';
 import 'package:farnsworth/provider/data_mobile_chips.dart';
 import 'package:farnsworth/provider/notify_avisos.dart';
+import 'package:farnsworth/provider/results_provider.dart';
 import 'package:farnsworth/provider/test_data.dart';
 import 'package:farnsworth/screens/results.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ class _WarningsState extends State<Warnings> {
     final chips = Provider.of<ChipsData>(context);
     final testData = Provider.of<TestData>(context);
     final appColor = Provider.of<AppColors>(context);
+    final results = Provider.of<ResultsProvider>(context);
+
     return Positioned(
       top: MediaQuery.of(context).size.height * 2 / 10,
       left: MediaQuery.of(context).size.width * 2 / 10,
@@ -75,6 +78,12 @@ class _WarningsState extends State<Warnings> {
                         ),
                         TextButton(
                           onPressed: () {
+                            List dataConsult = testData.consult;
+                            if (dataConsult[0].isEmpty) {
+                              testData.initTestData();
+                              testData.initState(
+                                  chips.get_numChips); // -> Cambiar esto
+                            }
                             testData.set_parameters_results = [
                               chips.get_numChips,
                               chips.get_len,
@@ -82,6 +91,8 @@ class _WarningsState extends State<Warnings> {
                               MediaQuery.of(context).size.width,
                             ];
                             testData.results_positions();
+                            results.setNumChips = chips.get_numChips;
+                            results.setResults = dataConsult;
                             Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -325,6 +325,7 @@ class _ToolBarState extends State<ToolBar> {
                 _TimerMinutescounter,
                 _TimerSecondscounter
               ];
+
               _Testtimer.cancel();
               testData.startCronometer = false;
 
@@ -388,6 +389,7 @@ class _ToolBarState extends State<ToolBar> {
                 _TimerMinutescounter,
                 _TimerSecondscounter
               ];
+
               _Testtimer.cancel();
               testData.startCronometer = false;
               testData.disminuirRepeticion();
@@ -536,8 +538,11 @@ class _ToolBarState extends State<ToolBar> {
                   MediaQuery.of(context).size.width,
                 ];
                 testData.results_positions();
+                results.eraseTiempo();
                 results.setNumChips = chips.get_numChips;
                 results.setResults = dataConsult;
+                results.setTiempoData = testData.getTiempoData;
+                results.savingConfigurations();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Results()),

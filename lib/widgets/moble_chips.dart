@@ -54,10 +54,10 @@ class _MobileChipsState extends State<MobileChips> {
     repeticion = (testData.get_repeticion < 0 ? 0 : testData.get_repeticion);
 
     Container chip = Container(
-      child: Text(
-        id.toString(),
-        style: TextStyle(backgroundColor: Colors.white),
-      ),
+      //child: Text(
+      // id.toString(),
+      // style: TextStyle(backgroundColor: Colors.white),
+      //),
       width: len,
       height: len,
       decoration: BoxDecoration(
@@ -75,10 +75,10 @@ class _MobileChipsState extends State<MobileChips> {
       ),
     );
     Container chipAccepted = Container(
-      child: Text(
-        id.toString(),
-        style: TextStyle(backgroundColor: Colors.white),
-      ),
+      //   child: Text(
+      //    id.toString(),
+      //   style: TextStyle(backgroundColor: Colors.white),
+      // ),
       width: len,
       height: len,
       decoration: BoxDecoration(

@@ -167,20 +167,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   );
                   break;
                 case 4: // RESULTADOS
-                  List dataConsult = testData.consult;
-                  if (dataConsult[0].isEmpty) {
-                    testData.initTestData();
-                    testData.initState(chips.get_numChips); // -> Cambiar esto
-                  }
-                  testData.set_parameters_results = [
-                    chips.get_numChips,
-                    chips.get_len,
-                    MediaQuery.of(context).size.height,
-                    MediaQuery.of(context).size.width,
-                  ];
-                  testData.results_positions();
-                  results.setNumChips = chips.get_numChips;
-                  results.setResults = dataConsult;
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Results()),
@@ -189,20 +176,6 @@ class _MenuPrincipal extends State<MenuPrincipal> {
               }
               break;
             case 458773:
-              List dataConsult = testData.consult;
-              if (dataConsult[0].isEmpty) {
-                testData.initTestData();
-                testData.initState(chips.get_numChips); // -> Cambiar esto
-              }
-              testData.set_parameters_results = [
-                chips.get_numChips,
-                chips.get_len,
-                MediaQuery.of(context).size.height,
-                MediaQuery.of(context).size.width,
-              ];
-              testData.results_positions();
-              results.setNumChips = chips.get_numChips;
-              results.setResults = dataConsult;
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Results()),

@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ResultsProvider with ChangeNotifier {
   List<String> _dataObjective = [];
   int _numChips = 0;
+  List<String> _Tiempo = [];
 
   SharedPreferences? _preferences;
 
@@ -20,6 +21,8 @@ class ResultsProvider with ChangeNotifier {
   _loadSettingsFromPrefs() async {
     await _initializePrefs();
     _dataObjective = _preferences?.getStringList('dataObjective') ?? [];
+    _Tiempo = _preferences?.getStringList('tiempo') ??
+        ['0', '0', '0', '0', '0', '0', '0', '0'];
     _numChips = _preferences?.getInt('numChips') ?? 0;
     notifyListeners();
   }
@@ -27,6 +30,7 @@ class ResultsProvider with ChangeNotifier {
   _saveSettingsToPrefs() async {
     await _initializePrefs();
     _preferences?.setStringList('dataObjective', _dataObjective);
+    _preferences?.setStringList('tiempo', _Tiempo);
     _preferences?.setInt('numChips', _numChips);
   }
 
@@ -42,6 +46,24 @@ class ResultsProvider with ChangeNotifier {
 
   get getNumChips {
     return _numChips;
+  }
+
+  set setTiempoData(List Tiempo) {
+    List<String> n_Tiempo = [];
+    for (int i = 0; i < Tiempo.length; i++) {
+      n_Tiempo.add(Tiempo[i].toString());
+    }
+
+    this._Tiempo = n_Tiempo;
+    notifyListeners();
+  }
+
+  get getTiempoData {
+    return _Tiempo;
+  }
+
+  void eraseTiempo() {
+    this._Tiempo = ['0', '0', '0', '0', '0', '0', '0', '0'];
   }
 
   set setResults(List n_Results) {

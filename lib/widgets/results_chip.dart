@@ -59,7 +59,7 @@ class _ResultsChipsState extends State<ResultsChips> {
       left: position.dy,
       child: Container(
         width: objective.get_len,
-        height: objective.get_len + 45,
+        height: objective.get_len + 10,
         decoration: BoxDecoration(
           border: Border.all(color: appColor.getBorderColor),
         ),
