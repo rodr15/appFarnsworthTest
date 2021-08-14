@@ -91,8 +91,11 @@ class _WarningsState extends State<Warnings> {
                               MediaQuery.of(context).size.width,
                             ];
                             testData.results_positions();
+                            results.eraseTiempo();
                             results.setNumChips = chips.get_numChips;
                             results.setResults = dataConsult;
+                            results.setTiempoData = testData.getTiempoData;
+                            results.savingConfigurations();
                             Navigator.push(
                               context,
                               MaterialPageRoute(

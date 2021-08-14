@@ -108,7 +108,7 @@ class ChipsData with ChangeNotifier {
         [132, 132, 163],
       ]; // Rojo ladrillo - Verde - Azul(verdoso) - Violeta
       List<dynamic> P = [
-        [151, 145, 75],
+        [157, 142, 72],
         [82, 150, 135],
         [123, 132, 163],
         [179, 118, 115],
@@ -128,6 +128,7 @@ class ChipsData with ChangeNotifier {
         }
       } else {
         for (int opcion = 0; opcion < 4; opcion++) {
+          v.clear();
           for (int i = 0; i <= 2; i++) {
             v.add(P[opcion][i] - Po[opcion][i]);
           }
@@ -243,51 +244,51 @@ class ChipsData with ChangeNotifier {
     var random = Random();
 
     for (int i = _initPositions.length - 2; i > 0; i--) {
+      int less = 0;
+      int mayor = 0;
       var n = random.nextInt(i + 1);
       notMove.clear();
       notMove = [0, 23, 24, 46, 47, 69, 70, 92];
       if (_numChips > 25) {
         switch (_repeticion) {
           case 3:
-            for (int x = 24; x < _numChips; x++) {
-              notMove.add(x);
-            }
+            less = 1;
+            mayor = 23;
 
             break;
           case 2:
-            for (int x = 0; x < 24; x++) {
-              notMove.add(x);
-            }
-            for (int x = 47; x < _numChips; x++) {
-              notMove.add(x);
-            }
+            less = 25;
+            mayor = 45;
             break;
           case 1:
-            for (int x = 0; x < 47; x++) {
-              notMove.add(x);
-            }
-            for (int x = 70; x < _numChips; x++) {
-              notMove.add(x);
-            }
+            less = 48;
+            mayor = 68;
             break;
           case 0:
-            for (int x = 0; x < 70; x++) {
-              notMove.add(x);
-            }
+            less = 71;
+            mayor = 91;
             break;
 
           default:
         }
-      }
+        List a = [];
+        a.clear();
+        for (int i = less; i < mayor; i++) {
+          a.add(_initPositions[i]);
+        }
+        a.shuffle();
+        for (int i = less; i < mayor; i++) {
+          _initPositions[i] = a[i - less];
+        }
+      } else {
+        if (!(notMove.contains(n) || notMove.contains(i))) {
+          var temp = _initPositions[i];
 
-      if (!(notMove.contains(n) || notMove.contains(i))) {
-        var temp = _initPositions[i];
-
-        _initPositions[i] = _initPositions[n];
-        _initPositions[n] = temp;
+          _initPositions[i] = _initPositions[n];
+          _initPositions[n] = temp;
+        }
       }
     }
-
     _positions.clear();
     _positions = List.from(_initPositions);
     notifyListeners();

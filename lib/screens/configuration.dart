@@ -1,5 +1,4 @@
 import 'package:farnsworth/Menu/menu_principal.dart';
-import 'package:farnsworth/Preferences/user_preferences.dart';
 import 'package:farnsworth/main.dart';
 import 'package:farnsworth/provider/config_provider.dart';
 import 'package:farnsworth/widgets/configurationCaja.dart';

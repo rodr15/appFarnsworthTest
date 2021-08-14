@@ -50,7 +50,7 @@ class _ResultsState extends State<Results> {
     final notify = Provider.of<Avisos>(context);
     final results = Provider.of<ResultsProvider>(context);
     double s = MediaQuery.of(context).size.height;
-    print(results.getTiempoData);
+    print(results.getNumChips);
     Stack Letreros = Stack(children: [
       Positioned(
           top: (s / 10) / 2,

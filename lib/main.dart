@@ -10,7 +10,6 @@ import 'package:farnsworth/screens/splash_Scren.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:farnsworth/Preferences/user_preferences.dart';
 
 import 'Menu/menu_principal.dart';
 

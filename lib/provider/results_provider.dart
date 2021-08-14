@@ -53,7 +53,8 @@ class ResultsProvider with ChangeNotifier {
     for (int i = 0; i < Tiempo.length; i++) {
       n_Tiempo.add(Tiempo[i].toString());
     }
-
+    print(_Tiempo);
+    print(n_Tiempo);
     this._Tiempo = n_Tiempo;
     notifyListeners();
   }
@@ -63,7 +64,9 @@ class ResultsProvider with ChangeNotifier {
   }
 
   void eraseTiempo() {
+    _Tiempo.clear();
     this._Tiempo = ['0', '0', '0', '0', '0', '0', '0', '0'];
+    notifyListeners();
   }
 
   set setResults(List n_Results) {
