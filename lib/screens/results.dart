@@ -26,7 +26,10 @@ class _ResultsState extends State<Results> {
               content:
                   Text('¿ Está seguro de volver a la pantalla principal ?'),
               actions: <Widget>[
-                OutlinedButton(child: Text(' Cancelar '), onPressed: () {}),
+                OutlinedButton(
+                  child: Text(' Cancelar '),
+                  onPressed: () => Navigator.of(context).pop(false),
+                ),
                 OutlinedButton(
                     child: Text(' Ir '),
                     onPressed: () {
@@ -50,15 +53,36 @@ class _ResultsState extends State<Results> {
     final notify = Provider.of<Avisos>(context);
     final results = Provider.of<ResultsProvider>(context);
     double s = MediaQuery.of(context).size.height;
-    print(results.getNumChips);
+
     Stack Letreros = Stack(children: [
       Positioned(
           top: (s / 10) / 2,
           child: Row(children: [
-            Text(
-              'RESULTADO PRUEBA 1  - OJO DERECHO',
-              style: TextStyle(color: appColor.getLetterColor),
-            ),
+            (results.getNumChips < 25
+                ? Text(
+                    ('RESULTADO PRUEBA 1  - OJO DERECHO'),
+                    style: TextStyle(color: appColor.getLetterColor),
+                  )
+                : Row(
+                    children: [
+                      Text(
+                        ('RESULTADO PRUEBA 1 - '),
+                        style: TextStyle(color: appColor.getLetterColor),
+                      ),
+                      Container(
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                              Color.fromARGB(255, 178, 118, 111),
+                              Color.fromARGB(255, 157, 142, 72)
+                            ])),
+                      ),
+                    ],
+                  )),
             Text(
               ' TIEMPO => ${results.getTiempoData[0]} : ${results.getTiempoData[1]} ',
               style: TextStyle(color: appColor.getLetterColor),
@@ -68,10 +92,31 @@ class _ResultsState extends State<Results> {
         top: (13 * s / 40) + ((s / 10) - (13 * s / 40)) / 2,
         child: Row(
           children: [
-            Text(
-              'RESULTADO PRUEBA 2  - OJO DERECHO',
-              style: TextStyle(color: appColor.getLetterColor),
-            ),
+            (results.getNumChips < 25
+                ? Text(
+                    'RESULTADO PRUEBA 2  - OJO DERECHO',
+                    style: TextStyle(color: appColor.getLetterColor),
+                  )
+                : Row(
+                    children: [
+                      Text(
+                        ('RESULTADO PRUEBA 2 - '),
+                        style: TextStyle(color: appColor.getLetterColor),
+                      ),
+                      Container(
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                              Color.fromARGB(255, 151, 145, 75),
+                              Color.fromARGB(255, 82, 150, 135)
+                            ])),
+                      ),
+                    ],
+                  )),
             Text(
               ' TIEMPO => ${results.getTiempoData[2]} : ${results.getTiempoData[3]} ',
               style: TextStyle(color: appColor.getLetterColor),
@@ -83,10 +128,31 @@ class _ResultsState extends State<Results> {
         top: (22 * s / 40) + ((13 * s / 40) - (22 * s / 40)) / 2,
         child: Row(
           children: [
-            Text(
-              'RESULTADO PRUEBA 1  - OJO IZQUIERDO',
-              style: TextStyle(color: appColor.getLetterColor),
-            ),
+            (results.getNumChips < 25
+                ? Text(
+                    'RESULTADO PRUEBA 1  - OJO IZQUIERDO',
+                    style: TextStyle(color: appColor.getLetterColor),
+                  )
+                : Row(
+                    children: [
+                      Text(
+                        'RESULTADO PRUEBA 3  -',
+                        style: TextStyle(color: appColor.getLetterColor),
+                      ),
+                      Container(
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                              Color.fromARGB(255, 78, 150, 135),
+                              Color.fromARGB(255, 123, 132, 163)
+                            ])),
+                      ),
+                    ],
+                  )),
             Text(
               ' TIEMPO => ${results.getTiempoData[4]} : ${results.getTiempoData[5]} ',
               style: TextStyle(color: appColor.getLetterColor),
@@ -98,10 +164,31 @@ class _ResultsState extends State<Results> {
         top: (31 * s / 40) + ((22 * s / 40) - (31 * s / 40)) / 2,
         child: Row(
           children: [
-            Text(
-              'RESULTADO PRUEBA 2  - OJO IZQUIERDO',
-              style: TextStyle(color: appColor.getLetterColor),
-            ),
+            (results.getNumChips < 25
+                ? Text(
+                    'RESULTADO PRUEBA 2  - OJO IZQUIERDO',
+                    style: TextStyle(color: appColor.getLetterColor),
+                  )
+                : Row(
+                    children: [
+                      Text(
+                        'RESULTADO PRUEBA 4  -',
+                        style: TextStyle(color: appColor.getLetterColor),
+                      ),
+                      Container(
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                              Color.fromARGB(255, 132, 132, 163),
+                              Color.fromARGB(255, 179, 118, 115)
+                            ])),
+                      ),
+                    ],
+                  )),
             Text(
               ' TIEMPO => ${results.getTiempoData[6]} : ${results.getTiempoData[7]} ',
               style: TextStyle(color: appColor.getLetterColor),

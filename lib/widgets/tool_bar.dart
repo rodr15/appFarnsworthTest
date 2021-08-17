@@ -138,8 +138,8 @@ class _ToolBarState extends State<ToolBar> {
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                             colors: [
-                          Color.fromARGB(255, 203, 65, 84),
-                          Color.fromARGB(255, 0, 80, 0)
+                          Color.fromARGB(255, 178, 118, 111),
+                          Color.fromARGB(255, 157, 142, 72)
                         ])),
                   ),
                   backgroundColor: (subSelected[1]
@@ -165,8 +165,8 @@ class _ToolBarState extends State<ToolBar> {
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                             colors: [
-                          Color.fromARGB(255, 0, 80, 0),
-                          Color.fromARGB(255, 93, 193, 185)
+                          Color.fromARGB(255, 151, 145, 75),
+                          Color.fromARGB(255, 82, 150, 135)
                         ])),
                   ),
                   backgroundColor: (subSelected[2]
@@ -192,8 +192,8 @@ class _ToolBarState extends State<ToolBar> {
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                             colors: [
-                          Color.fromARGB(255, 93, 193, 185),
-                          Color.fromARGB(255, 76, 40, 130)
+                          Color.fromARGB(255, 78, 150, 135),
+                          Color.fromARGB(255, 123, 132, 163)
                         ])),
                   ),
                   backgroundColor: (subSelected[3]
@@ -219,8 +219,8 @@ class _ToolBarState extends State<ToolBar> {
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                             colors: [
-                          Color.fromARGB(255, 76, 40, 130),
-                          Color.fromARGB(255, 203, 65, 84)
+                          Color.fromARGB(255, 132, 132, 163),
+                          Color.fromARGB(255, 179, 118, 115)
                         ])),
                   ),
                   backgroundColor: (subSelected[4]
@@ -312,7 +312,7 @@ class _ToolBarState extends State<ToolBar> {
             testData.setObjectivesFull = false;
           }
           if (testData.getObjectivesFull) {
-            notify.set_Aviso = 'Has Terminado?';
+            notify.set_Aviso = ' ¿ Has terminado?';
             testData.set_Notification = true;
 
             if (testData.getContinue) {
@@ -380,7 +380,7 @@ class _ToolBarState extends State<ToolBar> {
             testData.setObjectivesFull = false;
           }
           if (testData.getObjectivesFull) {
-            notify.set_Aviso = 'Has Terminado?';
+            notify.set_Aviso = ' ¿ Has terminado?';
             testData.set_Notification = true;
             if (testData.getContinue) {
               // CONTINUAR
@@ -526,6 +526,7 @@ class _ToolBarState extends State<ToolBar> {
               break;
             case 458792: // Enter
               if (testData.get_testfinished) {
+                ResultsProvider();
                 List dataConsult = testData.consult;
                 if (dataConsult[0].isEmpty) {
                   testData.initTestData();

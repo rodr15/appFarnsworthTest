@@ -9,6 +9,7 @@ import 'package:farnsworth/screens/results.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:farnsworth/provider/results_provider.dart';
 
 class Option extends StatelessWidget {
   final List option;
@@ -102,6 +103,7 @@ class Option extends StatelessWidget {
             );
             break;
           case 'RESULTADOS':
+            ResultsProvider();
             List dataConsult = testData.consult;
             if (dataConsult[0].isEmpty) {
               testData.initTestData();

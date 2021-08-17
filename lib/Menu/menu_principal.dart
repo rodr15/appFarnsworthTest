@@ -167,6 +167,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   );
                   break;
                 case 4: // RESULTADOS
+                  ResultsProvider();
 
                   Navigator.push(
                     context,
@@ -176,6 +177,8 @@ class _MenuPrincipal extends State<MenuPrincipal> {
               }
               break;
             case 458773:
+              ResultsProvider();
+
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Results()),
