@@ -94,6 +94,9 @@ class TestData with ChangeNotifier {
   }
 
   set modifyTiempoData(List n_tiempo) {
+    if (_tiempoData.length == 8) {
+      this._tiempoData.clear();
+    }
     for (int i = 0; i < n_tiempo.length; i++) {
       this._tiempoData.add(n_tiempo[i]);
     }

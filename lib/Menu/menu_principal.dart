@@ -167,7 +167,20 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   );
                   break;
                 case 4: // RESULTADOS
+                
                   ResultsProvider();
+                  List dataConsult = testData.consult;
+                  if (dataConsult[0].isEmpty) {
+                    testData.initTestData();
+                    testData.initState(chips.get_numChips); // -> Cambiar esto
+                  }
+                  testData.set_parameters_results = [
+                    chips.get_numChips,
+                    chips.get_len,
+                    MediaQuery.of(context).size.height,
+                    MediaQuery.of(context).size.width,
+                  ];
+                  testData.results_positions();
 
                   Navigator.push(
                     context,
@@ -177,12 +190,25 @@ class _MenuPrincipal extends State<MenuPrincipal> {
               }
               break;
             case 458773:
-              ResultsProvider();
+              
+                  ResultsProvider();
+                  List dataConsult = testData.consult;
+                  if (dataConsult[0].isEmpty) {
+                    testData.initTestData();
+                    testData.initState(chips.get_numChips); // -> Cambiar esto
+                  }
+                  testData.set_parameters_results = [
+                    chips.get_numChips,
+                    chips.get_len,
+                    MediaQuery.of(context).size.height,
+                    MediaQuery.of(context).size.width,
+                  ];
+                  testData.results_positions();
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Results()),
-              );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Results()),
+                  );
               break;
           }
           if (_contador < 0) {

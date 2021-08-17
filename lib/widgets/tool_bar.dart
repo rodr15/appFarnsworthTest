@@ -334,7 +334,7 @@ class _ToolBarState extends State<ToolBar> {
                 testData.set_Notification = true;
                 testData.testfinished();
               } else {
-                if (testData.get_repeticion > 1) {
+                if (testData.get_repeticion >= 0) {
                   notify.set_Aviso = 'AMBOS OJOS';
                   notify.set_Image = 'lib/assets/binocular.png';
                   testData.set_Notification = true;
