@@ -55,46 +55,49 @@ class _ResultsState extends State<Results> {
     double s = MediaQuery.of(context).size.height;
 
     Stack Letreros = Stack(children: [
-      Positioned(
-          top: (s / 10) / 2,
-          child: Row(children: [
-            (results.getNumChips < 25
-                ? Text(
-                    ('RESULTADO PRUEBA 1  - OJO DERECHO'),
-                    style: TextStyle(color: appColor.getLetterColor),
-                  )
-                : Row(
-                    children: [
-                      Text(
-                        ('RESULTADO PRUEBA 1 - '),
-                        style: TextStyle(color: appColor.getLetterColor),
-                      ),
-                      Container(
-                        height: 20,
-                        width: 20,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [
-                              Color.fromARGB(255, 178, 118, 111),
-                              Color.fromARGB(255, 157, 142, 72)
-                            ])),
-                      ),
-                    ],
-                  )),
-            Text(
-              ' TIEMPO => ${results.getTiempoData[0]} : ${results.getTiempoData[1]} ',
-              style: TextStyle(color: appColor.getLetterColor),
-            ),
-          ])),
+      if (!(testData.getTiempoData.length < 5))
+        Positioned(
+            top: (s / 10) / 2,
+            child: Row(children: [
+              (results.getNumChips < 25
+                  ? Text(
+                      ('RESULTADO PRUEBA 1  - OJO DERECHO'),
+                      style: TextStyle(color: appColor.getLetterColor),
+                    )
+                  : Row(
+                      children: [
+                        Text(
+                          ('RESULTADO PRUEBA 1 - '),
+                          style: TextStyle(color: appColor.getLetterColor),
+                        ),
+                        Container(
+                          height: 20,
+                          width: 20,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  colors: [
+                                Color.fromARGB(255, 178, 118, 111),
+                                Color.fromARGB(255, 157, 142, 72)
+                              ])),
+                        ),
+                      ],
+                    )),
+              Text(
+                ' TIEMPO => ${results.getTiempoData[0]} : ${results.getTiempoData[1]} ',
+                style: TextStyle(color: appColor.getLetterColor),
+              ),
+            ])),
       Positioned(
         top: (13 * s / 40) + ((s / 10) - (13 * s / 40)) / 2,
         child: Row(
           children: [
             (results.getNumChips < 25
                 ? Text(
-                    'RESULTADO PRUEBA 2  - OJO DERECHO',
+                    (!(testData.getTiempoData.length < 5)
+                        ? 'RESULTADO PRUEBA 2 - OJO DERECHO'
+                        : 'RESULTADO PRUEBA - OJO DERECHO'),
                     style: TextStyle(color: appColor.getLetterColor),
                   )
                 : Row(
@@ -118,7 +121,9 @@ class _ResultsState extends State<Results> {
                     ],
                   )),
             Text(
-              ' TIEMPO => ${results.getTiempoData[2]} : ${results.getTiempoData[3]} ',
+              (!(testData.getTiempoData.length < 5)
+                  ? ' TIEMPO => ${results.getTiempoData[2]} : ${results.getTiempoData[3]} '
+                  : ' TIEMPO => ${results.getTiempoData[0]} : ${results.getTiempoData[1]} '),
               style: TextStyle(color: appColor.getLetterColor),
             ),
           ],
@@ -130,7 +135,9 @@ class _ResultsState extends State<Results> {
           children: [
             (results.getNumChips < 25
                 ? Text(
-                    'RESULTADO PRUEBA 1  - OJO IZQUIERDO',
+                    (!(testData.getTiempoData.length < 5)
+                        ? 'RESULTADO PRUEBA 1 - OJO IZQUIERDO'
+                        : 'RESULTADO PRUEBA - OJO IZQUIERDO'),
                     style: TextStyle(color: appColor.getLetterColor),
                   )
                 : Row(
@@ -154,48 +161,51 @@ class _ResultsState extends State<Results> {
                     ],
                   )),
             Text(
-              ' TIEMPO => ${results.getTiempoData[4]} : ${results.getTiempoData[5]} ',
+              (!(testData.getTiempoData.length < 5)
+                  ? ' TIEMPO => ${results.getTiempoData[4]} : ${results.getTiempoData[5]} '
+                  : ' TIEMPO => ${results.getTiempoData[2]} : ${results.getTiempoData[3]} '),
               style: TextStyle(color: appColor.getLetterColor),
             ),
           ],
         ),
       ),
-      Positioned(
-        top: (31 * s / 40) + ((22 * s / 40) - (31 * s / 40)) / 2,
-        child: Row(
-          children: [
-            (results.getNumChips < 25
-                ? Text(
-                    'RESULTADO PRUEBA 2  - OJO IZQUIERDO',
-                    style: TextStyle(color: appColor.getLetterColor),
-                  )
-                : Row(
-                    children: [
-                      Text(
-                        'RESULTADO PRUEBA 4  -',
-                        style: TextStyle(color: appColor.getLetterColor),
-                      ),
-                      Container(
-                        height: 20,
-                        width: 20,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [
-                              Color.fromARGB(255, 132, 132, 163),
-                              Color.fromARGB(255, 179, 118, 115)
-                            ])),
-                      ),
-                    ],
-                  )),
-            Text(
-              ' TIEMPO => ${results.getTiempoData[6]} : ${results.getTiempoData[7]} ',
-              style: TextStyle(color: appColor.getLetterColor),
-            ),
-          ],
+      if (!(testData.getTiempoData.length < 5))
+        Positioned(
+          top: (31 * s / 40) + ((22 * s / 40) - (31 * s / 40)) / 2,
+          child: Row(
+            children: [
+              (results.getNumChips < 25
+                  ? Text(
+                      'RESULTADO PRUEBA 2  - OJO IZQUIERDO',
+                      style: TextStyle(color: appColor.getLetterColor),
+                    )
+                  : Row(
+                      children: [
+                        Text(
+                          'RESULTADO PRUEBA 4  -',
+                          style: TextStyle(color: appColor.getLetterColor),
+                        ),
+                        Container(
+                          height: 20,
+                          width: 20,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  colors: [
+                                Color.fromARGB(255, 132, 132, 163),
+                                Color.fromARGB(255, 179, 118, 115)
+                              ])),
+                        ),
+                      ],
+                    )),
+              Text(
+                ' TIEMPO => ${results.getTiempoData[6]} : ${results.getTiempoData[7]} ',
+                style: TextStyle(color: appColor.getLetterColor),
+              ),
+            ],
+          ),
         ),
-      ),
     ]);
 
     Stack resultadosD1 = Stack(
@@ -207,13 +217,15 @@ class _ResultsState extends State<Results> {
     Stack resultadosD2 = Stack(
       children: List.generate(
           (results.getNumChips > 25 ? 21 : results.getNumChips), (index) {
-        return ResultsChips(index, 2);
+        return ResultsChips(
+            index, (!(testData.getTiempoData.length < 5) ? 2 : 1));
       }),
     );
     Stack resultadosI1 = Stack(
       children: List.generate(
           (results.getNumChips > 25 ? 21 : results.getNumChips), (index) {
-        return ResultsChips(index, 1);
+        return ResultsChips(
+            index, (!(testData.getTiempoData.length < 5) ? 1 : 0));
       }),
     );
     Stack resultadosI2 = Stack(
@@ -238,10 +250,10 @@ class _ResultsState extends State<Results> {
           body: Stack(
             children: <Widget>[
               Letreros,
-              resultadosD1,
+              if (!(testData.getTiempoData.length < 5)) resultadosD1,
               resultadosI1,
               resultadosD2,
-              resultadosI2,
+              if (!(testData.getTiempoData.length < 5)) resultadosI2,
             ],
           )),
     );

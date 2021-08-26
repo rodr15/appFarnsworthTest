@@ -28,6 +28,8 @@ class _ToolBarState extends State<ToolBar> {
   bool optTiempoChange = false;
   bool backgroundChange = false;
   bool optStart = false;
+  bool ojo = false; // false -> un ojo , true -> bifocal
+  bool nIntentos = false; // false -> 1 , true 2
   int minutes = 0;
   int seconds = 0;
 
@@ -37,7 +39,7 @@ class _ToolBarState extends State<ToolBar> {
   Timer _Testtimer = Timer.periodic(Duration(seconds: 1), (timer) {});
 
   int repeticiones = 4;
-  List selected = [true, false, false, false, false];
+  List selected = [true, false, false, false, false, false, false];
   List subSelected = [true, false, false, false, false];
   int indexSelected = 0;
   int indexSubSelected = 0;
@@ -47,6 +49,7 @@ class _ToolBarState extends State<ToolBar> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    repeticiones = 4;
     //selected = widget.selected;
   }
 
@@ -86,7 +89,10 @@ class _ToolBarState extends State<ToolBar> {
 
     minutes = testData.get_minutes;
     seconds = testData.get_seconds;
-
+    print('-----------------------------------------');
+    print('widget repe -> ${repeticiones}');
+    print('provider repe -> ${testData.get_repeticion}');
+    print('-----------------------------------------');
     void optcolorPressed() {
       setState(() {
         optColorChange = !optColorChange;
@@ -333,6 +339,7 @@ class _ToolBarState extends State<ToolBar> {
                 notify.set_Aviso = 'Ha terminado el test';
                 testData.set_Notification = true;
                 testData.testfinished();
+                optStart = false;
               } else {
                 if (testData.get_repeticion >= 0) {
                   notify.set_Aviso = 'AMBOS OJOS';
@@ -392,22 +399,28 @@ class _ToolBarState extends State<ToolBar> {
 
               _Testtimer.cancel();
               testData.startCronometer = false;
-              testData.disminuirRepeticion();
+              testData.set_repeticion = testData.get_repeticion - 1;
 
               if (testData.get_repeticion < 0) {
                 notify.set_Aviso = 'Ha terminado el test';
                 testData.set_Notification = true;
                 testData.testfinished();
               } else {
-                if (testData.get_repeticion > 1) {
-                  notify.set_Aviso = 'OJO DERECHO';
-                  notify.set_Image = 'lib/assets/derecho.png';
-                  testData.set_Notification = true;
+                if (!ojo) {
+                  if (testData.get_repeticion > 1) {
+                    notify.set_Aviso = 'OJO DERECHO';
+                    notify.set_Image = 'lib/assets/derecho.png';
+                    testData.set_Notification = true;
+                  } else {
+                    notify.set_Aviso = 'OJO IZQUIERDO';
+                    notify.set_Image = 'lib/assets/izquierdo.png';
+                    testData.set_Notification = true;
+                  }
                 } else {
-                  notify.set_Aviso = 'OJO IZQUIERDO';
-                  notify.set_Image = 'lib/assets/izquierdo.png';
-                  testData.set_Notification = true;
+                  notify.set_Image = 'lib/assets/binocular.png';
+                  notify.set_Aviso = 'AMBOS OJOS';
                 }
+
                 Future.delayed(Duration(seconds: 3), () {
                   if (!testData.isactiveCronometer) {
                     TestTimer15();
@@ -427,41 +440,140 @@ class _ToolBarState extends State<ToolBar> {
     }
 
     void startPressed() {
-      setState(() {
-        optStart = true;
-        colorWidth = minWidth;
-        tiempoWidth = minWidth;
-        optColorChange = false;
-
-        if (testData.get_repeticion == repeticiones) {
+      if (!optStart) {
+        setState(() {
+          testData.clearTiempo = [];
+          optStart = true;
+          colorWidth = minWidth;
+          tiempoWidth = minWidth;
+          optColorChange = false;
+          // testData.set_repeticion = repeticiones;
           if (chips.get_numChips < 25) {
-            testData.disminuirRepeticion();
-            notify.set_Image = 'lib/assets/derecho.png';
-            notify.set_Aviso = 'OJO DERECHO';
-            testData.set_Notification = true;
-            Future.delayed(Duration(seconds: 3), () {
-              TestTimer15();
-              chips.shuffle();
-              testData.set_Notification = false;
-            });
+            if (testData.get_repeticion == repeticiones) {
+              testData.set_repeticion = testData.get_repeticion - 1;
+              if (!ojo) {
+                notify.set_Image = 'lib/assets/derecho.png';
+                notify.set_Aviso = 'OJO DERECHO';
+              } else {
+                notify.set_Image = 'lib/assets/binocular.png';
+                notify.set_Aviso = 'AMBOS OJOS';
+              }
+              testData.set_Notification = true;
+              Future.delayed(Duration(seconds: 3), () {
+                TestTimer15();
+                chips.shuffle();
+                testData.set_Notification = false;
+              });
+            }
           } else {
-            chips.init_positions();
-            testData.disminuirRepeticion();
+            if (testData.get_opcion == repeticiones) {
+              chips.init_positions();
+              testData.set_repeticion = testData.get_repeticion - 1;
 
-            notify.set_Image = 'lib/assets/binocular.png';
-            notify.set_Aviso = 'AMBOS OJOS';
-            testData.set_Notification = true;
-            Future.delayed(Duration(seconds: 3), () {
-              testData.disminuirRepeticion();
-              testData.set_opcion = testData.get_opcion - 1;
-              TestTimer100();
-              chips.shuffle();
-              testData.set_Notification = false;
-            });
+              notify.set_Image = 'lib/assets/binocular.png';
+              notify.set_Aviso = 'AMBOS OJOS';
+              testData.set_Notification = true;
+
+              Future.delayed(Duration(seconds: 3), () {
+                testData.set_repeticion = testData.get_repeticion - 1;
+                testData.set_opcion = testData.get_opcion - 1;
+                TestTimer100();
+                chips.shuffle();
+                testData.set_Notification = false;
+              });
+            }
           }
-        }
-      });
+        });
+      }
     }
+
+    void opcionOjoPressed() {
+      if (!optStart) {
+        setState(() {
+          ojo = !ojo;
+        });
+      }
+    }
+
+    Container opcionOjo = Container(
+      child: Column(
+        children: [
+          FloatingActionButton(
+            heroTag: 'Btn5',
+            onPressed: opcionOjoPressed,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.remove_red_eye, color: appColor.getLetterColor,
+                  // size: 15,
+                ),
+                if (ojo)
+                  Icon(
+                    Icons.remove_red_eye, color: appColor.getLetterColor,
+                    // size: 15,
+                  )
+              ],
+            ),
+            backgroundColor: (selected[4]
+                ? appColor.getBorderColor
+                : appColor.getBackgroundColor),
+          ),
+          (ojo
+              ? Text(
+                  'BI',
+                  style: TextStyle(color: appColor.getLetterColor),
+                )
+              : Text(
+                  'MONO',
+                  style: TextStyle(color: appColor.getLetterColor),
+                )),
+          Text(
+            'FOCAL',
+            style: TextStyle(color: appColor.getLetterColor),
+          ),
+        ],
+      ),
+    );
+    void intentosPressed() {
+      if (!optStart) {
+        setState(() {
+          nIntentos = !nIntentos;
+          if (chips.get_numChips < 25) {
+            if (nIntentos) {
+              repeticiones = 2;
+            } else {
+              repeticiones = 4;
+            }
+          } else {
+            repeticiones = 4;
+          }
+        });
+        testData.set_repeticion = repeticiones;
+      }
+    }
+
+    Container intentos = Container(
+      child: Column(
+        children: [
+          FloatingActionButton(
+            heroTag: 'Btn6',
+            onPressed: intentosPressed,
+            child: Text(
+              (nIntentos ? '2' : '4'),
+              style: TextStyle(color: appColor.getLetterColor, fontSize: 18),
+            ),
+            backgroundColor: (selected[5]
+                ? appColor.getBorderColor
+                : appColor.getBackgroundColor),
+          ),
+          Text(
+            'INTENTOS',
+            style: TextStyle(color: appColor.getLetterColor, fontSize: 10),
+          )
+        ],
+      ),
+    );
 
     Container start = Container(
       child: FloatingActionButton(
@@ -471,7 +583,7 @@ class _ToolBarState extends State<ToolBar> {
           Icons.play_arrow,
           color: appColor.getLetterColor,
         ),
-        backgroundColor: (selected[4]
+        backgroundColor: (selected[6]
             ? appColor.getBorderColor
             : appColor.getBackgroundColor),
       ),
@@ -544,10 +656,10 @@ class _ToolBarState extends State<ToolBar> {
                 results.setResults = dataConsult;
                 results.setTiempoData = testData.getTiempoData;
                 results.savingConfigurations();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Results()),
-                );
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => Results()),
+                    (route) => false);
               } else {
                 switch (indexSelected) {
                   case 0:
@@ -567,6 +679,12 @@ class _ToolBarState extends State<ToolBar> {
                     break;
                   case 3:
                     optBackPressed();
+                    break;
+                  case 4:
+                    opcionOjoPressed();
+                    break;
+                  case 5:
+                    intentosPressed();
                     break;
                   case 4:
                     startPressed();
@@ -591,6 +709,7 @@ class _ToolBarState extends State<ToolBar> {
       backgroundColor:
           (selected[0] ? appColor.getBorderColor : appColor.getBackgroundColor),
     );
+
     return RawKeyboardListener(
         autofocus: true,
         focusNode: _focusNode,
@@ -604,6 +723,8 @@ class _ToolBarState extends State<ToolBar> {
                 : opcionColor),
             opcionTiempo,
             opcionBackGround,
+            if (chips.get_numChips < 25) opcionOjo,
+            if (chips.get_numChips < 25) intentos,
             start,
           ],
         ));

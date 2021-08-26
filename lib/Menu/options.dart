@@ -79,6 +79,8 @@ class Option extends StatelessWidget {
             chips.set_numChips = 93;
             objective.set_numChips = 93;
             testData.set_numChips = 93;
+            testData.set_opcion = 4;
+            testData.set_repeticion = 4;
             chips.set_screenHeigth = MediaQuery.of(context).size.height;
             chips.set_screenWidth = MediaQuery.of(context).size.width;
             objective.set_screenHeigth = MediaQuery.of(context).size.height;
