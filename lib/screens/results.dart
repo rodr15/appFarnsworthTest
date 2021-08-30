@@ -16,8 +16,6 @@ class Results extends StatefulWidget {
 }
 
 class _ResultsState extends State<Results> {
-  int repeticion = 2;
-
   void _validationButton(BuildContext context) async {
     final result = await showDialog(
         context: context,

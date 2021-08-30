@@ -70,17 +70,17 @@ class Option extends StatelessWidget {
 
             break;
           case 'HUE100':
+            chips.clearall();
+            objective.clearall();
             testData.initTestData();
+
             chips.setTradicional = false;
             testData.set_tiempo = [0, 0];
             testData.set_opcion = 4;
-            chips.clearall();
-            objective.clearall();
+            testData.set_repeticion = 2;
             chips.set_numChips = 93;
             objective.set_numChips = 93;
             testData.set_numChips = 93;
-            testData.set_opcion = 4;
-            testData.set_repeticion = 4;
             chips.set_screenHeigth = MediaQuery.of(context).size.height;
             chips.set_screenWidth = MediaQuery.of(context).size.width;
             objective.set_screenHeigth = MediaQuery.of(context).size.height;
@@ -92,7 +92,6 @@ class Option extends StatelessWidget {
               context,
               MaterialPageRoute(builder: (context) => FarnsworthTest()),
             );
-
             break;
           case 'CONFIGURACIÓN':
             chips.set_numChips = 16;

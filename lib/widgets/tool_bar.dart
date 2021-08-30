@@ -583,7 +583,7 @@ class _ToolBarState extends State<ToolBar> {
           Icons.play_arrow,
           color: appColor.getLetterColor,
         ),
-        backgroundColor: (selected[6]
+        backgroundColor: ((chips.get_numChips < 25 ? selected[6] : selected[4])
             ? appColor.getBorderColor
             : appColor.getBackgroundColor),
       ),
@@ -614,9 +614,12 @@ class _ToolBarState extends State<ToolBar> {
                   indexSelected == 0) {
                 avance = 2;
               }
-              if (indexSelected != selected.length - 1) {
-                selected[indexSelected + avance] = true;
-                selected[indexSelected] = false;
+
+              if (!(chips.get_numChips > 25 && indexSelected == 4)) {
+                if (indexSelected != selected.length - 1) {
+                  selected[indexSelected + avance] = true;
+                  selected[indexSelected] = false;
+                }
               }
               break;
             case 458831: // Derecha
@@ -681,12 +684,16 @@ class _ToolBarState extends State<ToolBar> {
                     optBackPressed();
                     break;
                   case 4:
-                    opcionOjoPressed();
+                    if (chips.get_numChips < 25) {
+                      opcionOjoPressed();
+                    } else {
+                      startPressed();
+                    }
                     break;
                   case 5:
                     intentosPressed();
                     break;
-                  case 4:
+                  case 6:
                     startPressed();
                     break;
                 }

@@ -89,7 +89,8 @@ class TestData with ChangeNotifier {
 
   set modifyData(List ids) {
     // List ids = [objetivo_id, chip_id];
-
+    print('ids -> ${ids}');
+    print('_adta -> ${_data}');
     _data[_repeticion][ids[0]] = ids[1];
 
     notifyListeners();
