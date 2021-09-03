@@ -6,26 +6,33 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ResultsHUE100 extends StatelessWidget {
+  List results = [];
+  ResultsHUE100(this.results);
   @override
   Widget build(BuildContext context) {
     final chips = Provider.of<ChipsData>(context);
     final appColor = Provider.of<AppColors>(context);
     double s = MediaQuery.of(context).size.height;
     double sw = MediaQuery.of(context).size.width;
+    List<int> resultados = [];
     int maxError = 0;
     List unique = [];
+    int puntajeFinal = 0;
     TextStyle TextoPuntajes = TextStyle(
       color: appColor.getBorderColor,
-      fontSize: s / 10,
-      shadows: <BoxShadow>[
-        BoxShadow(
-          color: appColor.getLetterColor,
-          blurRadius: 10.0,
-          offset: Offset(0.0, 0.0),
-        ),
-      ],
+      fontSize: s / 12,
+      // shadows: <BoxShadow>[
+      //   BoxShadow(
+      //     color: colors.white,
+      //     blurRadius: 10.0,
+      //     offset: Offset(0.0, 0.0),
+      //   ),
+      // ],
     );
-    // List<int> puntaje = [];
+
+    for (int i = 0; i < results.length; i++) {
+      resultados.add(int.parse(results[i]));
+    }
 
     int findMin(List<int> numbers) {
       return numbers.reduce(min);
@@ -35,107 +42,27 @@ class ResultsHUE100 extends StatelessWidget {
       return numbers.reduce(max);
     }
 
-    List<int> resultados = List.generate(85, (index) {
-      return index;
-    });
-    // List resultados = [
-    //   0,
-    //   1,
-    //   2,
-    //   3,
-    //   4,
-    //   5,
-    //   6,
-    //   8,
-    //   7,
-    //   9,
-    //   10,
-    //   11,
-    //   12,
-    //   13,
-    //   14,
-    //   15,
-    //   16,
-    //   17,
-    //   18,
-    //   19,
-    //   20,
-    //   21,
-    //   22,
-    //   23,
-    //   24,
-    //   25,
-    //   26,
-    //   27,
-    //   28,
-    //   29,
-    //   30,
-    //   32,
-    //   31,
-    //   33,
-    //   34,
-    //   35,
-    //   36,
-    //   37,
-    //   38,
-    //   40,
-    //   39,
-    //   41,
-    //   42,
-    //   43,
-    //   44,
-    //   45,
-    //   46,
-    //   47,
-    //   48,
-    //   49,
-    //   50,
-    //   51,
-    //   52,
-    //   53,
-    //   54,
-    //   55,
-    //   56,
-    //   57,
-    //   58,
-    //   59,
-    //   60,
-    //   61,
-    //   62,
-    //   63,
-    //   64,
-    //   65,
-    //   66,
-    //   67,
-    //   68,
-    //   69,
-    //   70,
-    //   71,
-    //   72,
-    //   73,
-    //   74,
-    //   75,
-    //   76,
-    //   77,
-    //   78,
-    //   79,
-    //   80,
-    //   82,
-    //   81,
-    //   83,
-    //   84
-    // ];
-
-    List<int> puntaje = List.generate(85, (index) {
+    List<int> puntaje = List.generate(resultados.length, (index) {
       return index;
     });
     resultadosCalculo() {
+      if (resultados.contains(85)) {
+        resultados[resultados.indexOf(85)] = 0;
+      }
+
       for (int i = 0; i < resultados.length; i++) {
-        if (resultados[i] != 0 && resultados[i] != resultados.length - 1) {
+        if (i != 0 && i != resultados.length - 1) {
           puntaje[resultados[i]] = ((resultados[i] - resultados[i - 1]).abs() +
               (resultados[i + 1] - resultados[i]).abs());
-        } else {
-          puntaje[resultados[i]] = 2;
+        } else if (i == 0) {
+          puntaje[resultados[i]] = ((resultados.length +
+                      resultados[i] -
+                      resultados[resultados.length - 1])
+                  .abs() +
+              (resultados[i + 1] - resultados[i]).abs());
+        } else if (i == resultados.length - 1) {
+          puntaje[resultados[i]] = ((resultados[i] - resultados[i - 1]).abs() +
+              (resultados.length + resultados[0] - resultados[i]).abs());
         }
       }
 
@@ -147,35 +74,34 @@ class ResultsHUE100 extends StatelessWidget {
       }
 
       maxError = findMax(puntaje);
+      puntajeFinal =
+          (puntaje.reduce((value, element) => value + element) - 170);
     }
 
     resultadosCalculo();
     Stack Lineas = Stack(
         children: List.generate(resultados.length, (index) {
       double grados = 360 / resultados.length;
-      //   children: List.generate(chips.get_numChips, (index) {
-      // double grados = 360 / chips.get_numChips;
+
       return Lines(index, grados * index);
     }));
     Stack Numeros = Stack(
         children: List.generate(resultados.length, (index) {
       double grados = 360 / resultados.length;
-      //   children: List.generate(chips.get_numChips, (index) {
-      // double grados = 360 / chips.get_numChips;
+
       return Numeracion(index, grados * index);
     }));
     Stack Puntuacion = Stack(
         children: List.generate(resultados.length, (index) {
       double grados = 360 / resultados.length;
-      //   children: List.generate(chips.get_numChips, (index) {
-      // double grados = 360 / chips.get_numChips;
+
       return Puntaje(
           index,
           grados * index,
           (maxError < 6 ? 5 : maxError),
           puntaje[index],
-          puntaje[(index > 0 ? index - 1 : 0)],
-          grados * (index > 0 ? index - 1 : 0));
+          puntaje[(index > 0 ? index - 1 : resultados.length - 1)],
+          grados * (index > 0 ? index - 1 : resultados.length - 1));
     }));
     Stack Referencias = Stack(
       children: List.generate((maxError < 6 ? 5 : maxError), (index) {
@@ -188,9 +114,8 @@ class ResultsHUE100 extends StatelessWidget {
         height: s,
         width: s,
         decoration: BoxDecoration(
-          color: appColor.getLetterColor,
-          borderRadius: BorderRadius.all(
-              Radius.circular(MediaQuery.of(context).size.width)),
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(sw)),
         ),
         child: Stack(children: [
           Lineas,
@@ -207,16 +132,31 @@ class ResultsHUE100 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Spacer(),
               Text(
-                'DALTONISMO       LEVE',
+                'DALTONISMO',
                 style: TextoPuntajes,
               ),
               Text(
-                'MARCADOR       ' +
-                    (puntaje.reduce((value, element) => value + element) - 170)
-                        .toString(),
+                (puntajeFinal == 0
+                    ? 'NO HAY DALTONISMO'
+                    : (puntajeFinal < 120
+                        ? 'LEVE'
+                        : (puntajeFinal < 190)
+                            ? 'MODERADO'
+                            : 'SEVERO')),
                 style: TextoPuntajes,
               ),
+              Spacer(),
+              Text(
+                'MARCADOR',
+                style: TextoPuntajes,
+              ),
+              Text(
+                puntajeFinal.toString(),
+                style: TextoPuntajes,
+              ),
+              Spacer(),
             ],
           )),
     ]);
@@ -240,12 +180,12 @@ class CirculosFijos extends StatelessWidget {
             width: s / 1.1111,
             height: s / 1.1111,
             decoration: BoxDecoration(
-              border: Border.all(color: appColor.getBackgroundColor),
+              border: Border.all(color: Colors.black),
               borderRadius: BorderRadius.all(
                   Radius.circular(MediaQuery.of(context).size.width)),
             ),
             alignment: Alignment.topCenter,
-            child: Text(maxError.toString()),
+            child: Text((maxError - 2).toString()),
           ),
         ),
         Positioned(
@@ -256,7 +196,7 @@ class CirculosFijos extends StatelessWidget {
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: appColor.getLetterColor,
+              color: Colors.white,
               borderRadius: BorderRadius.all(
                   Radius.circular(MediaQuery.of(context).size.width)),
             ),
@@ -279,17 +219,19 @@ class Circulos extends StatelessWidget {
       Positioned(
         top: s / 2 - index * (s / 1.1111) / (2 * maxError),
         left: s / 2 - index * (s / 1.1111) / (2 * maxError),
-        child: Container(
-          width: index * (s / 1.1111) / (maxError),
-          height: index * (s / 1.1111) / (maxError),
-          decoration: BoxDecoration(
-            border: Border.all(color: appColor.getBackgroundColor),
-            borderRadius: BorderRadius.all(
-                Radius.circular(MediaQuery.of(context).size.width)),
-          ),
-          alignment: Alignment.topCenter,
-          child: Text(index.toString()),
-        ),
+        child: ((index >= 2)
+            ? Container(
+                width: index * (s / 1.1111) / (maxError),
+                height: index * (s / 1.1111) / (maxError),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(MediaQuery.of(context).size.width)),
+                ),
+                alignment: Alignment.topCenter,
+                child: Text((index - 2).toString()),
+              )
+            : Container()),
       ),
     ]);
   }
@@ -376,7 +318,7 @@ class Lines extends StatelessWidget {
         // width: s / 2,
         width: s / 2 / 1.1111,
         height: 0.5,
-        color: appColor.getBackgroundColor,
+        color: Colors.black,
       ),
     );
   }

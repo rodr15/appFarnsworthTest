@@ -70,6 +70,12 @@ class _ResultsState extends State<Results> {
                 }),
             backgroundColor: appColor.getBackgroundColor,
             // body: (results.getNumChips > 25 ? ResultsHUE100() : ResultsD15())
-            body: Container(width: sw, height: s, child: ResultsHUE100())));
+            body: Container(
+              width: sw,
+              height: s,
+              child: (results.getNumChips < 25
+                  ? ResultsD15(results.getResults)
+                  : ResultsHUE100(results.getResults)),
+            )));
   }
 }

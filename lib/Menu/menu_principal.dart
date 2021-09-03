@@ -140,7 +140,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   chips.setTradicional = false;
                   testData.set_tiempo = [0, 0];
                   testData.set_opcion = 4;
-                  testData.set_repeticion = 2;
+                  testData.set_repeticion = 0;
                   chips.set_numChips = 93;
                   objective.set_numChips = 93;
                   testData.set_numChips = 93;

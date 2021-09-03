@@ -50,6 +50,7 @@ class _ToolBarState extends State<ToolBar> {
     // TODO: implement initState
     super.initState();
     repeticiones = 4;
+    optStart = false;
     //selected = widget.selected;
   }
 
@@ -468,15 +469,14 @@ class _ToolBarState extends State<ToolBar> {
           } else {
             if (testData.get_opcion == repeticiones) {
               chips.init_positions();
-              testData.set_repeticion = testData.get_repeticion - 1;
 
+              testData.set_opcion = testData.get_opcion - 1;
+              chips.set_repeticion = testData.get_opcion;
               notify.set_Image = 'lib/assets/binocular.png';
               notify.set_Aviso = 'AMBOS OJOS';
               testData.set_Notification = true;
 
               Future.delayed(Duration(seconds: 3), () {
-                testData.set_repeticion = testData.get_repeticion - 1;
-                testData.set_opcion = testData.get_opcion - 1;
                 TestTimer100();
                 chips.shuffle();
                 testData.set_Notification = false;

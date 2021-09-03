@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => ConfigProvider()),
           ChangeNotifierProvider(create: (context) => ResultsProvider()),
         ],
-        child: MaterialApp(initialRoute: 'home', routes: {
+        child: MaterialApp(initialRoute: 'splash', routes: {
           'splash': (context) => SplashScreen(),
           'home': (context) => MenuPrincipal(),
           'configuration': (context) => ConfigurationPage(),

@@ -278,7 +278,7 @@ class TestData with ChangeNotifier {
 
   set set_repeticion(int n_repeticion) {
     this._repeticion = n_repeticion;
-    //notifyListeners();
+    notifyListeners();
   }
 
   void testfinished() {
