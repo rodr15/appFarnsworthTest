@@ -84,6 +84,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
               break;
             case 458792: //Enter
               ConfigProvider();
+              ResultsProvider();
               switch (_contador) {
                 case 0: // Tradicional
                   testData.initTestData();
