@@ -5,6 +5,7 @@ class ResultsProvider with ChangeNotifier {
   List<String> _dataObjective = [];
   int _numChips = 0;
   List<String> _Tiempo = [];
+  bool _tradicional = false;
 
   SharedPreferences? _preferences;
 
@@ -20,10 +21,28 @@ class ResultsProvider with ChangeNotifier {
 
   _loadSettingsFromPrefs() async {
     await _initializePrefs();
-    _dataObjective = _preferences?.getStringList('dataObjective') ?? [];
+    _dataObjective = _preferences?.getStringList('dataObjective') ??
+        [
+          '1',
+          '2',
+          '3',
+          '4',
+          '5',
+          '6',
+          '7',
+          '8',
+          '9',
+          '10',
+          '11',
+          '12',
+          '13',
+          '14',
+          '15'
+        ];
     _Tiempo = _preferences?.getStringList('tiempo') ??
         ['0', '0', '0', '0', '0', '0', '0', '0'];
     _numChips = _preferences?.getInt('numChips') ?? 0;
+    _tradicional = _preferences?.getBool('tradicional') ?? true;
     notifyListeners();
   }
 
@@ -32,6 +51,7 @@ class ResultsProvider with ChangeNotifier {
     _preferences?.setStringList('dataObjective', _dataObjective);
     _preferences?.setStringList('tiempo', _Tiempo);
     _preferences?.setInt('numChips', _numChips);
+    _preferences?.setBool('tradicional', _tradicional);
   }
 
   void savingConfigurations() {
@@ -46,6 +66,15 @@ class ResultsProvider with ChangeNotifier {
 
   get getNumChips {
     return _numChips;
+  }
+
+  set setTradicional(bool n_trad) {
+    this._tradicional = n_trad;
+    notifyListeners();
+  }
+
+  get getTradicional {
+    return _tradicional;
   }
 
   set setTiempoData(List Tiempo) {

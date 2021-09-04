@@ -95,6 +95,7 @@ class _WarningsState extends State<Warnings> {
                             results.setNumChips = chips.get_numChips;
                             results.setResults = dataConsult;
                             results.setTiempoData = testData.getTiempoData;
+                            results.setTradicional = chips.getTradicional;
                             results.savingConfigurations();
                             Navigator.push(
                               context,

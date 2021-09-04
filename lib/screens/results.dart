@@ -74,7 +74,8 @@ class _ResultsState extends State<Results> {
               width: sw,
               height: s,
               child: (results.getNumChips < 25
-                  ? ResultsD15(results.getResults)
+                  ? ResultsD15(results.getResults, results.getTiempoData,
+                      results.getTradicional)
                   : ResultsHUE100(results.getResults)),
             )));
   }
