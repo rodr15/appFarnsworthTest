@@ -46,14 +46,15 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
         context: context,
         builder: (_) {
           return AlertDialog(
-              content: Text('Estas seguro de devolverte?'),
+              content:
+                  Text(' ¿ Desea guardar los cambios en la configuración ? '),
               actions: <Widget>[
                 OutlinedButton(
                   child: Text('Cancelar'),
                   onPressed: () => Navigator.of(context).pop(false),
                 ),
                 OutlinedButton(
-                  child: Text('Ok'),
+                  child: Text('Guardar'),
                   onPressed: () => Navigator.of(context).pop(true),
                 ),
               ]);
@@ -597,8 +598,8 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
       ),
       child: Column(children: [
         Container(
-            height: MediaQuery.of(context).size.height / 25,
-            width: MediaQuery.of(context).size.width / 10,
+            height: MediaQuery.of(context).size.width / 29,
+            width: MediaQuery.of(context).size.width / 12,
             decoration: BoxDecoration(
               color: Colors.black54,
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -621,6 +622,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
             children: [
               if (s > 400) Spacer(),
               FloatingActionButton(
+                mini: true,
                 heroTag: 'Btn60',
                 child: (cajaForma ? BotonCuadrado : BotonCuadradoGrey),
                 onPressed: cajaFormaOn,
@@ -630,6 +632,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
               ),
               if (s > 400) Spacer(),
               FloatingActionButton(
+                mini: true,
                 heroTag: 'Btn61',
                 child: (!cajaForma ? BotonCirculo : BotonCirculoGrey),
                 onPressed: cajaFormaOff,
@@ -660,6 +663,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
           children: [
             if (s > 400) Spacer(),
             FloatingActionButton(
+              mini: true,
               heroTag: 'Btn70',
               child: (cajaContorno ? BotonFlecha : BotonFlechaGrey),
               onPressed: cajaContornoOn,
@@ -669,6 +673,7 @@ class _ConfigurationToolBarState extends State<ConfigurationToolBar> {
             ),
             if (s > 400) Spacer(),
             FloatingActionButton(
+              mini: true,
               heroTag: 'Btn71',
               child: (!cajaContorno ? BotonX : BotonXGrey),
               onPressed: cajaContornoOff,

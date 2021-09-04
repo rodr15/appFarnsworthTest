@@ -64,7 +64,7 @@ class ResultsProvider with ChangeNotifier {
   }
 
   void eraseTiempo() {
-    _Tiempo.clear();
+    this._Tiempo.clear();
     this._Tiempo = ['0', '0', '0', '0', '0', '0', '0', '0'];
     notifyListeners();
   }

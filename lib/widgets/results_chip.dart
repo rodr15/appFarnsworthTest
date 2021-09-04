@@ -38,7 +38,8 @@ class _ResultsChipsState extends State<ResultsChips> {
     final testData = Provider.of<TestData>(context);
     final notify = Provider.of<Avisos>(context);
     final results = Provider.of<ResultsProvider>(context);
-
+    id = widget.id;
+    repeticion = widget.repeticion;
     testData.set_id = id;
     testData.set_repeticion = repeticion;
     position = testData.get_results_positions;
@@ -59,7 +60,7 @@ class _ResultsChipsState extends State<ResultsChips> {
       left: position.dy,
       child: Container(
         width: objective.get_len,
-        height: objective.get_len + 10,
+        height: objective.get_len + 15,
         decoration: BoxDecoration(
           border: Border.all(color: appColor.getBorderColor),
         ),

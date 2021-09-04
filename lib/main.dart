@@ -14,15 +14,14 @@ import 'package:provider/provider.dart';
 import 'Menu/menu_principal.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarBrightness: Brightness.light));
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
+
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => ChipsData()),
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => ConfigProvider()),
           ChangeNotifierProvider(create: (context) => ResultsProvider()),
         ],
-        child: MaterialApp(initialRoute: 'home', routes: {
+        child: MaterialApp(initialRoute: 'splash', routes: {
           'splash': (context) => SplashScreen(),
           'home': (context) => MenuPrincipal(),
           'configuration': (context) => ConfigurationPage(),

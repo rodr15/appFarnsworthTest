@@ -135,7 +135,7 @@ class _WarningsState extends State<Warnings> {
                       ],
                     )
                   : Container()),
-              (notify.get_Aviso == 'Has Terminado?'
+              (notify.get_Aviso == ' ¿ Has terminado?'
                   ? Container(
                       child: Center(
                       child: ButtonBar(

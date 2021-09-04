@@ -34,7 +34,6 @@ class TestData with ChangeNotifier {
     _full = false;
     _finished = false;
     _notification = false;
-    _repeticion = 4;
     _data = [[], [], [], [], []]; // data = [chip_ids];
     _tiempo = []; // tiempo = [min,sec];
     List _tiempoData = [];
@@ -43,15 +42,18 @@ class TestData with ChangeNotifier {
     _cronometerMinutes = 0;
     _cronometer = Timer(Duration(seconds: 0), () {});
     _positions = [[], [], [], [], []];
+    results_positions();
     _numChips = 0;
     _len = 0;
     _screenHeight = 0;
     _screenWidth = 0;
     _id = 0;
+    _repeticion = 4;
+    notifyListeners();
   }
 
   set setshowcronometer(bool n_show) {
-    this._showCronometer = n_show;
+    _showCronometer = n_show;
     notifyListeners();
   }
 
@@ -67,9 +69,9 @@ class TestData with ChangeNotifier {
       for (int j = 0; j <= _repeticion; j++) {
         for (int i = 0; i < _numChips; i++) {
           if (i == 0) {
-            this._data[j].add(0);
+            _data[j].add(0);
           } else {
-            this._data[j].add(null);
+            _data[j].add(null);
           }
         }
       }
@@ -77,9 +79,9 @@ class TestData with ChangeNotifier {
       List notMove = [0, 23, 24, 46, 47, 69, 70, 92];
       for (int i = 0; i < _numChips; i++) {
         if (notMove.contains(i)) {
-          this._data[0].add(i);
+          _data[0].add(i);
         } else {
-          this._data[0].add(null);
+          _data[0].add(null);
         }
       }
     }
@@ -87,15 +89,23 @@ class TestData with ChangeNotifier {
 
   set modifyData(List ids) {
     // List ids = [objetivo_id, chip_id];
-
-    this._data[_repeticion][ids[0]] = ids[1];
+    print('ids -> ${ids}');
+    print('_adta -> ${_data}');
+    _data[_repeticion][ids[0]] = ids[1];
 
     notifyListeners();
   }
 
+  set clearTiempo(n) {
+    _tiempoData = [];
+  }
+
   set modifyTiempoData(List n_tiempo) {
+    if (_tiempoData.length == 8) {
+      _tiempoData.clear();
+    }
     for (int i = 0; i < n_tiempo.length; i++) {
-      this._tiempoData.add(n_tiempo[i]);
+      _tiempoData.add(n_tiempo[i]);
     }
   }
 
@@ -104,13 +114,13 @@ class TestData with ChangeNotifier {
   }
 
   set setObjectivesFull(bool n_full) {
-    this._full = n_full;
+    _full = n_full;
 
     notifyListeners();
   }
 
   set set_opcion(n_opc) {
-    this.opcion = n_opc;
+    opcion = n_opc;
     notifyListeners();
   }
 
@@ -126,7 +136,6 @@ class TestData with ChangeNotifier {
         _full = false;
       }
     } else {
-      _repeticion = 0;
       switch (opcion) {
         case 3:
           for (int i = 0; i < 24; i++) {
@@ -181,7 +190,7 @@ class TestData with ChangeNotifier {
   }
 
   set setContinue(bool n_cont) {
-    this._continue = n_cont;
+    _continue = n_cont;
     notifyListeners();
   }
 
@@ -190,7 +199,7 @@ class TestData with ChangeNotifier {
   }
 
   set setModify(bool n_mod) {
-    this._modify = n_mod;
+    _modify = n_mod;
     notifyListeners();
   }
 
@@ -203,7 +212,7 @@ class TestData with ChangeNotifier {
   }
 
   set set_tiempo(List n_tiempo) {
-    this._tiempo = n_tiempo;
+    _tiempo = n_tiempo;
     if (!_start) {
       _cronometerMinutes = _tiempo[0];
       _cronometerSeconds = _tiempo[1];
@@ -228,13 +237,13 @@ class TestData with ChangeNotifier {
   }
 
   set set_Cronometertiempo(List n_Cronometertime) {
-    this._cronometerMinutes = n_Cronometertime[0];
-    this._cronometerSeconds = n_Cronometertime[1];
+    _cronometerMinutes = n_Cronometertime[0];
+    _cronometerSeconds = n_Cronometertime[1];
     notifyListeners();
   }
 
   set startCronometer(bool n_start) {
-    this._start = n_start;
+    _start = n_start;
     if (!_start) {
       _cronometerMinutes = _tiempo[0];
       _cronometerSeconds = _tiempo[1];
@@ -243,11 +252,11 @@ class TestData with ChangeNotifier {
   }
 
   get isactiveCronometer {
-    return this._start;
+    return _start;
   }
 
   set set_Notification(bool n_notification) {
-    this._notification = n_notification;
+    _notification = n_notification;
     notifyListeners();
   }
 
@@ -260,17 +269,16 @@ class TestData with ChangeNotifier {
     /*if (this._repeticion < 0) {
       this._repeticion = 0;
     }*/
-    notifyListeners();
+    // notifyListeners();
   }
 
   get get_repeticion {
-    return _repeticion;
+    return this._repeticion;
   }
 
   set set_repeticion(int n_repeticion) {
     this._repeticion = n_repeticion;
-
-    //notifyListeners();
+    notifyListeners();
   }
 
   void testfinished() {
@@ -283,18 +291,18 @@ class TestData with ChangeNotifier {
   }
 
   set set_id(int n_id) {
-    this._id = n_id;
+    _id = n_id;
   }
 
   set set_numChips(int n_num) {
-    this._numChips = n_num;
+    _numChips = n_num;
   }
 
   set set_parameters_results(List parameters) {
-    this._numChips = parameters[0];
-    this._len = parameters[1];
-    this._screenHeight = parameters[2];
-    this._screenWidth = parameters[3];
+    _numChips = parameters[0];
+    _len = parameters[1];
+    _screenHeight = parameters[2];
+    _screenWidth = parameters[3];
     notifyListeners();
   }
 
@@ -309,10 +317,11 @@ class TestData with ChangeNotifier {
       }
     }
 
-    notifyListeners();
+    //notifyListeners();
   }
 
   get get_results_positions {
-    return _positions[_repeticion + 1][_id];
+    return _positions[
+        (!(_tiempoData.length < 5) ? _repeticion + 1 : _repeticion + 2)][_id];
   }
 }

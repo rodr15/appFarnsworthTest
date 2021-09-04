@@ -242,7 +242,10 @@ class ChipsData with ChangeNotifier {
 
   void shuffle() {
     var random = Random();
-
+    print('SHUFLE');
+    print('init ${_initPositions.length}');
+    print('_numChips ${_numChips}');
+    print('_repeticion ${_repeticion}');
     for (int i = _initPositions.length - 2; i > 0; i--) {
       int less = 0;
       int mayor = 0;

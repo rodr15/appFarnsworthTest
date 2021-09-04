@@ -32,8 +32,9 @@ class _MenuPrincipal extends State<MenuPrincipal> {
     ['lib/assets/RESULTS.jpg', 'RESULTADOS', false],
   ];
   String teclado = '';
-  final FocusNode _focusNode = FocusNode();
   final ScrollController _controller = ScrollController();
+  final FocusNode _focusNode = FocusNode();
+
   @override
   void dispose() {
     super.dispose();
@@ -102,9 +103,11 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   testData.initState(chips.get_numChips);
                   chips.init_positions();
                   objective.init_positions();
+                  testData.set_repeticion = 4;
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => FarnsworthTest()),
+                    // (route) => false
                   );
                   break;
                 case 1:
@@ -123,6 +126,7 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   testData.initState(chips.get_numChips);
                   chips.init_positions();
                   objective.init_positions();
+                  testData.set_repeticion = 4;
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => FarnsworthTest()),
@@ -130,12 +134,14 @@ class _MenuPrincipal extends State<MenuPrincipal> {
 
                   break;
                 case 2:
+                  chips.clearall();
+                  objective.clearall();
                   testData.initTestData();
+
                   chips.setTradicional = false;
                   testData.set_tiempo = [0, 0];
                   testData.set_opcion = 4;
-                  chips.clearall();
-                  objective.clearall();
+                  testData.set_repeticion = 0;
                   chips.set_numChips = 93;
                   objective.set_numChips = 93;
                   testData.set_numChips = 93;
@@ -169,6 +175,20 @@ class _MenuPrincipal extends State<MenuPrincipal> {
                   break;
                 case 4: // RESULTADOS
 
+                  ResultsProvider();
+                  List dataConsult = testData.consult;
+                  if (dataConsult[0].isEmpty) {
+                    testData.initTestData();
+                    testData.initState(chips.get_numChips); // -> Cambiar esto
+                  }
+                  testData.set_parameters_results = [
+                    chips.get_numChips,
+                    chips.get_len,
+                    MediaQuery.of(context).size.height,
+                    MediaQuery.of(context).size.width,
+                  ];
+                  testData.results_positions();
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Results()),
@@ -177,6 +197,20 @@ class _MenuPrincipal extends State<MenuPrincipal> {
               }
               break;
             case 458773:
+              ResultsProvider();
+              List dataConsult = testData.consult;
+              if (dataConsult[0].isEmpty) {
+                testData.initTestData();
+                testData.initState(chips.get_numChips); // -> Cambiar esto
+              }
+              testData.set_parameters_results = [
+                chips.get_numChips,
+                chips.get_len,
+                MediaQuery.of(context).size.height,
+                MediaQuery.of(context).size.width,
+              ];
+              testData.results_positions();
+
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Results()),
@@ -218,36 +252,41 @@ class _MenuPrincipal extends State<MenuPrincipal> {
         return Option(opciones[index]);
       }),
     );
-    return Scaffold(
-        body: Stack(
-      children: <Widget>[
-        /*Container(
-            child: Positioned(
-          top: 0,
-          left: 0,
-          child: Text(
-            teclado,
-            style: TextStyle(color: Colors.black, fontSize: 30),
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(false);
+      },
+      child: Scaffold(
+          body: Stack(
+        children: <Widget>[
+          /*Container(
+              child: Positioned(
+            top: 0,
+            left: 0,
+            child: Text(
+              teclado,
+              style: TextStyle(color: Colors.black, fontSize: 30),
+            ),
+          )),*/
+          Image.asset(
+            "lib/assets/FONDO.jpg",
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.fill,
           ),
-        )),*/
-        Image.asset(
-          "lib/assets/FONDO.jpg",
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.fill,
-        ),
-        RawKeyboardListener(
-          autofocus: true,
-          focusNode: _focusNode,
-          onKey: _handleKeyEvent,
-          child: listaOpciones,
-        ),
-        // Container(
-        //     child: Text(
-        //   '${opciones[_contador][1].toString()}',
-        //   style: TextStyle(fontSize: 100, backgroundColor: Colors.white),
-        // ))
-      ],
-    ));
+          RawKeyboardListener(
+            autofocus: true,
+            focusNode: _focusNode,
+            onKey: _handleKeyEvent,
+            child: listaOpciones,
+          ),
+          // Container(
+          //     child: Text(
+          //   '${opciones[_contador][1].toString()}',
+          //   style: TextStyle(fontSize: 100, backgroundColor: Colors.white),
+          // ))
+        ],
+      )),
+    );
   }
 }
