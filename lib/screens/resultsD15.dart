@@ -73,7 +73,7 @@ class _ResultsD15State extends State<ResultsD15> {
         resultados1.add(int.parse(ajustResults[2][i]));
         resultados.add(int.parse(ajustResults[3][i]));
       } else {
-        resultados.add(int.parse(ajustResults[0][i]));
+        resultados1.add(int.parse(ajustResults[0][i]));
         resultados.add(int.parse(ajustResults[1][i]));
       }
     }
@@ -96,7 +96,7 @@ class _ResultsD15State extends State<ResultsD15> {
       return Puntaje(showResults[index], showResults[index + 1]);
     }));
     TextStyle TextoPuntajes = TextStyle(
-        color: Colors.white, fontSize: sh / 20, fontWeight: FontWeight.bold);
+        color: Colors.white, fontSize: sh / 25, fontWeight: FontWeight.bold);
     Row Botones = Row(children: [
       Spacer(),
       Text(

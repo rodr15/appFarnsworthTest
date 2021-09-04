@@ -379,7 +379,7 @@ class Puntaje extends StatelessWidget {
               Container(
                 width: h,
                 height: 2,
-                color: appColor.getBorderColor,
+                color: Colors.red,
               ),
             ],
           )),
