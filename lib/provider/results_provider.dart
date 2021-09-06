@@ -21,27 +21,10 @@ class ResultsProvider with ChangeNotifier {
 
   _loadSettingsFromPrefs() async {
     await _initializePrefs();
-    _dataObjective = _preferences?.getStringList('dataObjective') ??
-        [
-          '1',
-          '2',
-          '3',
-          '4',
-          '5',
-          '6',
-          '7',
-          '8',
-          '9',
-          '10',
-          '11',
-          '12',
-          '13',
-          '14',
-          '15'
-        ];
+    _dataObjective = _preferences?.getStringList('dataObjective') ?? ['empty'];
     _Tiempo = _preferences?.getStringList('tiempo') ??
         ['0', '0', '0', '0', '0', '0', '0', '0'];
-    _numChips = _preferences?.getInt('numChips') ?? 0;
+    _numChips = _preferences?.getInt('numChips') ?? 16;
     _tradicional = _preferences?.getBool('tradicional') ?? true;
     notifyListeners();
   }
@@ -99,6 +82,8 @@ class ResultsProvider with ChangeNotifier {
   }
 
   set setResults(List n_Results) {
+    print('PROVIDER RESULTS');
+    print(n_Results);
     List<String> str_nResults = [];
     if (_numChips > 25) {
       List notMove = [0, 23, 24, 46, 47, 69, 70, 92];

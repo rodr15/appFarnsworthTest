@@ -36,6 +36,75 @@ class _ResultsD15State extends State<ResultsD15> {
   int nResults = 0;
   @override
   Widget build(BuildContext context) {
+    if (results[0] == 'empty') {
+      results.clear();
+      results = [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+        '15',
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+        '15',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+        'null',
+      ];
+    }
     final chips = Provider.of<ChipsData>(context);
     final objective = Provider.of<ObjectiveData>(context);
     final appColor = Provider.of<AppColors>(context);
@@ -63,8 +132,6 @@ class _ResultsD15State extends State<ResultsD15> {
       }
       ajustResults[a].add(results[i]);
     }
-    print('-------');
-    print(ajustResults.length);
     for (int i = 0; i < ajustResults[0].length; i++) {
       if (ajustResults[2][1] != 'null') {
         resultados3.add(int.parse(ajustResults[0][i]));
@@ -252,6 +319,25 @@ class LineasTradicional extends StatelessWidget {
 
     return Stack(
       children: [
+        // Tritan
+        Positioned(
+          top: s / 2 + hTritan / 3 * sin(rotationTritan),
+          left: s / 2 + hTritan / 3 * cos(rotationTritan),
+          child: Container(
+              transform: Matrix4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                  0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+                ..rotateZ(tritan),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text('Tritan',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 20,
+                      ))
+                ],
+              )),
+        ),
         Positioned(
           top: s / 2 + hTritan * sin(rotationTritan),
           left: s / 2 + hTritan * cos(rotationTritan),
@@ -288,6 +374,22 @@ class LineasTradicional extends StatelessWidget {
                 ],
               )),
         ),
+        // Deutan
+        Positioned(
+          top: s * 2 / 5,
+          left: s * 2 / 5,
+          child: Container(
+              transform: Matrix4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                  0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+                ..rotateZ(deutan),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text('Deutan',
+                      style: TextStyle(color: Colors.green, fontSize: 20))
+                ],
+              )),
+        ),
         Positioned(
           top: s / 2 + hDeutan * sin(rotationDeutan),
           left: s / 2 + hDeutan * cos(rotationDeutan),
@@ -321,6 +423,22 @@ class LineasTradicional extends StatelessWidget {
                     height: 2,
                     color: Colors.green,
                   ),
+                ],
+              )),
+        ),
+        // Protan
+        Positioned(
+          top: s / 2 + hProtan * 2 / 3 * sin(rotationProtan),
+          left: s / 2 + hProtan * cos(rotationProtan),
+          child: Container(
+              transform: Matrix4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                  0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+                ..rotateZ(protan),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text('Protan',
+                      style: TextStyle(fontSize: 20, color: Colors.red))
                 ],
               )),
         ),
@@ -484,9 +602,6 @@ class Numeracion extends StatelessWidget {
         rgb.clear();
       }
     }
-    print('------- $index -------------------');
-    print(s / 2 + h * sin(rotation) - 20);
-    print(s / 2 + h * cos(rotation) - 20);
     return Positioned(
         top: s / 2 + h * sin(rotation) - 20,
         left: s / 2 + h * cos(rotation) - 20,
@@ -577,8 +692,6 @@ class Puntaje extends StatelessWidget {
       d.add((sqrt(pow(x[i], 2) + pow(y[i], 2)) * (s / 2 / 1.0555)) /
           (sqrt(pow(x[0], 2) + pow(y[0], 2))));
       rotaciones[i] = -rotaciones[i] * pi / 180;
-      print('$index');
-      print('${rotaciones[index]}');
     }
     Ye = (s / 2) + d[index] * sin(rotaciones[index]);
     Xe = (s / 2) + d[index] * cos(rotaciones[index]);
